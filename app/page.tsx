@@ -1,65 +1,108 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Sparkles } from "lucide-react";
+import { Hero } from "@/components/Hero";
+
+import { RESOURCES, STEPS } from "@/contants/index";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
+      {/* Navigation */}
+      <header className="fixed top-0 left-0 right-0 z-50 glass-panel">
+        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+          <Link href="/" className="flex items-center gap-2">
+            <Sparkles className="h-6 w-6 text-primary" />
+            <span className="text-lg font-semibold">Blueprint</span>
+          </Link>
+
+          <div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
+            <Link href="#como-funciona" className="hover:text-foreground transition-colors">
+              Como funciona
+            </Link>
+            <Link href="#recursos" className="hover:text-foreground transition-colors">
+              Recursos
+            </Link>
+          </div>
+
+          <div className="flex items-center gap-4 text-sm">
+            <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+              Entrar
+            </Link>
+            <Link
+              href="#"
+              className="btn-primary rounded-full px-5 py-2.5 font-medium"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              Testar Blueprint
+            </Link>
+          </div>
+        </nav>
+      </header>
+
+      <Hero />
+
+      <section id="como-funciona" className="py-24 px-6">
+        <div className="mx-auto max-w-6xl">
+          <p className="text-primary text-sm font-medium mb-4">Como funciona</p>
+          <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-16">
+            Três passos até seu blueprint.
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {STEPS.map((item) => (
+              <div
+                key={item.id}
+                className="glass-panel rounded-2xl p-8 transition-colors hover:border-primary/30"
+              >
+                <span className="text-primary text-sm font-medium">
+                  {item.step}
+                </span>
+                <h3 className="text-xl font-medium mt-4 mb-3">{item.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      <section id="recursos" className="py-24 px-6">
+        <div className="mx-auto max-w-6xl">
+          <p className="text-primary text-sm font-medium mb-4">Recursos</p>
+          <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-16">
+            Tudo o que você precisa para
+            <br />
+            estudar melhor.
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {RESOURCES.map((item) => (
+              <div
+                key={item.title}
+                className="glass-panel rounded-2xl p-8 transition-colors hover:border-primary/30"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 mb-6">
+                  <item.icon className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="text-lg font-medium mb-2">{item.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
-      </main>
+      </section>
+
+      <footer className="mt-auto border-t border-border py-8 px-6">
+        <div className="mx-auto max-w-6xl flex items-center justify-between text-sm text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-primary" />
+            <span>Blueprint</span>
+          </div>
+          <p>© 2026 Blueprint. Todos os direitos reservados.</p>
+        </div>
+      </footer>
     </div>
   );
 }
