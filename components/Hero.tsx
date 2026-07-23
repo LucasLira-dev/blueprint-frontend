@@ -17,7 +17,7 @@ export const Hero = () => {
 
     return (
         <section className="relative flex flex-col items-center justify-center min-h-screen px-6 text-center hero">
-        <div className="absolute inset-0 bg-(--gradient-hero)] pointer-events-none" />
+        <div className="absolute inset-0 pointer-events-none bg-(image:--gradient-hero) bg-no-repeat" />
 
         <div className="relative z-10 max-w-4xl">
           <h1 className="text-5xl md:text-7xl font-medium tracking-tight leading-[1.05] mb-6">

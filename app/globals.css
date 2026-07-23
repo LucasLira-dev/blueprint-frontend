@@ -39,7 +39,6 @@
 
 :root {
   --radius: 1.25rem;
-  /* Gemini-inspired near-black */
   --background: oklch(0.13 0.005 260);
   --foreground: oklch(0.98 0.003 260);
   --surface: oklch(0.17 0.008 260);

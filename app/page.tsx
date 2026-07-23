@@ -4,10 +4,14 @@ import { Hero } from "@/components/Hero";
 
 import { RESOURCES, STEPS } from "@/contants/index";
 
+
 export default function Home() {
+
+
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
-      {/* Navigation */}
+    <div
+      className="flex min-h-screen flex-col bg-background bg-(image:--gradient-hero) bg-fixed bg-no-repeat text-foreground"
+    >
       <header className="fixed top-0 left-0 right-0 z-50 glass-panel">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <Link href="/" className="flex items-center gap-2">
@@ -25,11 +29,11 @@ export default function Home() {
           </div>
 
           <div className="flex items-center gap-4 text-sm">
-            <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/login" className="text-muted-foreground hover:text-foreground transition-colors">
               Entrar
             </Link>
             <Link
-              href="#"
+              href="/register"
               className="btn-primary rounded-full px-5 py-2.5 font-medium"
             >
               Testar Blueprint
