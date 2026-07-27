@@ -1,36 +1,42 @@
-"use client";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import { DashboardLayoutClient } from "./DashboardLayoutClient";
 
-import { useState } from "react";
-import { Sidebar } from "@/components/sidebar/Sidebar";
-import { Menu } from "lucide-react";
-
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  let session = null;
+  try {
+    session = await authClient.getSession({
+      fetchOptions: {
+        headers: await headers(),
+      },
+    });
+  } catch (error) {
+    console.error("Erro ao obter a sessão do usuário:", error);
+    throw new Error("Erro ao obter a sessão do usuário.");
+  }
+
+  if (!session?.data?.user?.id) {
+    redirect("/login");
+  }
+
+  const user = session.data.user;
+  const userInitials = user.name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase();
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background text-foreground">
-      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-
-      <div className="flex flex-1 flex-col overflow-hidden">
-        {/* Mobile top bar */}
-        <header className="flex items-center gap-3 border-b border-border px-4 py-3 lg:hidden">
-          <button
-            type="button"
-            onClick={() => setSidebarOpen(true)}
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-            aria-label="Abrir menu"
-          >
-            <Menu className="h-5 w-5" />
-          </button>
-          <span className="text-sm font-semibold">Blueprint</span>
-        </header>
-
-        <main className="flex flex-1 flex-col overflow-y-auto">{children}</main>
-      </div>
-    </div>
+    <DashboardLayoutClient
+      userInitials={userInitials}
+      userName={user.name}
+    >
+      {children}
+    </DashboardLayoutClient>
   );
 }

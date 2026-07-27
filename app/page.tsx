@@ -3,9 +3,20 @@ import { Sparkles } from "lucide-react";
 import { Hero } from "@/components/Hero";
 
 import { RESOURCES, STEPS } from "@/contants/index";
+import { authClient } from "@/lib/auth-client";
+import { headers } from "next/headers";
 
 export default async function Home() {
 
+  let session = null;
+
+  session = await authClient.getSession({
+    fetchOptions: {
+      headers: await headers(),
+    }
+  })
+
+  const hasSession = !!session?.data?.user?.id;
 
   return (
     <div
@@ -28,20 +39,20 @@ export default async function Home() {
           </div>
 
           <div className="flex items-center gap-4 text-sm">
-            <Link href="/login" className="text-muted-foreground hover:text-foreground transition-colors">
-              Entrar
+            <Link href={hasSession ? "/planos" : "/login"} className="text-muted-foreground hover:text-foreground transition-colors">
+              {hasSession ? "Planos" : "Entrar"}
             </Link>
             <Link
-              href="/register"
+              href={hasSession ? "/chat/new" : "/login"}
               className="btn-primary rounded-full px-5 py-2.5 font-medium"
             >
-              Testar Blueprint
+              {hasSession ? "Novo plano" : "Começar"}
             </Link>
           </div>
         </nav>
       </header>
 
-      <Hero />
+      <Hero hasSession={hasSession} />
 
       <section id="como-funciona" className="py-24 px-6">
         <div className="mx-auto max-w-6xl">
@@ -97,8 +108,8 @@ export default async function Home() {
         </div>
       </section>
 
-      <footer className="mt-auto border-t border-border py-8 px-6">
-        <div className="mx-auto max-w-6xl flex items-center justify-between text-sm text-muted-foreground">
+      <footer className="mt-auto border-t border-border py-8 px-6 ">
+        <div className="mx-auto max-w-6xl flex flex-col gap-2 sm:flex-row items-center justify-between text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-primary" />
             <span>Blueprint</span>

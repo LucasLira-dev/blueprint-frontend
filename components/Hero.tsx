@@ -4,7 +4,11 @@ import Link from "next/link"
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 
-export const Hero = () => {
+interface HeroProps {
+  hasSession: boolean;
+}
+
+export const Hero = ({ hasSession }: HeroProps) => {
 
     useGSAP(() => {
         const timeline = gsap.timeline({ defaults: { duration: 1, ease: "power2.out" } });
@@ -31,10 +35,10 @@ export const Hero = () => {
           </p>
 
           <Link
-            href="#"
+            href={hasSession ? "/chat/new" : "/login"}
             className="btn-primary inline-flex items-center gap-2 rounded-full px-8 py-4 text-lg font-medium"
           >
-            Testar Blueprint
+            {hasSession ? "Novo plano" : "Começar"}
             <span className="text-xl">→</span>
           </Link>
         </div>
