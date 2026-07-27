@@ -4,8 +4,7 @@ import { Hero } from "@/components/Hero";
 
 import { RESOURCES, STEPS } from "@/contants/index";
 
-
-export default function Home() {
+export default async function Home() {
 
 
   return (
