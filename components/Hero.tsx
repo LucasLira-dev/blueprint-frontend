@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import { NewPlanButton } from "./NewPlanButton";
 
 interface HeroProps {
   hasSession: boolean;
@@ -34,13 +35,9 @@ export const Hero = ({ hasSession }: HeroProps) => {
             livros gerados sob medida em segundos.
           </p>
 
-          <Link
-            href={hasSession ? "/chat/new" : "/login"}
-            className="btn-primary inline-flex items-center gap-2 rounded-full px-8 py-4 text-lg font-medium"
-          >
-            {hasSession ? "Novo plano" : "Começar"}
+          <NewPlanButton hasSession={hasSession} className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-lg font-medium text-primary-foreground transition-colors hover:bg-primary/90">
             <span className="text-xl">→</span>
-          </Link>
+          </NewPlanButton>
         </div>
       </section>
     )

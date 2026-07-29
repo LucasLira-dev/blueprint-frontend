@@ -6,16 +6,14 @@ import {
   Sparkles,
   LayoutGrid,
   Plus,
-  BookOpen,
   Settings,
   LogOut,
   X,
 } from "lucide-react";
 
 const NAV_ITEMS = [
-  { label: "Planos", href: "/chat", icon: LayoutGrid },
-  { label: "Novo plano", href: "/chat/new", icon: Plus },
-  { label: "Biblioteca", href: "/library", icon: BookOpen },
+  { label: "Planos", href: "/plans", icon: LayoutGrid },
+  { label: "Novo plano", href: "/plans/new", icon: Plus },
 ] as const;
 
 interface SidebarProps {
@@ -62,8 +60,8 @@ export function Sidebar({ open, onClose, userInitials, userName }: SidebarProps)
         <nav className="flex flex-1 flex-col gap-1 px-3">
           {NAV_ITEMS.map((item) => {
             const isActive =
-              item.href === "/chat"
-                ? pathname === "/chat"
+              item.href === "/plans"
+                ? pathname === "/plans"
                 : pathname.startsWith(item.href);
 
             return (

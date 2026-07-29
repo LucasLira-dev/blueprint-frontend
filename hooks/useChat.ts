@@ -44,7 +44,7 @@ export function useChat() {
             }
         }
         catch (error) {
-            patch((msg: Message) => ({ ...msg, error: "Erro de conexão ao gerar plano."}))
+            patch((msg: Message) => ({ ...msg, error: (error as Error).message }));
             console.error("Error during streaming:", error);
         }
         finally {

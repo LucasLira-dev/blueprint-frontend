@@ -5,6 +5,7 @@ import { Hero } from "@/components/Hero";
 import { RESOURCES, STEPS } from "@/contants/index";
 import { authClient } from "@/lib/auth-client";
 import { headers } from "next/headers";
+import { NewPlanButton } from "@/components/NewPlanButton";
 
 export default async function Home() {
 
@@ -42,12 +43,7 @@ export default async function Home() {
             <Link href={hasSession ? "/planos" : "/login"} className="text-muted-foreground hover:text-foreground transition-colors">
               {hasSession ? "Planos" : "Entrar"}
             </Link>
-            <Link
-              href={hasSession ? "/chat/new" : "/login"}
-              className="btn-primary rounded-full px-5 py-2.5 font-medium"
-            >
-              {hasSession ? "Novo plano" : "Começar"}
-            </Link>
+            <NewPlanButton hasSession={hasSession} className="btn-primary rounded-full px-5 py-2.5 font-medium text-white"/>
           </div>
         </nav>
       </header>

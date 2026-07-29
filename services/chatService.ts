@@ -12,6 +12,9 @@ export async function* streamGeneratePlan(topic: string): AsyncGenerator<PlanEve
     const response = await apiFetch(`/study-plans/generate?topic=${encodeURIComponent(topic)}`);
 
     if (!response.ok) {
+        if (response.status === 429) {
+            throw new Error("Você atingiu o limite de gerações. Tente novamente amanhã.");
+        }
         throw new Error(`Erro ao gerar plano: ${response.status}`);
     }
 

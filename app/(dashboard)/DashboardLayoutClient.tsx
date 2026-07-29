@@ -38,7 +38,7 @@ export function DashboardLayoutClient({
           </button>
           <span className="text-sm font-semibold">Blueprint</span>
         </header>
-        <main className="flex flex-1 flex-col overflow-hidden">{children}</main>
+        <main className="flex flex-1 flex-col overflow-y-auto">{children}</main>
       </div>
     </div>
   );

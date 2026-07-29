@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { DashboardLayoutClient } from "./DashboardLayoutClient";
+import { Provider } from "./provider";
 
 export default async function DashboardLayout({
   children,
@@ -17,7 +18,7 @@ export default async function DashboardLayout({
     });
   } catch (error) {
     console.error("Erro ao obter a sessão do usuário:", error);
-    throw new Error("Erro ao obter a sessão do usuário.");
+    redirect("/login");
   }
 
   if (!session?.data?.user?.id) {
@@ -32,11 +33,13 @@ export default async function DashboardLayout({
     .toUpperCase();
 
   return (
-    <DashboardLayoutClient
-      userInitials={userInitials}
-      userName={user.name}
-    >
-      {children}
-    </DashboardLayoutClient>
+    <Provider>
+      <DashboardLayoutClient
+        userInitials={userInitials}
+        userName={user.name}
+      >
+        {children}
+      </DashboardLayoutClient>
+    </Provider>
   );
 }
