@@ -40,7 +40,7 @@ export default async function Home() {
           </div>
 
           <div className="flex items-center gap-4 text-sm">
-            <Link href={hasSession ? "/planos" : "/login"} className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link href={hasSession ? "/plans" : "/login"} className="text-muted-foreground hover:text-foreground transition-colors">
               {hasSession ? "Planos" : "Entrar"}
             </Link>
             <NewPlanButton hasSession={hasSession} className="btn-primary rounded-full px-5 py-2.5 font-medium text-white"/>

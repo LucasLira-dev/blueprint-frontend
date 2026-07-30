@@ -1,4 +1,4 @@
-import { changePlanVisibility, getPlans } from "@/services/plansService";
+import { changePlanVisibility, deletePlan, getPlanById, getPlans } from "@/services/plansService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 type ChangeVisibilityParams = {
@@ -13,17 +13,40 @@ export function usePlansQuery(userId: string) {
     })
 }
 
+export function useMyPlansQuery(userId: string, planId: string) {
+    return useQuery({
+        queryKey: ['my-plans', userId, planId],
+        queryFn: () => getPlanById(planId),
+    })
+}
+
 export function useChangePlanVisibilityMutation(userId: string) {
 
     const queryClient = useQueryClient();
 
     return useMutation({
         mutationFn: ({ planId, visibility}: ChangeVisibilityParams) => changePlanVisibility(planId, visibility),
-        onSuccess: () => {
+        onSuccess: (_, { planId }) => {
             queryClient.invalidateQueries({ queryKey: ['plans', userId] });
+            queryClient.invalidateQueries({ queryKey: ['my-plans', userId, planId] });
         },
         onError: (error) => {
             console.error('Erro ao alterar visibilidade do plano:', error);
+        }
+    })
+}
+
+export function useDeletePlanMutation(userId: string) {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (planId: string) => deletePlan(planId),
+        onSuccess: (_, planId: string) => {
+            queryClient.invalidateQueries({ queryKey: ['plans', userId] });
+            queryClient.invalidateQueries({ queryKey: ['my-plans', userId, planId] });
+        },
+        onError: (error) => {
+            console.error('Erro ao deletar o plano:', error);
         }
     })
 }
