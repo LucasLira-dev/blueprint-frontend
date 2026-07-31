@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 import {
   Sparkles,
   LayoutGrid,
@@ -9,7 +10,10 @@ import {
   Settings,
   LogOut,
   X,
+  AlertCircleIcon,
 } from "lucide-react";
+import { useState } from "react";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 
 const NAV_ITEMS = [
   { label: "Planos", href: "/plans", icon: LayoutGrid },
@@ -25,10 +29,47 @@ interface SidebarProps {
 
 export function Sidebar({ open, onClose, userInitials, userName }: SidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const [alert, setAlert] = useState<{ type: 'success' | 'destructive'; message: string } | null>(null);
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await authClient.signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            router.push("/login"); // redirect to login page
+          },
+        }
+      })
+      if (error) {
+        console.error(error)
+        setAlert({ type: 'destructive', message: `Erro ao sair da conta. tente novamente.` });
+      }
+    } catch (error) {
+      console.error(error)
+      setAlert({ type: 'destructive', message: `Erro ao sair da conta. tente novamente.` });
+    }
+  };
 
   return (
     <>
-      {/* Mobile backdrop */}
+      {alert && (
+        <div className="fixed top-4 right-4 z-50 w-auto max-w-sm sm:left-auto sm:w-full">
+          <Alert variant={alert.type === 'destructive' ? 'destructive' : 'default'}>
+            <AlertCircleIcon className="h-4 w-4" />
+            <AlertTitle>{alert.type === 'destructive' ? 'Erro' : 'Sucesso'}</AlertTitle>
+            <AlertDescription>{alert.message}</AlertDescription>
+            <button
+              onClick={() => setAlert(null)}
+              className="absolute top-2 right-2 p-1 rounded-full hover:bg-muted/50"
+              aria-label="Fechar alerta"
+            >
+              <X className="h-3 w-3" />
+            </button>
+          </Alert>
+        </div>
+      )}
       {open && (
         <div
           className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
@@ -36,13 +77,11 @@ export function Sidebar({ open, onClose, userInitials, userName }: SidebarProps)
         />
       )}
 
-      {/* Sidebar */}
       <aside
         className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-border bg-surface transition-transform duration-300 lg:static lg:translate-x-0 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        {/* Mobile close button */}
         <button
           type="button"
           onClick={onClose}
@@ -104,7 +143,8 @@ export function Sidebar({ open, onClose, userInitials, userName }: SidebarProps)
             </div>
             <button
               type="button"
-              className="shrink-0 text-muted-foreground transition-colors hover:text-foreground"
+              onClick={handleLogout}
+              className="shrink-0 text-muted-foreground transition-colors hover:text-foreground cursor-pointer"
               aria-label="Sair"
             >
               <LogOut className="h-4 w-4" />

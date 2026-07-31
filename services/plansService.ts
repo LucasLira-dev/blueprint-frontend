@@ -66,3 +66,18 @@ export const deletePlan = async (planId: string) => {
         throw new Error(`Erro ao deletar plano: ${error}`);
     }
 }
+
+export const deleteAllPlans = async () => {
+    try {
+        const response = await apiFetch(`/study-plans/plans/delete-all`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro ao deletar todos os planos: ${response.status}`);
+        }
+    }
+    catch (error) {
+        throw new Error(`Erro ao deletar todos os planos: ${error}`);
+    }
+}

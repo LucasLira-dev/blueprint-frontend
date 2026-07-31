@@ -1,4 +1,4 @@
-import { changePlanVisibility, deletePlan, getPlanById, getPlans } from "@/services/plansService";
+import { changePlanVisibility, deleteAllPlans, deletePlan, getPlanById, getPlans } from "@/services/plansService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 type ChangeVisibilityParams = {
@@ -47,6 +47,21 @@ export function useDeletePlanMutation(userId: string) {
         },
         onError: (error) => {
             console.error('Erro ao deletar o plano:', error);
+        }
+    })
+}
+
+export function useDeleteAllPlansMutation(userId: string) {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: () => deleteAllPlans(), 
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['plans', userId] });
+            queryClient.invalidateQueries({ queryKey: ['my-plans', userId] });
+        },
+        onError: (error) => {
+            console.error('Erro ao deletar todos os planos:', error);
         }
     })
 }
