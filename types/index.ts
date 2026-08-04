@@ -17,6 +17,7 @@ type Book = {
 
 export type PlanDetails = {
     id: string;
+    userId: string;
     topic: string;
     syllabus?: string | null;
     pdfUrl?: string | null;
@@ -35,4 +36,19 @@ export type Plan = {
 
 export type PlansResponse = {
     plans: Plan[];
+}
+
+export type PublicPlan = {
+    id: string;
+    userName: string;
+    topic: string;
+    visibility: 'PUBLIC' | 'PRIVATE';
+    thumbnail: string | null;
+    isFavorite: boolean;
+    totalFavorites: number;
+}
+
+export type PublicPlansResponse = {
+    plans: PublicPlan[];
+    totalUserFavorites: number;
 }

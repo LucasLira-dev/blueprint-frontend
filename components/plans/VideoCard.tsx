@@ -14,7 +14,7 @@ export const VideoCard = (props: VideoCardProps) => {
         href={props.youtubeUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex flex-col gap-2 border border-border rounded-t-lg rounded-b-lg bg-surface/40 transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:bg-surface hover:shadow-(--shadow-elegant)]">
+        className="flex flex-col gap-2 border-2 border-border rounded-t-lg rounded-b-lg bg-surface/40 transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:bg-surface hover:shadow-(--shadow-elegant)]">
             <div className="relative w-full h-48 rounded-t-lg overflow-hidden">
                 <Image
                     src={props.thumbnailUrl ?? "/ytb-fallback.webp"}

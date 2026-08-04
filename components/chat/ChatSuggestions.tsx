@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 
 const SUGGESTIONS = [
   "Aprender Rust do zero",
-  "Dominar violão em 12 semanas",
+  "Next.js para iniciantes",
   "Preparação para AWS Cloud Practitioner",
 ] as const;
 

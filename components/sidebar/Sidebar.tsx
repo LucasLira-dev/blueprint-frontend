@@ -11,12 +11,14 @@ import {
   LogOut,
   X,
   AlertCircleIcon,
+  Compass,
 } from "lucide-react";
 import { useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 
 const NAV_ITEMS = [
   { label: "Planos", href: "/plans", icon: LayoutGrid },
+  { label: "Planos públicos", href: "/explore", icon: Compass },
   { label: "Novo plano", href: "/plans/new", icon: Plus },
 ] as const;
 

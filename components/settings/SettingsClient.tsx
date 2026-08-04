@@ -46,6 +46,7 @@ export function SettingsClient({ userId, userName, userEmail }: SettingsClientPr
                 setAlert({ type: 'success', message: 'Todos os planos foram deletados com sucesso.' });
             },
             onError: (error) => {
+                console.error(error);
                 setAlert({ type: 'destructive', message: `Erro ao deletar todos os planos. tente novamente.` });
             }
         });

@@ -1,4 +1,4 @@
-import { changePlanVisibility, deleteAllPlans, deletePlan, getPlanById, getPlans } from "@/services/plansService";
+import { changeFavoriteStatus, changePlanVisibility, deleteAllPlans, deletePlan, getPlanById, getPlans, getPublicPlans } from "@/services/plansService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 type ChangeVisibilityParams = {
@@ -10,6 +10,13 @@ export function usePlansQuery(userId: string) {
     return useQuery({
         queryKey: ['plans', userId],
         queryFn: () => getPlans(),
+    })
+}
+
+export function usePublicPlansQuery(userId: string) {
+    return useQuery({
+        queryKey: ['public-plans', userId],
+        queryFn: () => getPublicPlans(),
     })
 }
 
@@ -36,6 +43,22 @@ export function useChangePlanVisibilityMutation(userId: string) {
     })
 }
 
+export function useChangePlanFavoriteMutation(userId: string) {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: ({ planId, favorite }: { planId: string, favorite: boolean }) => changeFavoriteStatus(planId, favorite),
+        onSuccess: (_, { planId }) => {
+            queryClient.invalidateQueries({ queryKey: ['plans', userId] });
+            queryClient.invalidateQueries({ queryKey: ['my-plans', userId, planId] });
+            queryClient.invalidateQueries({ queryKey: ['public-plans', userId] });
+        },
+        onError: (error) => {
+            console.error('Erro ao alterar status de favorito do plano:', error);
+        }
+    })
+}
+
 export function useDeletePlanMutation(userId: string) {
     const queryClient = useQueryClient();
 
@@ -44,6 +67,7 @@ export function useDeletePlanMutation(userId: string) {
         onSuccess: (_, planId: string) => {
             queryClient.invalidateQueries({ queryKey: ['plans', userId] });
             queryClient.invalidateQueries({ queryKey: ['my-plans', userId, planId] });
+            queryClient.invalidateQueries({ queryKey: ['public-plans', userId] });
         },
         onError: (error) => {
             console.error('Erro ao deletar o plano:', error);
@@ -59,6 +83,7 @@ export function useDeleteAllPlansMutation(userId: string) {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['plans', userId] });
             queryClient.invalidateQueries({ queryKey: ['my-plans', userId] });
+            queryClient.invalidateQueries({ queryKey: ['public-plans', userId] });
         },
         onError: (error) => {
             console.error('Erro ao deletar todos os planos:', error);

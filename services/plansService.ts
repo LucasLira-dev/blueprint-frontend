@@ -1,5 +1,5 @@
 import { apiFetch } from "@/lib/api-client";
-import { Plan, PlanDetails } from "@/types";
+import { Plan, PlanDetails, PublicPlansResponse } from "@/types";
 
 export const getPlans = async (): Promise<Plan[]> => {
     try {
@@ -14,6 +14,23 @@ export const getPlans = async (): Promise<Plan[]> => {
     }
     catch (error) {
         throw new Error(`Erro ao buscar planos: ${error}`);
+    }
+}
+
+export const getPublicPlans = async (): Promise<PublicPlansResponse> => {
+    try {
+        const response = await apiFetch("/study-plans/plans/publics");
+
+        if (!response.ok) {
+            throw new Error(`Erro ao buscar planos públicos: ${response.status}`);
+        }
+
+        const data: PublicPlansResponse = await response.json();
+        console.log("Data fetched from getPublicPlans:", data); // Log the fetched data for debugging
+        return data;
+    }
+    catch (error) {
+        throw new Error(`Erro ao buscar planos públicos: ${error}`);
     }
 }
 
@@ -49,6 +66,26 @@ export const changePlanVisibility = async (planId: string, visibility: 'PUBLIC' 
     }
     catch (error) {
         throw new Error(`Erro ao alterar visibilidade do plano: ${error}`);
+    }
+}
+
+export const changeFavoriteStatus = async (planId: string, favorite: boolean) => {
+    try {
+        const response = await apiFetch(`/study-plans/plans/${planId}/favorite`, {
+            method: 'PATCH',
+            body: JSON.stringify({ favorite }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro ao alterar status de favorito do plano: ${response.status}`);
+        }
+
+        return {
+            message: 'Status de favorito do plano alterado com sucesso',
+        }
+    }
+    catch (error) {
+        throw new Error(`Erro ao alterar status de favorito do plano: ${error}`);
     }
 }
 

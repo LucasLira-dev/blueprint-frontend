@@ -72,6 +72,8 @@ export const PlanDetails = ({ planId, userId }: PlanDetailsProps) => {
         })
     }
 
+    const isOwner = planDetails.userId === userId;
+
     return (
         <>
         {alert && (
@@ -103,19 +105,23 @@ export const PlanDetails = ({ planId, userId }: PlanDetailsProps) => {
                     {planDetails.topic.toUpperCase()}
                 </h1>
 
-                <div className="flex justify-between items-center flex-wrap">
-                    <div className="flex flex-wrap items-center gap-3 mt-1">
-                        <ChangeVisibilityToogle 
-                            visibility={planDetails.visibility}
-                            onChangeVisibility={(visibility) => handleChangeVisibility(planDetails.id, visibility)}
-                        />
-                    </div>
-                    <DeletePlanDialog 
-                    planTitle={planDetails.topic}
-                    planId={planDetails.id}
-                    onDelete={handleDeletePlan}
-                    />
-                </div>
+                {
+                    isOwner && (
+                        <div className="flex justify-between items-center flex-wrap">
+                            <div className="flex flex-wrap items-center gap-3 mt-1">
+                                <ChangeVisibilityToogle
+                                    visibility={planDetails.visibility}
+                                    onChangeVisibility={(visibility) => handleChangeVisibility(planDetails.id, visibility)}
+                                />
+                            </div>
+                            <DeletePlanDialog
+                                planTitle={planDetails.topic}
+                                planId={planDetails.id}
+                                onDelete={handleDeletePlan}
+                            />
+                        </div>
+                    )
+                }
                 
 
                 <div className="h-px bg-linear-to-r from-transparent via-border to-transparent w-full" />
