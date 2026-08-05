@@ -1,5 +1,5 @@
 import { apiFetch } from "@/lib/api-client";
-import { Plan, PlanDetails, PublicPlansResponse } from "@/types";
+import { FavoritePlan, Plan, PlanDetails, PublicPlansResponse } from "@/types";
 
 export const getPlans = async (): Promise<Plan[]> => {
     try {
@@ -31,6 +31,23 @@ export const getPublicPlans = async (): Promise<PublicPlansResponse> => {
     }
     catch (error) {
         throw new Error(`Erro ao buscar planos públicos: ${error}`);
+    }
+}
+
+export const getMyFavoritePlans = async (): Promise<FavoritePlan[]> => {
+    try {
+        const response = await apiFetch("/study-plans/plans/my-favorites");
+
+        if (!response.ok) {
+            throw new Error(`Erro ao buscar planos favoritos: ${response.status}`);
+        }
+
+        const data: FavoritePlan[] = await response.json();
+        return data;
+
+    }
+    catch (error) {
+        throw new Error(`Erro ao buscar planos favoritos: ${error}`);
     }
 }
 
@@ -86,6 +103,44 @@ export const changeFavoriteStatus = async (planId: string, favorite: boolean) =>
     }
     catch (error) {
         throw new Error(`Erro ao alterar status de favorito do plano: ${error}`);
+    }
+}
+
+export const deleteFavoritePlan = async (planId: string) => {
+    try {
+        const response = await apiFetch(`/study-plans/plans/${planId}/removeFavorite`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro ao remover plano dos favoritos: ${response.status}`);
+        }
+
+        return {
+            message: 'Plano removido dos favoritos com sucesso',
+        };
+    }
+    catch (error) {
+        throw new Error(`Erro ao remover plano dos favoritos: ${error}`);
+    }
+}
+
+export const deleteAllFavoritePlans = async () => {
+    try {
+        const response = await apiFetch(`/study-plans/plans/deleteAllFavorites`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro ao remover todos os planos dos favoritos: ${response.status}`);
+        }
+
+        return {
+            message: 'Todos os planos removidos dos favoritos com sucesso',
+        };
+    }
+    catch (error) {
+        throw new Error(`Erro ao remover todos os planos dos favoritos: ${error}`);
     }
 }
 

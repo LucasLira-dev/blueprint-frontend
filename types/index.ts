@@ -52,3 +52,10 @@ export type PublicPlansResponse = {
     plans: PublicPlan[];
     totalUserFavorites: number;
 }
+
+export type FavoritePlan = {
+    id: string;
+    topic: string;
+    userName: string;
+    thumbnail: string | null;
+}

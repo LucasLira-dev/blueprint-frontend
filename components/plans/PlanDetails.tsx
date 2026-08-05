@@ -22,7 +22,7 @@ interface PlanDetailsProps {
 
 export const PlanDetails = ({ planId, userId }: PlanDetailsProps) => {
     const { data: planDetails, isLoading, error } = useMyPlansQuery(userId!, planId);
-    const { mutate: deletePlan } = useDeletePlanMutation(userId!);
+    const { mutate: deletePlan, isPending } = useDeletePlanMutation(userId!);
     const { mutate: changeVisibility } = useChangePlanVisibilityMutation(userId!);
 
     const [alert, setAlert] = useState<{ type: 'success' | 'destructive'; message: string } | null>(null);
@@ -117,6 +117,7 @@ export const PlanDetails = ({ planId, userId }: PlanDetailsProps) => {
                             <DeletePlanDialog
                                 planTitle={planDetails.topic}
                                 planId={planDetails.id}
+                                isDeleting={isPending}
                                 onDelete={handleDeletePlan}
                             />
                         </div>

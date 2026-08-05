@@ -1,20 +1,23 @@
 'use client';
 
-import { AlertCircleIcon, Search, X } from "lucide-react"
+import { AlertCircleIcon, Heart, Search, X } from "lucide-react"
 import { ExploreCard } from "./ExploreCard"
 import { ExploreSkeleton } from "./ExploreSkeleton"
 import { ExploreError } from "./ExploreError"
 import { ExploreEmpty } from "./ExploreEmpty"
+import { FavoritesDrawer } from "./FavoritesDrawer"
 import { PublicPlan } from "@/types"
 import { useChangePlanFavoriteMutation, usePublicPlansQuery } from "@/hooks/usePlans"
 import { useEffect, useMemo, useState } from "react"
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { Button } from "../ui/button";
 
 
 export const Explore = ({ userId }: { userId: string | undefined}) => {
 
     const [searchTerm, setSearchTerm] = useState("")
     const [alert, setAlert] = useState<{ type: 'success' | 'destructive'; message: string } | null>(null);
+    const [favoritesDrawerOpen, setFavoritesDrawerOpen] = useState(false);
 
     const { data, isLoading, error } = usePublicPlansQuery(userId!)
 
@@ -92,9 +95,15 @@ export const Explore = ({ userId }: { userId: string | undefined}) => {
                 </div>
                 <div className="flex items-center gap-2">
                     {totalUserFavorites > 0 && (
-                        <p className="text-sm text-muted-foreground">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setFavoritesDrawerOpen(true)}
+                            className="gap-1.5"
+                        >
+                            <Heart className="h-4 w-4 text-red-500 fill-red-500" />
                             {totalUserFavorites} favoritado{totalUserFavorites > 1 ? 's' : ''}
-                        </p>
+                        </Button>
                     )}
                 </div>
             </div>
@@ -126,6 +135,11 @@ export const Explore = ({ userId }: { userId: string | undefined}) => {
                 )}
             </div>
         </article>
+        <FavoritesDrawer
+            userId={userId!}
+            open={favoritesDrawerOpen}
+            onOpenChange={setFavoritesDrawerOpen}
+        />
         </>
     )
 }

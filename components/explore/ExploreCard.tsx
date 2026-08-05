@@ -33,7 +33,7 @@ export const ExploreCard = ({ plan, onFavoriteClick }: ExploreCardProps) => {
             </div>
             <div className="flex items-center justify-between">
                 <div className="flex flex-col gap-1">
-                    <p className="font-medium text-lg line-clamp-1"> {plan.topic} </p>
+                    <p className="font-bold text-lg line-clamp-1"> {plan.topic} </p>
                     <div className="flex items-center text-sm gap-2">
                         <Globe className="h-4 w-4 text-muted-foreground" />
                         <span className="text-muted-foreground"> {plan.userName} </span>

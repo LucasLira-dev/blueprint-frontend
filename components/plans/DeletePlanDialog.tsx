@@ -5,10 +5,11 @@ import { Button } from "../ui/button";
 interface DeletePlanDialogProps {
     planId: string;
     planTitle: string;
+    isDeleting: boolean;
     onDelete: (planId: string) => void;
 }
 
-export const DeletePlanDialog = ({ planId, planTitle, onDelete }: DeletePlanDialogProps) => {
+export const DeletePlanDialog = ({ planId, planTitle, isDeleting, onDelete }: DeletePlanDialogProps) => {
     return (
         <AlertDialog>
             <AlertDialogTrigger render={<Button variant="ghost" className="hover:bg-destructive/10 cursor-pointer"> <Trash2 className="h-5 w-5" /></Button>} />
@@ -22,6 +23,7 @@ export const DeletePlanDialog = ({ planId, planTitle, onDelete }: DeletePlanDial
                 <AlertDialogFooter>
                     <AlertDialogCancel className="bg-secondary hover:bg-secondary/90 cursor-pointer">Cancelar</AlertDialogCancel>
                     <AlertDialogAction
+                        disabled={isDeleting}
                         onClick={() => onDelete(planId)}
                         className="bg-destructive hover:bg-destructive/90 cursor-pointer"> Deletar </AlertDialogAction>
                 </AlertDialogFooter>
