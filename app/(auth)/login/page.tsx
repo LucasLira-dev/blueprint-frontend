@@ -24,16 +24,9 @@ export default async function LoginPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <header className="fixed top-0 left-0 right-0 z-50 glass-panel">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link href="/" className="flex items-center gap-2">
-            <Sparkles className="h-6 w-6 text-primary" />
-            <span className="text-lg font-semibold">Blueprint</span>
-          </Link>
-        </nav>
-      </header>
+      
 
-      <main className="flex-1 flex flex-col items-center justify-center px-6 pt-24">
+      <main className="flex-1 flex flex-col items-center justify-center">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-medium tracking-tight mb-4">

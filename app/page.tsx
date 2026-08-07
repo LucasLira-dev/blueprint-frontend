@@ -6,6 +6,7 @@ import { RESOURCES, STEPS } from "@/contants/index";
 import { authClient } from "@/lib/auth-client";
 import { headers } from "next/headers";
 import { NewPlanButton } from "@/components/NewPlanButton";
+import Image from "next/image";
 
 export default async function Home() {
 
@@ -26,7 +27,13 @@ export default async function Home() {
       <header className="fixed top-0 left-0 right-0 z-50 glass-panel">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <Link href="/" className="flex items-center gap-2">
-            <Sparkles className="h-6 w-6 text-primary" />
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={1024}
+              height={1024}
+              className="h-10 w-10 sm:h-11 sm:w-11 md:h-12 md:w-12"
+            />
             <span className="text-lg font-semibold">Blueprint</span>
           </Link>
 

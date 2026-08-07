@@ -2,25 +2,26 @@ type Video = {
     id: string;
     title: string;
     videoUrl: string;
-    thumbnail: string;
-    channelName: string;
+    videoId: string;
+    thumbnail: string | null;
+    channelName: string | null;
 }
 
 type Book = {
     id: string;
     title: string;
     authors: string[];
-    thumbnail: string;
-    infoLink: string;
-    description: string;
+    thumbnail: string | null;
+    infoLink: string | null;
+    description: string | null;
 }
 
 export type PlanDetails = {
     id: string;
     userId: string;
     topic: string;
-    syllabus?: string | null;
-    pdfUrl?: string | null;
+    syllabus: string;
+    pdfUrl: string | null;
     visibility: 'PUBLIC' | 'PRIVATE';
     videos: Video[];
     books: Book[];
@@ -34,9 +35,6 @@ export type Plan = {
 }
 
 
-export type PlansResponse = {
-    plans: Plan[];
-}
 
 export type PublicPlan = {
     id: string;

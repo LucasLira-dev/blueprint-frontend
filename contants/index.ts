@@ -6,59 +6,59 @@ export const STEPS = [
         step: "01",
         title: "Descreva seu objetivo",
         description:
-            "Diga o que quer aprender e em quanto tempo. A IA cuida do resto.",
+            "Digite o que quer aprender no chat. A IA extrai o tema, nivel e intencao automaticamente.",
     },
     {
         id: 2,
         step: "02",
         title: "Receba seu blueprint",
         description:
-            "Cronograma semanal com recursos selecionados e marcos claros.",
+            "Cronograma em markdown com videos do YouTube, livros do Google Books e um PDF pronto.",
     },
     {
         id: 3,
         step: "03",
-        title: "Estude e evolua",
+        title: "Organize e compartilhe",
         description:
-            "Acompanhe o progresso, ajuste o ritmo e compartilhe com sua equipe.",
+            "Salve seus planos, baixe o PDF, explore planos publicos de outros usuarios e favorite os melhores.",
     },
 ]
 
 export const RESOURCES = [
     {
         icon: Calendar,
-        title: "Timeline semanal",
+        title: "Cronograma com IA",
         description:
-            "Divisão inteligente por semana com metas mensuráveis.",
+            "Syllabus semanal gerado por inteligencia artificial, sob medida para seu tema.",
     },
     {
         icon: Video,
-        title: "Vídeos curados",
+        title: "Videos do YouTube",
         description:
-            "Aulas selecionadas do YouTube e plataformas confiáveis.",
+            "Top 10 videos relevantes buscados automaticamente via YouTube Data API.",
     },
     {
         icon: BookOpen,
-        title: "Livros recomendados",
+        title: "Livros do Google Books",
         description:
-            "Bibliografia essencial e complementar para cada tema.",
+            "Top 10 livros encontrados pela Google Books API, com capa, autores e link.",
     },
     {
         icon: Zap,
         title: "Streaming em tempo real",
         description:
-            "Veja o plano sendo construído token a token.",
+            "Acompanhe o progresso da geracao: moderacao, busca de videos, livros e mais.",
     },
     {
         icon: Target,
-        title: "Foco em resultado",
+        title: "PDF automatico",
         description:
-            "Objetivos SMART e checkpoints avaliáveis.",
+            "Plano exportado em PDF com syllabus, videos e livros, pronto para baixar.",
     },
     {
         icon: Share2,
-        title: "Compartilhe fácil",
+        title: "Planos publicos",
         description:
-            "Exporte em PDF ou envie um link público.",
+            "Explore planos de outros usuarios, favorite os melhores e compartilhe seu conhecimento.",
     }
 ]
