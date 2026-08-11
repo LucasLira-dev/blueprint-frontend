@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import Image from "next/image";
 
 const NAV_ITEMS = [
   { label: "Planos", href: "/plans", icon: LayoutGrid },
@@ -93,10 +94,19 @@ export function Sidebar({ open, onClose, userInitials, userName }: SidebarProps)
           <X className="h-4 w-4" />
         </button>
 
-        <div className="flex items-center gap-2 px-5 py-5">
-          <Sparkles className="h-5 w-5 text-primary" />
+        <div className="flex items-center gap-2 border-b border-border px-3 py-4">
+          <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/logo.png"
+            alt="Logo"
+            width={1024}
+            height={1024}
+            className="h-9 w-9"
+          />
           <span className="text-lg font-semibold">Blueprint</span>
+        </Link>
         </div>
+        
 
         <nav className="flex flex-1 flex-col gap-1 px-3">
           {NAV_ITEMS.map((item) => {

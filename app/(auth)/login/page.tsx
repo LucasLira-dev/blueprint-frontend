@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Sparkles } from "lucide-react";
 import { LoginComponent } from "@/components/auth/LoginComponent";
 import { authClient } from "@/lib/auth-client";
 import { headers } from "next/headers";
@@ -23,9 +22,7 @@ export default async function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      
-
+    <div className="min-h-screen bg-background flex flex-col p-2 my-5 sm:my-0">
       <main className="flex-1 flex flex-col items-center justify-center">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
@@ -36,8 +33,9 @@ export default async function LoginPage() {
               Entre para continuar seus blueprints.
             </p>
           </div>
-
-          <LoginComponent />
+          <div className="p-3">
+            <LoginComponent />
+          </div>
 
           <p className="text-center mt-6 text-muted-foreground">
             Não tem conta?{' '}

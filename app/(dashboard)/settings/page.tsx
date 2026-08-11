@@ -17,6 +17,7 @@ export default async function SettingsPage() {
     }
 
     const user = session?.data?.user;
+    const sessionCreatedAt = session?.data?.session?.createdAt?.toISOString();
 
     return (
         <section className="flex justify-center px-4 py-8 sm:px-6 lg:px-8">
@@ -24,6 +25,7 @@ export default async function SettingsPage() {
                 userId={user?.id}
                 userName={user?.name}
                 userEmail={user?.email}
+                sessionCreatedAt={sessionCreatedAt}
             />
         </section>
     )

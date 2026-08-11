@@ -6,21 +6,52 @@ import { authClient } from "@/lib/auth-client";
 import { useDeleteAllPlansMutation, usePlansQuery } from "@/hooks/usePlans";
 import { DeleteAllPlansDialog } from "./DeleteAllPlansDialog";
 import { DeleteAccountDialog } from "./DeleteAccountDialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 
 interface SettingsClientProps {
     userId?: string;
     userName?: string;
     userEmail?: string;
+    sessionCreatedAt?: string;
 }
 
-export function SettingsClient({ userId, userName, userEmail }: SettingsClientProps) {
+const ONE_HOUR_MS = 60 * 60 * 1000;
+
+export function SettingsClient({ userId, userName, userEmail, sessionCreatedAt }: SettingsClientProps) {
     const router = useRouter();
     const { mutate: deleteAllPlansMutation, isPending } = useDeleteAllPlansMutation(userId!);
     const { data: plans } = usePlansQuery(userId!);
 
     const [alert, setAlert] = useState<{ type: 'success' | 'destructive'; message: string } | null>(null);
+    const [needsRecentLogin, setNeedsRecentLogin] = useState(false);
+    const [isDeletingAccount, setIsDeletingAccount] = useState(false);
+
+    useEffect(() => {
+        if (!sessionCreatedAt) {
+            return;
+        }
+
+        const createdAt = new Date(sessionCreatedAt).getTime();
+        if (!Number.isFinite(createdAt)) {
+            return;
+        }
+
+        const elapsedMs = Date.now() - createdAt;
+        if (elapsedMs > ONE_HOUR_MS) {
+            const timeoutId = window.setTimeout(() => {
+                setNeedsRecentLogin(true);
+            }, 0);
+
+            return () => window.clearTimeout(timeoutId);
+        }
+
+        const timeoutId = window.setTimeout(() => {
+            setNeedsRecentLogin(true);
+        }, ONE_HOUR_MS - elapsedMs);
+
+        return () => window.clearTimeout(timeoutId);
+    }, [sessionCreatedAt]);
 
     const handleLogout = async () => {
         try {
@@ -53,6 +84,16 @@ export function SettingsClient({ userId, userName, userEmail }: SettingsClientPr
     };
 
     const handleDeleteAccount = async () => {
+        if (needsRecentLogin) {
+            setAlert({
+                type: 'destructive',
+                message: 'Sua sessão de login tem mais de 1 hora. Faça login novamente para conseguir deletar a conta.',
+            });
+            return;
+        }
+
+        setIsDeletingAccount(true);
+
         try {
             const { error } = await authClient.deleteUser({
                 fetchOptions: {
@@ -68,6 +109,8 @@ export function SettingsClient({ userId, userName, userEmail }: SettingsClientPr
         } catch (error) {
             console.error(error)
             setAlert({ type: 'destructive', message: `Erro ao deletar a conta. tente novamente.` });
+        } finally {
+            setIsDeletingAccount(false);
         }
     };
 
@@ -144,6 +187,16 @@ export function SettingsClient({ userId, userName, userEmail }: SettingsClientPr
                     </h2>
                 </div>
 
+                {needsRecentLogin && (
+                    <Alert variant="destructive">
+                        <AlertCircleIcon className="h-4 w-4" />
+                        <AlertTitle>Faça login novamente</AlertTitle>
+                        <AlertDescription>
+                            Sua sessão tem mais de 1 hora. Entre novamente para liberar a exclusão da conta.
+                        </AlertDescription>
+                    </Alert>
+                )}
+
                 <div className="glass-panel rounded-2xl border border-destructive/20 p-3 sm:p-4 space-y-2">
                     <DeleteAllPlansDialog
                         onDelete={handleDeleteAllPlans}
@@ -153,7 +206,8 @@ export function SettingsClient({ userId, userName, userEmail }: SettingsClientPr
 
                     <DeleteAccountDialog
                         onDelete={handleDeleteAccount}
-                        isPending={false}
+                        isPending={isDeletingAccount}
+                        disabled={needsRecentLogin || isDeletingAccount}
                     />
                 </div>
             </div>

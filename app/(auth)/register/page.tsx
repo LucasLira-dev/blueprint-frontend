@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Sparkles } from "lucide-react";
 import { RegisterComponent } from "@/components/auth/RegisterComponent";
 import { authClient } from "@/lib/auth-client";
 import { headers } from "next/headers";
@@ -23,22 +22,20 @@ export default async function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col p-4">
-
-      <main className="flex-1 flex flex-col items-center justify-center px-6">
-        <div className="w-full max-w-md">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
+    <div className="min-h-screen bg-background flex flex-col px-2 py-5 sm:px-0 sm:my-0">
+      <main className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 md:px-8">
+        <div className="w-full max-w-md sm:max-w-lg md:max-w-xl">
+          <div className="text-center mb-8 sm:mb-10 md:mb-12">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-4 md:mb-5">
               Crie sua conta.
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-sm sm:text-base text-muted-foreground max-w-md mx-auto">
               Comece a criar seus blueprints personalizados.
             </p>
           </div>
-
           <RegisterComponent />
 
-          <p className="text-center mt-6 text-muted-foreground">
+          <p className="text-center mt-6 md:mt-8 text-sm sm:text-base text-muted-foreground">
             Já tem uma conta?{' '}
             <Link href="/login" className="text-foreground font-medium hover:underline">
               Entrar

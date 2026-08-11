@@ -97,7 +97,7 @@ export function LoginForm({ disabled = false, onLoadingChange, onError }: LoginF
           onChange={(e) => handleChange("email", e.target.value)}
           placeholder="voce@email.com"
           disabled={isDisabled}
-          className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full px-4 py-3 rounded-sm border border-border bg-surface text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
         />
         {errors.email && (
           <p className="mt-2 text-sm text-red-400">{errors.email}</p>
@@ -116,7 +116,7 @@ export function LoginForm({ disabled = false, onLoadingChange, onError }: LoginF
             onChange={(e) => handleChange("password", e.target.value)}
             placeholder="••••••••"
             disabled={isDisabled}
-            className="w-full px-4 py-3 pr-11 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-4 py-3 pr-11 rounded-sm border border-border bg-surface text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
           />
           <button
             type="button"
@@ -154,7 +154,7 @@ export function LoginForm({ disabled = false, onLoadingChange, onError }: LoginF
       <button
         type="submit"
         disabled={isDisabled}
-        className="w-full btn-primary rounded-xl px-4 py-3 font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full btn-primary rounded-sm px-4 py-3 font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isLoading ? (
           <Loader2 className="h-4 w-4 animate-spin" />

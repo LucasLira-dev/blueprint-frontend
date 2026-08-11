@@ -18,9 +18,10 @@ import { Button } from "@/components/ui/button";
 interface DeleteAccountDialogProps {
     onDelete: () => void;
     isPending: boolean;
+    disabled?: boolean;
 }
 
-export function DeleteAccountDialog({ onDelete, isPending }: DeleteAccountDialogProps) {
+export function DeleteAccountDialog({ onDelete, isPending, disabled = false }: DeleteAccountDialogProps) {
     const [open, setOpen] = useState(false);
 
     const handleDelete = () => {
@@ -31,10 +32,12 @@ export function DeleteAccountDialog({ onDelete, isPending }: DeleteAccountDialog
     return (
         <AlertDialog open={open} onOpenChange={setOpen}>
             <AlertDialogTrigger
+                disabled={disabled || isPending}
                 render={
                     <Button
                         variant="destructive"
                         className="w-full justify-start gap-3 h-auto py-3 cursor-pointer whitespace-normal"
+                        disabled={disabled || isPending}
                     >
                         <Trash2 className="h-4 w-4 shrink-0" />
                         <div className="flex flex-col items-start text-left min-w-0">
