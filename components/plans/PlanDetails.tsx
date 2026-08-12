@@ -163,9 +163,9 @@ export const PlanDetails = ({ planId, userId }: PlanDetailsProps) => {
                                 <VideoCard
                                     key={video.id}
                                     title={video.title}
-                                    channel={video.channelName}
-                                    youtubeUrl={video.videoUrl}
-                                    thumbnailUrl={video.thumbnail}
+                                    channel={video.channelName || 'Canal desconhecido'}
+                                    youtubeUrl={video.videoUrl }
+                                    thumbnailUrl={video.thumbnail || ''}
                                 />
                             ))}
                         </div>
@@ -187,8 +187,8 @@ export const PlanDetails = ({ planId, userId }: PlanDetailsProps) => {
                                     key={book.id}
                                     title={book.title}
                                     authors={book.authors}
-                                    coverImage={book.thumbnail}
-                                    bookUrl={book.infoLink}
+                                    coverImage={book.thumbnail || 'Capa do livro não disponível'}
+                                    bookUrl={book.infoLink || ''}
                                 />
                             ))}
                         </div>

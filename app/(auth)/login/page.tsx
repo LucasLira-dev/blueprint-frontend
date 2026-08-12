@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import Link from "next/link";
 import { LoginComponent } from "@/components/auth/LoginComponent";
 import { authClient } from "@/lib/auth-client";

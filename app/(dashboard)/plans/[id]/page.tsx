@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { PlanDetails } from "@/components/plans/PlanDetails";
 import { authClient } from "@/lib/auth-client";
 import { headers } from "next/headers";

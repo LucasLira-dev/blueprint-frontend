@@ -15,6 +15,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_FRONTEND_URL ?? "http://localhost:3000"),
   title: "Blueprint",
   description: "Crie planos de estudo personalizados com inteligência artificial.",
   openGraph: {

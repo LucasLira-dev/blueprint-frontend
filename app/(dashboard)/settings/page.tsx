@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { SettingsClient } from "@/components/settings/SettingsClient";
 import { authClient } from "@/lib/auth-client";
 import { headers } from "next/headers";
