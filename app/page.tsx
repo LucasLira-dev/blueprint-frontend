@@ -13,15 +13,19 @@ import Image from "next/image";
 export default async function Home() {
 
   let session = null;
+  try {
+    session = await authClient.getSession({
+      fetchOptions: {
+        headers: await headers(),
+      }
+    })
+  } 
+  catch (error) {
+    console.error("Error fetching session:", error);
+  }
 
-  session = await authClient.getSession({
-    fetchOptions: {
-      headers: await headers(),
-    }
-  })
-
-  const hasSession = !!session?.data?.user?.id;
-
+  const hasSession = !!session; 
+  
   return (
     <div
       className="flex min-h-screen flex-col bg-background bg-(image:--gradient-hero) bg-fixed bg-no-repeat text-foreground"
