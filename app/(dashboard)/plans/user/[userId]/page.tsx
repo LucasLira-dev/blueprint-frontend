@@ -1,16 +1,16 @@
 export const dynamic = "force-dynamic";
 
-import { PlanDetails } from "@/components/plans/PlanDetails";
+import { Plans } from "@/components/plans/Plans";
 import { authClient } from "@/lib/auth-client";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-interface PlanDetailsPageProps {
-    params: Promise<{ id: string }>;
+interface UserPlansPageProps {
+    params: Promise<{ userId: string }>;
 }
 
-export default async function PlanDetailsPage({ params }: PlanDetailsPageProps) {
-
-    const { id: planId } = await params;
+export default async function UserPlansPage({ params }: UserPlansPageProps) {
+    const { userId } = await params;
 
     let session = null;
 
@@ -25,13 +25,15 @@ export default async function PlanDetailsPage({ params }: PlanDetailsPageProps) 
         console.error('Erro ao buscar sessão:', error);
     }
 
-    const userId = session?.data?.user.id;
-    const userRole = session?.data?.user.role;
+    const role = session?.data?.user.role
+
+    if (role !== "admin") {
+        redirect("/")
+    }
 
     return (
         <section className="flex justify-center">
-            <PlanDetails planId={planId} userId={userId} isAdmin={userRole === 'admin'}/>
+            <Plans userId={userId} isAdmin={role === "admin"}/>
         </section>
     )
-
 }

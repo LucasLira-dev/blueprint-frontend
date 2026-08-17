@@ -1,6 +1,6 @@
 'use client';
 
-import { AlertCircleIcon, Heart, Search, X } from "lucide-react"
+import { Heart, Search } from "lucide-react"
 import { ExploreCard } from "./ExploreCard"
 import { ExploreSkeleton } from "./ExploreSkeleton"
 import { ExploreError } from "./ExploreError"
@@ -8,15 +8,14 @@ import { ExploreEmpty } from "./ExploreEmpty"
 import { FavoritesDrawer } from "./FavoritesDrawer"
 import { PublicPlan } from "@/types"
 import { useChangePlanFavoriteMutation, usePublicPlansQuery } from "@/hooks/usePlans"
-import { useEffect, useMemo, useState } from "react"
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { useMemo, useState } from "react"
 import { Button } from "../ui/button";
+import { toast } from "sonner";
 
 
 export const Explore = ({ userId }: { userId: string | undefined}) => {
 
     const [searchTerm, setSearchTerm] = useState("")
-    const [alert, setAlert] = useState<{ type: 'success' | 'destructive'; message: string } | null>(null);
     const [favoritesDrawerOpen, setFavoritesDrawerOpen] = useState(false);
 
     const { data, isLoading, error } = usePublicPlansQuery(userId!)
@@ -26,15 +25,6 @@ export const Explore = ({ userId }: { userId: string | undefined}) => {
     const plansData = useMemo<PublicPlan[]>(() => data?.plans ?? [], [data])
 
     const filteredPlans = plansData.filter((plan) => plan.topic.toLowerCase().includes(searchTerm.toLowerCase()) || plan.userName.toLowerCase().includes(searchTerm.toLowerCase()))
-
-    useEffect(() => {
-        if (alert) {
-            const timer = setTimeout(() => {
-                setAlert(null);
-            }, 3000);
-            return () => clearTimeout(timer);
-        }
-    }, [alert]);
 
     if (isLoading) {
         return <ExploreSkeleton />
@@ -55,11 +45,11 @@ export const Explore = ({ userId }: { userId: string | undefined}) => {
     const handleFavoriteClick = (planId: string, favorite: boolean) => {
         changeFavorite({ planId, favorite }, {
             onSuccess: () => {
-                setAlert({ type: 'success', message: `Plano ${favorite ? 'adicionado aos favoritos' : 'removido dos favoritos'} com sucesso!` });
+                toast.success(`Plano ${favorite ? 'adicionado aos favoritos' : 'removido dos favoritos'} com sucesso!`);
             },
             onError: (error) => {
                 console.error('Erro ao alterar status de favorito do plano:', error);
-                setAlert({ type: 'destructive', message: `Erro ao alterar status de favorito do plano. Tente novamente.` });
+                toast.error('Erro ao alterar status de favorito do plano. Tente novamente.');
             }
         })
     }
@@ -68,21 +58,6 @@ export const Explore = ({ userId }: { userId: string | undefined}) => {
 
     return (
         <>
-        {alert && (
-            <div className="fixed top-4 right-4 left-4 sm:left-auto z-50 w-full max-w-sm">
-                <Alert variant={alert.type === 'destructive' ? 'destructive' : 'default'}>
-                    <AlertCircleIcon className="h-4 w-4" />
-                    <AlertTitle>{alert.type === 'destructive' ? 'Erro' : 'Sucesso'}</AlertTitle>
-                    <AlertDescription>{alert.message}</AlertDescription>
-                    <button
-                        onClick={() => setAlert(null)}
-                        className="absolute top-2 right-2 p-1 rounded-full hover:bg-muted/50"
-                    >
-                        <X className="h-3 w-3" />
-                    </button>
-                </Alert>
-            </div>
-        )}
         <article className="flex flex-col gap-4 w-full max-w-5xl p-4 mt-8">
             <div className="flex items-center justify-between">
                 <div className="flex flex-col gap-1">

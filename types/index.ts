@@ -57,3 +57,12 @@ export type FavoritePlan = {
     userName: string;
     thumbnail: string | null;
 }
+
+export type User = {
+    id: string;
+    email: string;
+    role: 'user' | 'admin';
+    name: string;
+}
+
+

@@ -8,12 +8,14 @@ interface DashboardLayoutClientProps {
   children: React.ReactNode;
   userInitials: string;
   userName: string;
+  userRole: string;
 }
 
 export function DashboardLayoutClient({
   children,
   userInitials,
   userName,
+  userRole,
 }: DashboardLayoutClientProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -24,6 +26,7 @@ export function DashboardLayoutClient({
         onClose={() => setSidebarOpen(false)}
         userInitials={userInitials}
         userName={userName}
+        userRole={userRole}
       />
 
       <div className="flex flex-1 flex-col overflow-hidden">

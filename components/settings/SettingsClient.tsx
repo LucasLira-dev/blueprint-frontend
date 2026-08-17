@@ -1,13 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { LogOut, Shield, AlertTriangle, AlertCircleIcon, X } from "lucide-react";
+import { LogOut, Shield, AlertTriangle, AlertCircleIcon } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { useDeleteAllPlansMutation, usePlansQuery } from "@/hooks/usePlans";
 import { DeleteAllPlansDialog } from "./DeleteAllPlansDialog";
 import { DeleteAccountDialog } from "./DeleteAccountDialog";
 import { useEffect, useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { toast } from "sonner";
 
 interface SettingsClientProps {
     userId?: string;
@@ -23,7 +24,6 @@ export function SettingsClient({ userId, userName, userEmail, sessionCreatedAt }
     const { mutate: deleteAllPlansMutation, isPending } = useDeleteAllPlansMutation(userId!);
     const { data: plans } = usePlansQuery(userId!);
 
-    const [alert, setAlert] = useState<{ type: 'success' | 'destructive'; message: string } | null>(null);
     const [needsRecentLogin, setNeedsRecentLogin] = useState(false);
     const [isDeletingAccount, setIsDeletingAccount] = useState(false);
 
@@ -63,32 +63,29 @@ export function SettingsClient({ userId, userName, userEmail, sessionCreatedAt }
                 }
             })
             if (error) {
-                setAlert({ type: 'destructive', message: `Erro ao sair da conta. tente novamente.` });
+                toast.error('Erro ao sair da conta. Tente novamente.');
             }
         } catch (error) {
             console.error(error);
-            setAlert({ type: 'destructive', message: `Erro ao sair da conta. tente novamente.` });
+            toast.error('Erro ao sair da conta. Tente novamente.');
         }
     };
 
     const handleDeleteAllPlans = () => {
         deleteAllPlansMutation(undefined, {
             onSuccess: () => {
-                setAlert({ type: 'success', message: 'Todos os planos foram deletados com sucesso.' });
+                toast.success('Todos os planos foram deletados com sucesso.');
             },
             onError: (error) => {
                 console.error(error);
-                setAlert({ type: 'destructive', message: `Erro ao deletar todos os planos. tente novamente.` });
+                toast.error('Erro ao deletar todos os planos. Tente novamente.');
             }
         });
     };
 
     const handleDeleteAccount = async () => {
         if (needsRecentLogin) {
-            setAlert({
-                type: 'destructive',
-                message: 'Sua sessão de login tem mais de 1 hora. Faça login novamente para conseguir deletar a conta.',
-            });
+            toast.error('Sua sessão de login tem mais de 1 hora. Faça login novamente para conseguir deletar a conta.');
             return;
         }
 
@@ -104,11 +101,11 @@ export function SettingsClient({ userId, userName, userEmail, sessionCreatedAt }
             })
             if (error) {
                 console.error(error)
-                setAlert({ type: 'destructive', message: `Erro ao deletar a conta. tente novamente.` });
+                toast.error('Erro ao deletar a conta. Tente novamente.');
             }
         } catch (error) {
             console.error(error)
-            setAlert({ type: 'destructive', message: `Erro ao deletar a conta. tente novamente.` });
+            toast.error('Erro ao deletar a conta. Tente novamente.');
         } finally {
             setIsDeletingAccount(false);
         }
@@ -118,22 +115,6 @@ export function SettingsClient({ userId, userName, userEmail, sessionCreatedAt }
 
     return (
         <>
-        {alert && (
-            <div className="fixed top-4 right-4 z-50 w-full max-w-sm">
-                <Alert variant={alert.type === 'destructive' ? 'destructive' : 'default'}>
-                    <AlertCircleIcon className="h-4 w-4" />
-                    <AlertTitle>{alert.type === 'destructive' ? 'Erro' : 'Sucesso'}</AlertTitle>
-                    <AlertDescription>{alert.message}</AlertDescription>
-                    <button
-                        onClick={() => setAlert(null)}
-                        className="absolute top-2 right-2 p-1 rounded-full hover:bg-muted/50"
-                        aria-label="Fechar alerta"
-                    >
-                        <X className="h-3 w-3" />
-                    </button>
-                </Alert>
-            </div>
-        )}
         <div className="w-full max-w-2xl space-y-8 fade-up">
             <div>
                 <h1 className="text-display text-2xl sm:text-3xl text-foreground">

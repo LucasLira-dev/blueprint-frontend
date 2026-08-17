@@ -2,7 +2,7 @@ import { BookOpen } from "lucide-react"
 
 export const ExploreEmpty = () => {
     return (
-        <article className="flex flex-col items-center justify-center gap-6 w-full max-w-5xl p-4 mt-8">
+        <article className="flex flex-col items-center justify-center gap-6 w-full max-w-5xl min-h-[calc(100svh-8rem)] p-4">
             <div className="flex items-center justify-center w-20 h-20 rounded-full bg-muted">
                 <BookOpen className="h-10 w-10 text-muted-foreground" />
             </div>

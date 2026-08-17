@@ -10,7 +10,12 @@ import { Plan } from "@/types"
 import { useChangePlanVisibilityMutation, usePlansQuery } from "@/hooks/usePlans"
 import { useMemo, useState } from "react"
 
-export const Plans = ({ userId }: { userId: string | undefined }) => {
+interface PlansProps {
+    userId: string | undefined;
+    isAdmin?: boolean;
+}
+
+export const Plans = ({ userId, isAdmin }: PlansProps) => {
 
     const [searchTerm, setSearchTerm] = useState("")
 
@@ -37,7 +42,7 @@ export const Plans = ({ userId }: { userId: string | undefined }) => {
     if (plansData.length === 0) {
         return (
             <div className="flex flex-col justify-center w-full max-w-5xl p-4 m-4 gap-6">
-                <PlansEmpty />
+                <PlansEmpty isAdmin={isAdmin!}/>
             </div>
         )
     }
@@ -47,16 +52,18 @@ export const Plans = ({ userId }: { userId: string | undefined }) => {
             <div className="flex items-center justify-between">
                 <div className="flex flex-col gap-1">
                     <h1 className="text-3xl font-semibold">
-                        Seus planos
+                        { isAdmin ? 'Planos do usuário' : 'Meus planos'}
                     </h1>
                     <p className="text-sm text-muted-foreground">
                         {plansData.length} plano{plansData.length > 1 ? 's' : ''} salvos.
                     </p>
                 </div>
-                <Link href="/plans/new" className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
-                    <Plus className="h-4 w-4" />
-                    Novo plano
-                </Link>
+                {!isAdmin && (
+                    <Link href="/plans/new" className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+                        <Plus className="h-4 w-4" />
+                        Novo plano
+                    </Link>
+                )}
             </div>
             <div className="relative flex items-center gap-2 w-full">
                 <input

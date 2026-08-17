@@ -39,6 +39,7 @@ export default async function DashboardLayout({
       <DashboardLayoutClient
         userInitials={userInitials}
         userName={user.name}
+        userRole={user.role ?? 'user'}
       >
         {children}
       </DashboardLayoutClient>

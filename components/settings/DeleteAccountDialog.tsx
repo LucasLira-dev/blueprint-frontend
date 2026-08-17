@@ -19,9 +19,10 @@ interface DeleteAccountDialogProps {
     onDelete: () => void;
     isPending: boolean;
     disabled?: boolean;
+    isMyAccount?: boolean;
 }
 
-export function DeleteAccountDialog({ onDelete, isPending, disabled = false }: DeleteAccountDialogProps) {
+export function DeleteAccountDialog({ onDelete, isPending, disabled = false, isMyAccount = true }: DeleteAccountDialogProps) {
     const [open, setOpen] = useState(false);
 
     const handleDelete = () => {
@@ -34,7 +35,8 @@ export function DeleteAccountDialog({ onDelete, isPending, disabled = false }: D
             <AlertDialogTrigger
                 disabled={disabled || isPending}
                 render={
-                    <Button
+                    isMyAccount ? (
+                        <Button
                         variant="destructive"
                         className="w-full justify-start gap-3 h-auto py-3 cursor-pointer whitespace-normal"
                         disabled={disabled || isPending}
@@ -45,13 +47,23 @@ export function DeleteAccountDialog({ onDelete, isPending, disabled = false }: D
                             <span className="text-xs opacity-80 wrap-break-words">Remove permanentemente sua conta e todos os dados</span>
                         </div>
                     </Button>
+                    ) : (
+                        <Button
+                        variant="destructive"
+                        className="flex flex-row items-center gap-1 border-red-500/50 cursor-pointer"
+                        disabled={disabled || isPending}
+                        >
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            Deletar conta
+                        </Button>
+                    )
                 }
             />
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Deletar sua conta?</AlertDialogTitle>
+                    <AlertDialogTitle>{isMyAccount ? "Deletar minha conta?" : "Deletar conta"}</AlertDialogTitle>
                     <AlertDialogDescription>
-                        Essa ação não pode ser desfeita. Sua conta será
+                        Essa ação não pode ser desfeita. {isMyAccount ? "Sua conta será" : "A conta selecionada será"}
                         <span className="font-bold text-destructive"> permanentemente removida</span>,
                         incluindo todos os planos, dados e configurações associados.
                     </AlertDialogDescription>

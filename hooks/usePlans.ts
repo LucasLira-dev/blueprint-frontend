@@ -1,3 +1,4 @@
+import { adminDeletePlan, getPlanDetailsAdmin } from "@/services/adminService";
 import { changeFavoriteStatus, changePlanVisibility, deleteAllFavoritePlans, deleteAllPlans, deleteFavoritePlan, deletePlan, getMyFavoritePlans, getPlanById, getPlans, getPublicPlans } from "@/services/plansService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -6,10 +7,10 @@ type ChangeVisibilityParams = {
     visibility: 'PUBLIC' | 'PRIVATE';
 };
 
-export function usePlansQuery(userId: string) {
+export function usePlansQuery(userId?: string) {
     return useQuery({
         queryKey: ['plans', userId],
-        queryFn: () => getPlans(),
+        queryFn: () => getPlans(userId),
     })
 }
 
@@ -27,12 +28,19 @@ export function useMyFavoritePlansQuery(userId: string) {
     })
 }
 
-export function useMyPlansQuery(userId: string, planId: string) {
+export function useMyPlansQuery(userId: string, planId: string, isAdmin: boolean) {
     return useQuery({
-        queryKey: ['my-plans', userId, planId],
-        queryFn: () => getPlanById(planId),
+        queryKey: ['my-plans', userId, planId, isAdmin],
+        queryFn: () => {
+            if (isAdmin) {
+                return getPlanDetailsAdmin(planId);
+            } else {
+                return getPlanById(planId);
+            }
+        }
     })
 }
+
 
 export function useChangePlanVisibilityMutation(userId: string) {
 
@@ -97,11 +105,11 @@ export function useDeleteAllFavoritePlansMutation(userId: string) {
     })
 }
 
-export function useDeletePlanMutation(userId: string) {
+export function useDeletePlanMutation(userId: string, isAdmin: boolean) {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (planId: string) => deletePlan(planId),
+        mutationFn: (planId: string) => isAdmin ? adminDeletePlan(planId) : deletePlan(planId),
         onSuccess: (_, planId: string) => {
             queryClient.invalidateQueries({ queryKey: ['plans', userId] });
             queryClient.invalidateQueries({ queryKey: ['my-plans', userId, planId] });

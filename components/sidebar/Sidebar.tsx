@@ -4,23 +4,22 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import {
-  Sparkles,
   LayoutGrid,
   Plus,
   Settings,
   LogOut,
   X,
-  AlertCircleIcon,
   Compass,
+  Shield,
 } from "lucide-react";
-import { useState } from "react";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import Image from "next/image";
+import { toast } from "sonner";
 
 const NAV_ITEMS = [
   { label: "Planos", href: "/plans", icon: LayoutGrid },
   { label: "Planos públicos", href: "/explore", icon: Compass },
   { label: "Novo plano", href: "/plans/new", icon: Plus },
+  { label: "Admin", href: "/admin", icon: Shield },
 ] as const;
 
 interface SidebarProps {
@@ -28,13 +27,12 @@ interface SidebarProps {
   onClose: () => void;
   userInitials?: string;
   userName?: string;
+  userRole: string;
 }
 
-export function Sidebar({ open, onClose, userInitials, userName }: SidebarProps) {
+export function Sidebar({ open, onClose, userInitials, userName, userRole }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
-
-  const [alert, setAlert] = useState<{ type: 'success' | 'destructive'; message: string } | null>(null);
 
   const handleLogout = async () => {
     try {
@@ -47,32 +45,16 @@ export function Sidebar({ open, onClose, userInitials, userName }: SidebarProps)
       })
       if (error) {
         console.error(error)
-        setAlert({ type: 'destructive', message: `Erro ao sair da conta. tente novamente.` });
+        toast.error('Erro ao sair da conta. Tente novamente.');
       }
     } catch (error) {
       console.error(error)
-      setAlert({ type: 'destructive', message: `Erro ao sair da conta. tente novamente.` });
+      toast.error('Erro ao sair da conta. Tente novamente.');
     }
   };
 
   return (
     <>
-      {alert && (
-        <div className="fixed top-4 right-4 z-50 w-auto max-w-sm sm:left-auto sm:w-full">
-          <Alert variant={alert.type === 'destructive' ? 'destructive' : 'default'}>
-            <AlertCircleIcon className="h-4 w-4" />
-            <AlertTitle>{alert.type === 'destructive' ? 'Erro' : 'Sucesso'}</AlertTitle>
-            <AlertDescription>{alert.message}</AlertDescription>
-            <button
-              onClick={() => setAlert(null)}
-              className="absolute top-2 right-2 p-1 rounded-full hover:bg-muted/50"
-              aria-label="Fechar alerta"
-            >
-              <X className="h-3 w-3" />
-            </button>
-          </Alert>
-        </div>
-      )}
       {open && (
         <div
           className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
@@ -114,7 +96,10 @@ export function Sidebar({ open, onClose, userInitials, userName }: SidebarProps)
               item.href === "/plans"
                 ? pathname === "/plans"
                 : pathname.startsWith(item.href);
-
+            const isAdminOnly = item.label === "Admin" && userRole !== "admin";
+            if (isAdminOnly) {
+              return null;
+            }
             return (
               <Link
                 key={item.label}

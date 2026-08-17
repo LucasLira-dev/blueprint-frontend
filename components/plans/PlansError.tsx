@@ -6,7 +6,7 @@ interface PlansErrorProps {
 
 export const PlansError = ({ onRetry }: PlansErrorProps) => {
     return (
-        <article className="flex flex-col items-center justify-center w-full max-w-5xl p-4 mt-8 gap-4">
+        <article className="flex flex-col items-center justify-center w-full max-w-5xl min-h-[calc(100svh-8rem)] p-4 gap-4">
             <div className="flex items-center justify-center w-16 h-16 rounded-full bg-destructive/10">
                 <AlertTriangle className="h-8 w-8 text-destructive" />
             </div>
@@ -15,7 +15,7 @@ export const PlansError = ({ onRetry }: PlansErrorProps) => {
                     Erro ao carregar planos
                 </h2>
                 <p className="text-sm text-muted-foreground max-w-md">
-                    Ocorreu um erro inesperado ao tentar carregar seus planos. Por favor, tente novamente.
+                    Ocorreu um erro inesperado ao tentar carregar os planos. Por favor, tente novamente.
                 </p>
             </div>
             {onRetry && (

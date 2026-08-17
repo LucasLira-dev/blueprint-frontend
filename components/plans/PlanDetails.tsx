@@ -1,42 +1,34 @@
 'use client';
 
 import { useChangePlanVisibilityMutation, useDeletePlanMutation, useMyPlansQuery } from "@/hooks/usePlans";
-import { AlertCircleIcon, Download, FileText, X } from "lucide-react";
+import { Download, FileText } from "lucide-react";
 import { ChangeVisibilityToogle } from "./ChangeVisibilityToogle";
 import { VideoCard } from "./VideoCard";
 import { BookCard } from "./BookCard";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { DeletePlanDialog } from "./DeletePlanDialog";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { PlanDetailsSkeleton } from "./PlanDetailsSkeleton";
 import { PlanDetailsError } from "./PlanDetailsError";
 import { PlanNotFound } from "./PlanNotFound";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 interface PlanDetailsProps {
     planId: string;
     userId: string | undefined;
+    isAdmin: boolean;
 }
 
-export const PlanDetails = ({ planId, userId }: PlanDetailsProps) => {
-    const { data: planDetails, isLoading, error } = useMyPlansQuery(userId!, planId);
-    const { mutate: deletePlan, isPending } = useDeletePlanMutation(userId!);
+export const PlanDetails = ({ planId, userId, isAdmin }: PlanDetailsProps) => {
+    
+    const { data: planDetails, isLoading, error } = useMyPlansQuery(userId!, planId, isAdmin);
+
+    const { mutate: deletePlan, isPending } = useDeletePlanMutation(userId!, isAdmin)
+
     const { mutate: changeVisibility } = useChangePlanVisibilityMutation(userId!);
 
-    const [alert, setAlert] = useState<{ type: 'success' | 'destructive'; message: string } | null>(null);
-
     const router = useRouter();
-
-    useEffect(() => {
-        if (alert) {
-            const timer = setTimeout(() => {
-                setAlert(null);
-            }, 3000);
-            return () => clearTimeout(timer);
-        }
-    }, [alert]);
 
     if (isLoading) {
         return <PlanDetailsSkeleton />;
@@ -56,7 +48,7 @@ export const PlanDetails = ({ planId, userId }: PlanDetailsProps) => {
                 router.push('/plans');
             },
             onError: (error) => {
-                setAlert({ type: 'destructive', message: `Erro ao deletar o plano: ${error.message}` });
+                toast.error(`Erro ao deletar o plano: ${error.message}`);
             }
         })
     }
@@ -64,10 +56,10 @@ export const PlanDetails = ({ planId, userId }: PlanDetailsProps) => {
     const handleChangeVisibility = (planId: string, visibility: 'PUBLIC' | 'PRIVATE') => {
         changeVisibility({ planId, visibility }, {
             onSuccess: () => {
-                setAlert({ type: 'success', message: `Visibilidade do plano alterada para ${visibility === 'PUBLIC' ? 'Público' : 'Privado'}` });
+                toast.success(`Visibilidade do plano alterada para ${visibility === 'PUBLIC' ? 'Público' : 'Privado'}`);
             }, 
             onError: (error) => {
-                setAlert({ type: 'destructive', message: `Erro ao alterar visibilidade do plano: ${error.message}` });
+                toast.error(`Erro ao alterar visibilidade do plano: ${error.message}`);
             }
         })
     }
@@ -76,21 +68,6 @@ export const PlanDetails = ({ planId, userId }: PlanDetailsProps) => {
 
     return (
         <>
-        {alert && (
-            <div className="fixed top-4 right-4 z-50 w-full max-w-sm">
-                <Alert variant={alert.type === 'destructive' ? 'destructive' : 'default'}>
-                    <AlertCircleIcon className="h-4 w-4" />
-                    <AlertTitle>{alert.type === 'destructive' ? 'Erro' : 'Sucesso'}</AlertTitle>
-                    <AlertDescription>{alert.message}</AlertDescription>
-                    <button
-                        onClick={() => setAlert(null)}
-                        className="absolute top-2 right-2 p-1 rounded-full hover:bg-muted/50"
-                    >
-                        <X className="h-3 w-3" />
-                    </button>
-                </Alert>
-            </div>
-        )}
         <article className="flex flex-col gap-12 w-full max-w-5xl px-4 sm:px-6 md:px-8 py-6 sm:py-8 mt-4 sm:mt-8">
             <div className="flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
@@ -106,7 +83,7 @@ export const PlanDetails = ({ planId, userId }: PlanDetailsProps) => {
                 </h1>
 
                 {
-                    isOwner && (
+                    (isOwner || isAdmin) && (
                         <div className="flex justify-between items-center flex-wrap">
                             <div className="flex flex-wrap items-center gap-3 mt-1">
                                 <ChangeVisibilityToogle

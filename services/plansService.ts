@@ -1,9 +1,10 @@
 import { apiFetch } from "@/lib/api-client";
 import { FavoritePlan, Plan, PlanDetails, PublicPlansResponse } from "@/types";
 
-export const getPlans = async (): Promise<Plan[]> => {
+export const getPlans = async (userId?: string): Promise<Plan[]> => {
     try {
-        const response = await apiFetch("/study-plans/plans");
+        const url = userId ? `/study-plans/plans?userId=${userId}` : "/study-plans/plans";
+        const response = await apiFetch(url);
 
         if (!response.ok) {
             throw new Error(`Erro ao buscar planos: ${response.status}`);
@@ -26,7 +27,6 @@ export const getPublicPlans = async (): Promise<PublicPlansResponse> => {
         }
 
         const data: PublicPlansResponse = await response.json();
-        console.log("Data fetched from getPublicPlans:", data); // Log the fetched data for debugging
         return data;
     }
     catch (error) {
@@ -144,7 +144,7 @@ export const deleteAllFavoritePlans = async () => {
     }
 }
 
-export const deletePlan = async (planId: string) => {
+export const deletePlan = async (planId: string): Promise<{ message: string }> => {
     try {
         const response = await apiFetch(`/study-plans/plans/${planId}`, {
             method: 'DELETE',
@@ -153,6 +153,10 @@ export const deletePlan = async (planId: string) => {
         if (!response.ok) {
             throw new Error(`Erro ao deletar plano: ${response.status}`);
         }
+
+        return {
+            message: 'Plano deletado com sucesso',
+        };
     }
     catch (error) {
         throw new Error(`Erro ao deletar plano: ${error}`);

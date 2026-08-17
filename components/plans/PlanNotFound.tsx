@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export const PlanNotFound = () => {
     return (
-        <article className="flex flex-col items-center justify-center w-full max-w-5xl px-4 sm:px-6 md:px-8 py-6 sm:py-8 mt-4 sm:mt-8 gap-4">
+        <article className="flex flex-col items-center justify-center w-full max-w-5xl min-h-[calc(100svh-8rem)] px-4 sm:px-6 md:px-8 py-6 sm:py-8 gap-4">
             <div className="flex items-center justify-center w-16 h-16 rounded-full bg-muted">
                 <FileSearch className="h-8 w-8 text-muted-foreground" />
             </div>
