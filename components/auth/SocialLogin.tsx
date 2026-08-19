@@ -39,7 +39,7 @@ export function SocialLogin({ disabled = false, onLoadingChange, onError }: Soci
   const isDisabled = disabled || loadingProvider !== null;
 
   return (
-    <div className="flex gap-2 flex-col items-center justify-center">
+    <div className="flex gap-2 flex-col lg:flex-row items-center justify-center">
       <button
         type="button"
         onClick={() => handleSocialLogin("google")}

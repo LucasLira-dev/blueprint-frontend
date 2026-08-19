@@ -42,7 +42,7 @@ export const Hero = ({ hasSession }: HeroProps) => {
           </p>
 
           <NewPlanButton hasSession={hasSession} className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 sm:px-5 font-medium text-primary-foreground transition-colors hover:bg-primary/90">
-            <span className="text-sm sm:text-xl">→</span>
+            <span className="sm:text-xl">→</span>
           </NewPlanButton>
         </div>
       </section>

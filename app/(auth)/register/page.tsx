@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 
+import Image from "next/image";
 import Link from "next/link";
 import { RegisterComponent } from "@/components/auth/RegisterComponent";
 import { authClient } from "@/lib/auth-client";
@@ -24,11 +25,20 @@ export default async function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col px-2 py-5 sm:px-0 sm:my-0">
-      <main className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 md:px-8">
+    <div className="min-h-screen flex">
+      <div className="hidden lg:block relative w-1/2 opacity-60">
+        <Image
+          loading="eager"
+          src="/authLogo.jpeg"
+          alt="Blueprint Logo"
+          fill
+          className="object-cover"
+        />
+      </div>
+      <div className="w-full lg:w-1/2 flex items-center justify-center px-4 sm:px-6 md:px-8 mt-4">
         <div className="w-full max-w-md sm:max-w-lg md:max-w-xl">
           <div className="text-center mb-8 sm:mb-10 md:mb-12">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-4 md:mb-5">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-4">
               Crie sua conta.
             </h1>
             <p className="text-sm sm:text-base text-muted-foreground max-w-md mx-auto">
@@ -37,14 +47,14 @@ export default async function RegisterPage() {
           </div>
           <RegisterComponent />
 
-          <p className="text-center mt-6 md:mt-8 text-sm sm:text-base text-muted-foreground">
+          <p className="text-center mt-6 md:mt-8 text-sm sm:text-base text-muted-foreground mb-4">
             Já tem uma conta?{' '}
             <Link href="/login" className="text-foreground font-medium hover:underline">
               Entrar
             </Link>
           </p>
         </div>
-      </main>
+      </div>
     </div>
   );
 }
