@@ -85,7 +85,7 @@
 @utility glass-panel {
   background: color-mix(in oklab, var(--surface) 70%, transparent);
   backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 @utility btn-primary {

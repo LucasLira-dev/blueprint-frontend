@@ -31,16 +31,16 @@ export default async function Home() {
       className="flex min-h-screen flex-col bg-background bg-(image:--gradient-hero) bg-fixed bg-no-repeat text-foreground"
     >
       <header className="fixed top-0 left-0 right-0 z-50 glass-panel">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
           <Link href="/" className="flex items-center gap-2">
             <Image
               src="/logo.png"
               alt="Logo"
               width={1024}
               height={1024}
-              className="h-10 w-10 sm:h-11 sm:w-11 md:h-12 md:w-12"
+              className="h-8 w-8 sm:h-11 sm:w-11 md:h-12 md:w-12"
             />
-            <span className="text-lg font-semibold">Blueprint</span>
+            <span className="text-base font-semibold sm:text-lg">Blueprint</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
@@ -52,37 +52,66 @@ export default async function Home() {
             </Link>
           </div>
 
-          <div className="flex items-center gap-4 text-sm">
-            <Link href={hasSession ? "/plans" : "/login"} className="text-muted-foreground hover:text-foreground transition-colors">
+          <div className="flex items-center gap-2 sm:gap-4 text-sm">
+            <Link href={hasSession ? "/plans" : "/login"} className="text-muted-foreground hover:text-foreground transition-colors text-xs sm:text-sm">
               {hasSession ? "Planos" : "Entrar"}
             </Link>
-            <NewPlanButton hasSession={hasSession} className="btn-primary rounded-full px-5 py-2.5 font-medium text-white"/>
+            <NewPlanButton hasSession={hasSession} className="btn-primary rounded-full px-3 py-1.5 sm:px-1 sm:py-1 md:px-4 font-medium text-white "/>
           </div>
         </nav>
       </header>
 
       <Hero hasSession={hasSession} />
 
-      <section id="como-funciona" className="py-24 px-6">
+      <section id="como-funciona" className="py-24 px-6 bg-[#0a1a1a]">
         <div className="mx-auto max-w-6xl">
           <p className="text-primary text-sm font-medium mb-4">Como funciona</p>
-          <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-16">
-            Três passos até seu blueprint.
+          <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-20">
+            Do objetivo ao domínio, em<br />
+            três telas.
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {STEPS.map((item) => (
+          <div className="space-y-32">
+            {STEPS.map((item, index) => (
               <div
                 key={item.id}
-                className="glass-panel rounded-2xl p-8 transition-colors hover:border-primary/30"
+                className={`flex flex-col md:flex-row items-center gap-12 ${
+                  index % 2 !== 0 ? "md:flex-row-reverse" : ""
+                }`}
               >
-                <span className="text-primary text-sm font-medium">
-                  {item.step}
-                </span>
-                <h3 className="text-xl font-medium mt-4 mb-3">{item.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {item.description}
-                </p>
+                <div className="flex-1 space-y-4">
+                  <div className="flex items-center gap-4">
+                    <span className="text-primary text-lg font-medium">{item.step}</span>
+                    <div className="h-px w-12 bg-primary/30" />
+                    <span className="text-muted-foreground font-medium">{item.stepName}</span>
+                  </div>
+                  <h3 className="text-3xl md:text-4xl font-medium tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed text-lg">
+                    {item.description}
+                  </p>
+                </div>
+                <div className="group flex-1 w-full shadow-lg transition-transform duration-300 hover:-translate-y-1 relative">
+                  <div className="absolute -inset-3 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none -z-10 bg-[radial-gradient(ellipse_at_center,var(--primary-glow)_0%,transparent_70%)] blur-2xl" />
+                  <div className="relative rounded-xl border border-primary/20 bg-[#0d2424] p-2 shadow-2xl shadow-primary/10 transition-colors duration-300 group-hover:border-primary/60">
+                    <div className="flex items-center gap-2 px-3 py-2 border-b border-primary/10">
+                      <div className="flex gap-1.5">
+                        <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                        <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                        <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                      </div>
+                      <span className="text-xs text-muted-foreground ml-2">{item.label}</span>
+                    </div>
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      width={800}
+                      height={450}
+                      className="w-full h-auto rounded-b-lg"
+                    />
+                  </div>
+                </div>
               </div>
             ))}
           </div>

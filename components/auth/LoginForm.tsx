@@ -78,7 +78,6 @@ export function LoginForm({ disabled = false, onLoadingChange, onError }: LoginF
       setIsLoading(false);
       onLoadingChange?.(false);
     }
-    router.push(callbackURL);
   };
 
   const isDisabled = disabled || isLoading;

@@ -4,24 +4,43 @@ export const STEPS = [
     {
         id: 1,
         step: "01",
-        title: "Descreva seu objetivo",
+        stepName: "Criação",
+        label: "/plans/new",
+        title: "Descreva seu objetivo em uma frase.",
         description:
-            "Digite o que quer aprender no chat. A IA extrai o tema, nivel e intencao automaticamente.",
+            "Um chat simples: diga o que quer aprender, seu nível e quanto tempo tem. A IA monta o plano em segundos, com streaming em tempo real.",
+        image: "/image1.png",
     },
     {
         id: 2,
         step: "02",
-        title: "Receba seu blueprint",
+        stepName: "Seus planos",
+        label: "/plans",
+        title: "Todos os seus planos em um só lugar.",
         description:
-            "Cronograma em markdown com videos do YouTube, livros do Google Books e um PDF pronto.",
+            "Acesse seus blueprints, explore planos públicos de outros usuários e favorite os melhores para consultar depois.",
+        image: "/image2.png",
     },
     {
         id: 3,
         step: "03",
-        title: "Organize e compartilhe",
+        stepName: "Compartilhe",
+        label: "/plans/myPlan",
+        title: "Compartilhe e baixe em PDF.",
         description:
-            "Salve seus planos, baixe o PDF, explore planos publicos de outros usuarios e favorite os melhores.",
+            "Salve seus planos, baixe o PDF pronto para estudar offline e compartilhe seu conhecimento com a comunidade.",
+        image: "/image3.png",
     },
+    {
+        id: 4,
+        step: "04",
+        stepName: "Planos públicos",
+        label: "/explore",
+        title: "Explore planos de outros usuários.",
+        description:
+            "Acesse planos públicos de outros usuários, explore e favorite os melhores para consultar depois.",
+        image: "/image4.png",
+    }
 ]
 
 export const RESOURCES = [

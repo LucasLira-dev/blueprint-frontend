@@ -10,7 +10,7 @@ export const NewPlanButton = ({ hasSession, children, className }: NewPlanButton
     return (
         <Link
             href={hasSession ? "/plans/new" : "/login"}
-            className={`bg-primary text-background px-4 py-2 rounded-md font-medium hover:bg-primary/90 transition-colors ${className} `}
+            className={`bg-primary text-background text-sm sm:text-base px-1 py-2 md:px-4 md:py-2 rounded-md font-medium hover:bg-primary/90 transition-colors ${className} `}
         >
             {hasSession ? "Novo plano" : "Começar"}
             {children}
