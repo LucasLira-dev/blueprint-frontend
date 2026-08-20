@@ -31,6 +31,11 @@ export function useChat() {
                     continue;
                 }
 
+                if (event.step === "syllabusChunk") {
+                    patch((msg: Message) => ({ ...msg, content: (msg.content ?? "") + event.label }));
+                    continue;
+                }
+
                 if (event.step === "done") {
                     patch((msg: Message) => ({ ...msg, content: event.syllabus, planId: event.studyPlanId, steps: []}));
                     continue;

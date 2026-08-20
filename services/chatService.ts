@@ -2,7 +2,7 @@ import { apiFetch } from "@/lib/api-client";
 
 export interface PlanEvent {
     step: string;
-    status: "start" | "done" | "error";
+    status: "start" | "done" | "error" | "streaming";
     label: string;
     studyPlanId?: string;
     syllabus?: string;

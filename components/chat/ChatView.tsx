@@ -56,16 +56,6 @@ export function ChatView() {
             <div className="flex flex-col gap-4 sm:gap-6">
               {messages.map((message) => (
                 <div key={message.id} className={`flex flex-col gap-2 ${message.role === "user" ? "items-end" : "items-start"}`}>
-                  {message.content && (
-                    <div className={`rounded-lg p-4 text-sm ${message.role === "user" ? "bg-muted text-primary-foreground" : "bg-secondary text-secondary-foreground"}`}>
-                      {message.role === "user" ? message.content : <Markdown content={message.content} />}
-                      {message.planId && (
-                        <a href={`/plans/${message.planId}`} className="mt-3 inline-block text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80">
-                          Acesse seu plano de estudos
-                        </a>
-                      )}
-                    </div>
-                  )}
                   {message.steps.length > 0 && (
                     <div className="mt-3 w-full flex flex-col gap-2 overflow-hidden rounded-lg border border-border/50 bg-card/50 p-3">
                       <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
@@ -85,6 +75,16 @@ export function ChatView() {
                           </li>
                         ))}
                       </ul>
+                    </div>
+                  )}
+                  {message.content && (
+                    <div className={`rounded-lg p-4 text-sm ${message.role === "user" ? "bg-muted text-primary-foreground" : "bg-secondary text-secondary-foreground"}`}>
+                      {message.role === "user" ? message.content : <Markdown content={message.content} />}
+                      {message.planId && (
+                        <a href={`/plans/${message.planId}`} className="mt-3 inline-block text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80">
+                          Acesse seu plano de estudos
+                        </a>
+                      )}
                     </div>
                   )}
                   {message.error && (
