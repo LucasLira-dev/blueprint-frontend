@@ -1,7 +1,6 @@
 export const dynamic = "force-dynamic";
 
 import Link from "next/link";
-import { Sparkles } from "lucide-react";
 import { Hero } from "@/components/Hero";
 
 import { RESOURCES, STEPS } from "@/contants/index";
@@ -28,14 +27,14 @@ export default async function Home() {
   
   return (
     <div
-      className="flex min-h-screen flex-col bg-background bg-(image:--gradient-hero) bg-fixed bg-no-repeat text-foreground"
+      className="flex min-h-dvh flex-col bg-background bg-(image:--gradient-hero) bg-no-repeat text-foreground"
     >
       <header className="fixed top-0 left-0 right-0 z-50 glass-panel">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
           <Link href="/" className="flex items-center gap-2">
             <Image
               src="/logo.png"
-              alt="Logo"
+              alt=""
               width={1024}
               height={1024}
               className="h-8 w-8 sm:h-11 sm:w-11 md:h-12 md:w-12"
@@ -53,20 +52,19 @@ export default async function Home() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-4 text-sm">
-            <Link href={hasSession ? "/plans" : "/login"} className="text-muted-foreground hover:text-foreground transition-colors text-xs sm:text-sm">
+            <Link href={hasSession ? "/plans" : "/login"} className="text-muted-foreground hover:text-foreground transition-colors">
               {hasSession ? "Planos" : "Entrar"}
             </Link>
-            <NewPlanButton hasSession={hasSession} className="btn-primary rounded-full px-3 py-1.5 sm:px-1 sm:py-1 md:px-4 font-medium text-white "/>
+            <NewPlanButton hasSession={hasSession} className="btn-primary rounded-full px-3 py-1.5 text-primary-foreground sm:px-4" />
           </div>
         </nav>
       </header>
 
       <Hero hasSession={hasSession} />
 
-      <section id="como-funciona" className="py-24 px-6 bg-[#0a1a1a]">
+      <section id="como-funciona" className="py-24 px-6 bg-surface/30">
         <div className="mx-auto max-w-6xl">
-          <p className="text-primary text-sm font-medium mb-4">Como funciona</p>
-          <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-20">
+          <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-16">
             Do objetivo ao domínio, em<br />
             três telas.
           </h2>
@@ -92,9 +90,8 @@ export default async function Home() {
                     {item.description}
                   </p>
                 </div>
-                <div className="group flex-1 w-full shadow-lg transition-transform duration-300 hover:-translate-y-1 relative">
-                  <div className="absolute -inset-3 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none -z-10 bg-[radial-gradient(ellipse_at_center,var(--primary-glow)_0%,transparent_70%)] blur-2xl" />
-                  <div className="relative rounded-xl border border-primary/20 bg-[#0d2424] p-2 shadow-2xl shadow-primary/10 transition-colors duration-300 group-hover:border-primary/60">
+                <div className="group flex-1 w-full transition-transform duration-300 hover:-translate-y-1">
+                  <div className="relative rounded-xl border border-primary/20 bg-surface p-2 shadow-2xl shadow-primary/10 transition-colors duration-300 group-hover:border-primary/60">
                     <div className="flex items-center gap-2 px-3 py-2 border-b border-primary/10">
                       <div className="flex gap-1.5">
                         <div className="w-3 h-3 rounded-full bg-red-500/80" />
@@ -120,7 +117,6 @@ export default async function Home() {
 
       <section id="recursos" className="py-24 px-6">
         <div className="mx-auto max-w-6xl">
-          <p className="text-primary text-sm font-medium mb-4">Recursos</p>
           <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-16">
             Tudo o que você precisa para
             <br />
@@ -131,7 +127,7 @@ export default async function Home() {
             {RESOURCES.map((item) => (
               <div
                 key={item.title}
-                className="glass-panel rounded-2xl p-8 transition-colors hover:border-primary/30"
+                className="glass-panel border rounded-2xl p-8 transition-colors hover:border-primary/30"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 mb-6">
                   <item.icon className="h-5 w-5 text-primary" />
@@ -149,7 +145,13 @@ export default async function Home() {
       <footer className="mt-auto border-t border-border py-8 px-6 ">
         <div className="mx-auto max-w-6xl flex flex-col gap-2 sm:flex-row items-center justify-between text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-primary" />
+            <Image
+              src="/logo.png"
+              alt=""
+              width={1024}
+              height={1024}
+              className="h-5 w-5"
+            />
             <span>Blueprint</span>
           </div>
           <p>© 2026 Blueprint. Todos os direitos reservados.</p>

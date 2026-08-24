@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 interface NewPlanButtonProps {
     hasSession?: boolean;
@@ -10,7 +11,10 @@ export const NewPlanButton = ({ hasSession, children, className }: NewPlanButton
     return (
         <Link
             href={hasSession ? "/plans/new" : "/login"}
-            className={`bg-primary text-background text-sm sm:text-base px-1 py-2 md:px-4 md:py-2 rounded-md font-medium hover:bg-primary/90 transition-colors ${className} `}
+            className={cn(
+                "inline-flex items-center justify-center gap-2 text-sm sm:text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+                className
+            )}
         >
             {hasSession ? "Novo plano" : "Começar"}
             {children}

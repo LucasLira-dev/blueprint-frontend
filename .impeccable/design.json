@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-24T12:00:00Z",
+  "title": "Design System: Blueprint",
+  "extensions": {
+    "colorMeta": {
+      "azul-abissal": { "role": "neutral", "displayName": "Azul-Abissal", "canonical": "oklch(0.18 0.04 195)", "tonalRamp": ["oklch(15% 0.04 195)", "oklch(24% 0.04 195)", "oklch(33% 0.04 195)", "oklch(43% 0.04 195)", "oklch(53% 0.04 195)", "oklch(64% 0.04 195)", "oklch(78% 0.03 195)", "oklch(93% 0.02 195)"] },
+      "agua-profunda": { "role": "neutral", "displayName": "Água Profunda", "canonical": "oklch(0.24 0.05 195)", "tonalRamp": ["oklch(15% 0.05 195)", "oklch(25% 0.05 195)", "oklch(34% 0.05 195)", "oklch(44% 0.05 195)", "oklch(54% 0.05 195)", "oklch(65% 0.05 195)", "oklch(79% 0.03 195)", "oklch(93% 0.02 195)"] },
+      "agua-suspensa": { "role": "neutral", "displayName": "Água Suspensa", "canonical": "oklch(0.28 0.04 195)", "tonalRamp": ["oklch(16% 0.04 195)", "oklch(26% 0.04 195)", "oklch(35% 0.04 195)", "oklch(45% 0.04 195)", "oklch(55% 0.04 195)", "oklch(66% 0.04 195)", "oklch(80% 0.03 195)", "oklch(94% 0.02 195)"] },
+      "agua-media": { "role": "neutral", "displayName": "Água Média", "canonical": "oklch(0.30 0.06 195)", "tonalRamp": ["oklch(16% 0.06 195)", "oklch(26% 0.06 195)", "oklch(36% 0.06 195)", "oklch(45% 0.06 195)", "oklch(55% 0.06 195)", "oklch(66% 0.06 195)", "oklch(80% 0.04 195)", "oklch(94% 0.02 195)"] },
+      "agua-rasa": { "role": "neutral", "displayName": "Água Rasa", "canonical": "oklch(0.32 0.06 195)", "tonalRamp": ["oklch(17% 0.06 195)", "oklch(27% 0.06 195)", "oklch(36% 0.06 195)", "oklch(46% 0.06 195)", "oklch(56% 0.06 195)", "oklch(67% 0.06 195)", "oklch(81% 0.04 195)", "oklch(94% 0.02 195)"] },
+      "linha-borda": { "role": "neutral", "displayName": "Linha-Borda", "canonical": "oklch(0.38 0.05 195)", "tonalRamp": ["oklch(18% 0.05 195)", "oklch(28% 0.05 195)", "oklch(38% 0.05 195)", "oklch(47% 0.05 195)", "oklch(57% 0.05 195)", "oklch(68% 0.05 195)", "oklch(82% 0.03 195)", "oklch(95% 0.02 195)"] },
+      "bruma": { "role": "neutral", "displayName": "Bruma", "canonical": "oklch(0.72 0.04 195)", "tonalRamp": ["oklch(20% 0.04 195)", "oklch(32% 0.04 195)", "oklch(44% 0.04 195)", "oklch(56% 0.04 195)", "oklch(68% 0.04 195)", "oklch(78% 0.04 195)", "oklch(87% 0.03 195)", "oklch(96% 0.02 195)"] },
+      "espuma": { "role": "neutral", "displayName": "Espuma", "canonical": "oklch(0.98 0.01 195)", "tonalRamp": ["oklch(22% 0.01 195)", "oklch(36% 0.01 195)", "oklch(50% 0.01 195)", "oklch(63% 0.01 195)", "oklch(75% 0.01 195)", "oklch(85% 0.01 195)", "oklch(93% 0.01 195)", "oklch(98% 0.01 195)"] },
+      "turquesa-neon": { "role": "primary", "displayName": "Turquesa Neon", "canonical": "oklch(0.60 0.28 182)", "tonalRamp": ["oklch(20% 0.09 182)", "oklch(30% 0.14 182)", "oklch(40% 0.19 182)", "oklch(50% 0.24 182)", "oklch(60% 0.28 182)", "oklch(70% 0.26 181)", "oklch(82% 0.19 180)", "oklch(94% 0.09 179)"] },
+      "luz-turquesa": { "role": "primary", "displayName": "Luz Turquesa", "canonical": "oklch(0.75 0.25 175)", "tonalRamp": ["oklch(24% 0.10 175)", "oklch(34% 0.15 175)", "oklch(45% 0.20 175)", "oklch(55% 0.23 175)", "oklch(65% 0.25 175)", "oklch(75% 0.25 175)", "oklch(85% 0.20 174)", "oklch(95% 0.10 173)"] },
+      "coral-alerta": { "role": "destructive", "displayName": "Coral Alerta", "canonical": "oklch(0.62 0.22 25)", "tonalRamp": ["oklch(21% 0.08 25)", "oklch(31% 0.12 25)", "oklch(41% 0.16 25)", "oklch(51% 0.19 25)", "oklch(62% 0.22 25)", "oklch(72% 0.20 25)", "oklch(83% 0.15 25)", "oklch(94% 0.07 25)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Título da página dentro do app (Space Grotesk, tracking -0.035em). Hero da landing ainda em DM Sans — dívida conhecida." },
+      "headline": { "displayName": "Headline", "purpose": "Títulos de seção da landing." },
+      "title": { "displayName": "Title", "purpose": "Tópicos de cartões e wordmark." },
+      "body": { "displayName": "Body", "purpose": "Parágrafos e descrições; leitura longa." },
+      "label": { "displayName": "Label", "purpose": "Botões, navegação e labels de formulário." }
+    },
+    "shadows": [
+      { "name": "glow-assinatura", "value": "0 24px 80px -24px oklch(0.60 0.28 182 / 0.45)", "purpose": "Halo ciano exclusivo sob o botão primário em gradiente." },
+      { "name": "estrutural", "value": "0 10px 40px -16px oklch(0 0 0 / 0.6)", "purpose": "Sombra preta de hover em cartões e screenshots." }
+    ],
+    "motion": [
+      { "name": "fade-up", "value": "fade-up 0.6s ease-out both (translateY 12px → 0)", "purpose": "Entrada padrão de conteúdo." },
+      { "name": "interacao-padrao", "value": "200–300ms ease", "purpose": "Transições de cor/borda/hover em toda a UI." },
+      { "name": "lift-primario", "value": "translateY(-1px) + brightness(1.06), 250ms ease", "purpose": "Hover do botão primário." },
+      { "name": "hero-gsap", "value": "GSAP timeline, power2.out, 1s, stagger 0.2", "purpose": "Entrada da hero na landing." },
+      { "name": "pulse-dot", "value": "pulse-dot 1.4s ease-in-out infinite", "purpose": "Indicador vivo (gravação/streaming)." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botão Primário",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ação primária: gradiente turquesa com glow assinatura; uma por contexto.",
+      "html": "<button class=\"ds-btn-primary\">Criar novo plano</button>",
+      "css": ".ds-btn-primary { background: linear-gradient(100deg, oklch(0.55 0.28 185), oklch(0.65 0.25 180) 55%, oklch(0.75 0.22 175)); color: oklch(0.99 0 0); box-shadow: 0 24px 80px -24px oklch(0.60 0.28 182 / 0.45); border: none; border-radius: 20px; padding: 10px 22px; font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease; } .ds-btn-primary:hover { transform: translateY(-1px); filter: brightness(1.06); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px oklch(0.60 0.28 182 / 0.5), 0 24px 80px -24px oklch(0.60 0.28 182 / 0.45); }"
+    },
+    {
+      "name": "Botão Fantasma",
+      "kind": "button",
+      "refersTo": "button-pill",
+      "description": "Ações secundárias e chips: pill discreto que acende no hover.",
+      "html": "<span class='ds-chip'><svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><path d='M2 12h20'/><path d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'/></svg>Público</span>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 6px; background: oklch(0.30 0.06 195); color: oklch(0.98 0.01 195); border-radius: 9999px; padding: 4px 12px; font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; transition: background 0.2s ease; } .ds-chip:hover { background: oklch(0.30 0.06 195 / 0.8); }"
+    },
+    {
+      "name": "Cartão de Plano",
+      "kind": "card",
+      "refersTo": "card-plan",
+      "description": "Cartão de plano: thumbnail 16:9, tópico e visibilidade; hover acende borda e eleva.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-card-media\"></div><div class=\"ds-card-body\"><div><h3 class=\"ds-card-title\">Aprender Rust do zero</h3><p class=\"ds-card-meta\">Público</p></div></div></div>",
+      "css": ".ds-card { display: flex; flex-direction: column; width: 320px; overflow: hidden; background: oklch(0.24 0.05 195); color: oklch(0.98 0.01 195); border: 1px solid oklch(0.38 0.05 195 / 0.6); border-radius: 24px; font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif; transition: box-shadow 0.2s ease, border-color 0.2s ease; cursor: pointer; } .ds-card:hover { box-shadow: 0 10px 40px -16px oklch(0 0 0 / 0.6); border-color: oklch(0.60 0.28 182 / 0.5); } .ds-card-media { aspect-ratio: 16/9; width: 100%; background: linear-gradient(120deg, oklch(0.30 0.06 195), oklch(0.40 0.10 190)); } .ds-card-body { display: flex; align-items: center; justify-content: space-between; padding: 16px; } .ds-card-title { margin: 0 0 6px; font-size: 16px; font-weight: 600; } .ds-card-meta { margin: 0; font-size: 12px; color: oklch(0.72 0.04 195); }"
+    },
+    {
+      "name": "Campo de Texto",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Input padrão: fundo Água Profunda, foco acende anel turquesa.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"seu@email.com\" />",
+      "css": ".ds-input { width: 100%; max-width: 320px; background: oklch(0.24 0.05 195); color: oklch(0.98 0.01 195); border: 1px solid oklch(0.38 0.05 195); border-radius: 16px; padding: 12px 16px; font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif; font-size: 14px; outline: none; transition: box-shadow 0.2s ease, border-color 0.2s ease; } .ds-input::placeholder { color: oklch(0.72 0.04 195); } .ds-input:focus { border-color: transparent; box-shadow: 0 0 0 2px oklch(0.60 0.28 182); }"
+    },
+    {
+      "name": "Compositor do Chat",
+      "kind": "custom",
+      "refersTo": "chat-composer",
+      "description": "Composer de criação de plano: superfície elevada, raio generoso, envio circular.",
+      "html": "<div class=\"ds-composer\"><textarea class=\"ds-composer-textarea\" rows=\"2\" placeholder=\"Ex: Quero aprender Rust...\"></textarea><div class=\"ds-composer-actions\"><button class=\"ds-composer-send\" aria-label=\"Enviar\"><svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m22 2-7 20-4-9-9-4Z'/><path d='M22 2 11 13'/></svg></button></div></div>",
+      "css": ".ds-composer { width: 360px; max-width: 100%; background: oklch(0.30 0.06 195); border: 1px solid oklch(0.38 0.05 195); border-radius: 28px; padding: 12px 16px; font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif; } .ds-composer-textarea { width: 100%; resize: none; background: transparent; border: none; outline: none; color: oklch(0.98 0.01 195); font-family: inherit; font-size: 14px; } .ds-composer-textarea::placeholder { color: oklch(0.72 0.04 195); } .ds-composer-actions { display: flex; justify-content: flex-end; margin-top: 8px; } .ds-composer-send { display: flex; align-items: center; justify-content: center; height: 32px; width: 32px; border-radius: 9999px; background: oklch(0.60 0.28 182); color: oklch(0.99 0 0); border: none; cursor: pointer; transition: opacity 0.2s ease; } .ds-composer-send:hover { opacity: 0.9; }"
+    },
+    {
+      "name": "Item de Navegação",
+      "kind": "nav",
+      "refersTo": "button-ghost",
+      "description": "Item da sidebar: repouso em Bruma, hover em Água Suspensa, ativo em turquesa a 10%.",
+      "html": "<nav class='ds-nav'><a class='ds-nav-item' href='#'><svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='7' height='7' rx='1'/><rect x='14' y='3' width='7' height='7' rx='1'/><rect x='14' y='14' width='7' height='7' rx='1'/><rect x='3' y='14' width='7' height='7' rx='1'/></svg>Planos</a><a class='ds-nav-item ds-nav-item--active' href='#'>Novo plano</a></nav>",
+      "css": ".ds-nav { display: flex; flex-direction: column; gap: 4px; width: 220px; padding: 12px; background: oklch(0.24 0.05 195); border-radius: 24px; font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif; } .ds-nav-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 24px; font-size: 14px; font-weight: 500; text-decoration: none; color: oklch(0.72 0.04 195); transition: background 0.2s ease, color 0.2s ease; } .ds-nav-item:hover { background: oklch(0.28 0.04 195); color: oklch(0.98 0.01 195); } .ds-nav-item--active { background: oklch(0.60 0.28 182 / 0.1); color: oklch(0.60 0.28 182); }"
+    },
+    {
+      "name": "Painel de Vidro",
+      "kind": "card",
+      "refersTo": "card-plan",
+      "description": "Superfície translúcidada assinatura: blur + tom de água; usada em header fixo e zonas de conteúdo.",
+      "html": "<div class=\"ds-glass\">Painel de vidro fosco</div>",
+      "css": ".ds-glass { width: 280px; padding: 24px; border-radius: 28px; border: 1px solid oklch(0.38 0.05 195); background: oklch(0.24 0.05 195 / 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); color: oklch(0.98 0.01 195); font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif; font-size: 14px; transition: border-color 0.2s ease; } .ds-glass:hover { border-color: oklch(0.60 0.28 182 / 0.3); }"
+    },
+    {
+      "name": "Avatar de Iniciais",
+      "kind": "custom",
+      "refersTo": "avatar-initials",
+      "description": "Identidade do usuário na sidebar: círculo turquesa translúcido com iniciais.",
+      "html": "<div class='ds-avatar'>LL</div>",
+      "css": ".ds-avatar { display: flex; align-items: center; justify-content: center; height: 32px; width: 32px; border-radius: 9999px; background: oklch(0.60 0.28 182 / 0.2); color: oklch(0.60 0.28 182); font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif; font-size: 12px; font-weight: 600; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Mergulho nas Profundezas",
+    "overview": "A interface é um oceano noturno: fundos azul-esverdeados profundos onde a luz é escassa e, por isso, preciosa. O único ciano vivo — Turquesa Neon — existe para guiar o olhar do mergulhador: aparece em ações primárias, links e estados ativos, nunca como decoração. Tudo o mais é camada de água: superfícies tonais que se distinguem por profundidade (mais claro = mais perto da superfície = mais interativo), não por sombras chamativas.\n\nO caráter emocional é calmo e concentrado: alto contraste só onde importa, ritmo generoso entre seções, movimento breve e discreto. A densidade é confortável, nunca densa. O acabamento lembra equipamento de mergulho sério: vidro fosco, bordas finas de 1px, cantos arredondados generosos.",
+    "keyCharacteristics": [
+      "Paleta escura com matiz oceânico constante (hue ~195 em todos os neutros)",
+      "Um único acento ciano, usado com raridade deliberada",
+      "Profundidade por camadas tonais + vidro fosco, não por sombras decorativas",
+      "Cantos muito arredondados (16–32px) e pills completos para ações pequenas",
+      "Tipografia DM Sans no corpo, Space Grotesk reservada a títulos de página",
+      "Movimento curto, funcional e discreto"
+    ],
+    "rules": [
+      { "name": "A Regra da Luz Rara", "body": "Turquesa Neon ocupa no máximo ~10% de qualquer tela: ação primária, estado ativo, link. Se tudo brilha, nada guia.", "section": "colors" },
+      { "name": "A Regra do Fundo Molhado", "body": "Nenhum neutro acinza puro: todo fundo, borda e texto secundário carrega o matiz 195 do oceano. Preto puro só em scrims de overlay e sombras.", "section": "colors" },
+      { "name": "A Regra do Traço Firme", "body": "Tracking negativo é privilégio de títulos grandes (-0.025em a -0.035em); corpo e labels nunca comprimem letras.", "section": "typography" },
+      { "name": "A Regra do Glow Assinatura", "body": "Luz turquesa difusa só sob ações primárias. Hover pode acender bordas, nunca acender glows novos.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do resolver profundidade primeiro por camadas tonais (abissal → rasa) e borda de 1px; sombra é evento de hover, não estado de repouso.",
+      "Do reservar o gradiente turquesa + glow para a ação primária de cada tela — exatamente uma por contexto.",
+      "Do usar pills (9999px) para ações pequenas e chips; raio mínimo de 16px em qualquer superfície interativa.",
+      "Do manter todos os neutros no matiz 195; seleção de texto também.",
+      "Do animar entradas com fade-up de 600ms ease-out e interações de 200–300ms."
+    ],
+    "donts": [
+      "Don't introduzir roxo, azul-padrão de framework ou gradientes genéricos de IA — anti-referência confirmada: dashboard SaaS genérico.",
+      "Don't espalhar glow turquesa por títulos, bordas grandes ou fundos inteiros — vira neon cyberpunk e mata a Regra da Luz Rara.",
+      "Don't usar cinza/preto puro em fundos, bordas ou textos secundários; preto só em scrims e sombras.",
+      "Don't criar cartões idênticos em grade sem hierarquia; cada lista tem um elemento dominante ou variação clara.",
+      "Don't aplicar tracking negativo fora de títulos grandes, nem fontes terceiras além do par DM Sans + Space Grotesk."
+    ]
+  }
+}
