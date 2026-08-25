@@ -11,9 +11,11 @@ import {
   X,
   Compass,
   Shield,
+  MessageSquare,
 } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
+import { useMyThreadsQuery } from "@/hooks/useConversations";
 
 const NAV_ITEMS = [
   { label: "Planos", href: "/plans", icon: LayoutGrid },
@@ -28,11 +30,13 @@ interface SidebarProps {
   userInitials?: string;
   userName?: string;
   userRole: string;
+  userId: string;
 }
 
-export function Sidebar({ open, onClose, userInitials, userName, userRole }: SidebarProps) {
+export function Sidebar({ open, onClose, userInitials, userName, userRole, userId }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const { data: threads } = useMyThreadsQuery(userId);
 
   const handleLogout = async () => {
     try {
@@ -90,7 +94,7 @@ export function Sidebar({ open, onClose, userInitials, userName, userRole }: Sid
         </div>
         
 
-        <nav className="flex flex-1 flex-col gap-1 px-3">
+        <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-3">
           {NAV_ITEMS.map((item) => {
             const isActive =
               item.href === "/plans"
@@ -116,6 +120,34 @@ export function Sidebar({ open, onClose, userInitials, userName, userRole }: Sid
               </Link>
             );
           })}
+
+          {threads && threads.length > 0 && (
+            <div className="mt-3 flex flex-col gap-1">
+              <p className="px-3 pb-1 text-xs font-medium uppercase tracking-wider text-muted-foreground mt-4">
+                Conversas
+              </p>
+              {threads.map((thread) => {
+                const href = `/conversations/${thread.threadId}`;
+                const isActive = pathname === href;
+                return (
+                  <Link
+                    key={thread.threadId}
+                    href={href}
+                    onClick={onClose}
+                    title={thread.topic}
+                    className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors ${
+                      isActive
+                        ? "bg-primary/10 text-primary"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    }`}
+                  >
+                    <MessageSquare className="h-4 w-4 shrink-0" />
+                    <span className="truncate">{thread.topic}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
         </nav>
 
         <div className="mt-auto border-t border-border px-3 py-3">

@@ -10,8 +10,8 @@ export interface Message {
     error?: string;
 }
 
-export function useChat() {
-    const [messages, setMessages] = useState<Message[]>([]);
+export function useChat(initialMessages: Message[] = []) {
+    const [messages, setMessages] = useState<Message[]>(initialMessages);
     const [isStreaming, setIsStreaming] = useState(false);
 
     const sendMessage = useCallback(async (content: string) => {

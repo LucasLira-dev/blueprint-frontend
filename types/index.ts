@@ -65,4 +65,22 @@ export type User = {
     name: string;
 }
 
+export type ConversationThread = {
+    id: string;
+    topic: string;
+    threadId: string;
+    createdAt: string;
+}
+
+export type HistoryMessage = {
+    role: 'user' | 'assistant';
+    content: string;
+}
+
+
+export type ThreadHistoryResponse = {
+    threadId: string;
+    messages: HistoryMessage[];
+}
+
 

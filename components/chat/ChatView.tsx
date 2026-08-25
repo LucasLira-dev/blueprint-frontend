@@ -1,15 +1,74 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import { ChatHeader } from "./ChatHeader";
 import { ChatSuggestions } from "./ChatSuggestions";
 import { ChatInput } from "./ChatInput";
-import { useChat } from "@/hooks/useChat";
+import { useChat, type Message } from "@/hooks/useChat";
+import { useThreadHistoryQuery } from "@/hooks/useConversations";
+import { ConversationApiError } from "@/services/conversationsService";
 import { Markdown } from "./Markdown";
+import { ChatSkeleton } from "./ChatSkeleton";
+import { ChatError } from "./ChatError";
 
-export function ChatView() {
+interface ChatViewProps {
+  threadId?: string;
+}
 
-  const { messages, sendMessage, isStreaming } = useChat();
+export function ChatView({ threadId }: ChatViewProps) {
+  const {
+    data: history,
+    error,
+    isPending,
+    isError,
+    refetch,
+  } = useThreadHistoryQuery(threadId ?? "", Boolean(threadId));
+
+  const historyMessages = useMemo<Message[]>(
+    () =>
+      history?.messages.map((message, index) => ({
+        id: `${threadId}-${index}`,
+        role: message.role,
+        content: message.content,
+        steps: [],
+      })) ?? [],
+    [history, threadId]
+  );
+
+  if (!threadId) {
+    return <ChatSession initialMessages={[]} />;
+  }
+
+  if (isPending) {
+    return <ChatSkeleton />;
+  }
+
+  if (isError || !history) {
+    const isNotFound = error instanceof ConversationApiError && error.status === 404;
+
+    return (
+      <ChatError isNotFound={isNotFound} refetch={refetch} />
+    )
+  }
+
+  if (history.messages.length === 0) {
+    return (
+      <div className="flex h-full items-center justify-center px-4">
+        <div className="flex max-w-md flex-col items-center gap-2 text-center">
+          <h2 className="text-lg font-medium">Nenhuma mensagem nesta conversa</h2>
+          <p className="text-sm text-muted-foreground">
+            Volte para a página inicial e gere um novo plano de estudos.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return <ChatSession key={threadId} initialMessages={historyMessages} />;
+}
+
+function ChatSession({ initialMessages }: { initialMessages: Message[] }) {
+  const { messages, sendMessage, isStreaming } = useChat(initialMessages);
   const containerRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -111,3 +170,4 @@ export function ChatView() {
     </div>
   );
 }
+

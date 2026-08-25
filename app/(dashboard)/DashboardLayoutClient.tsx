@@ -9,6 +9,7 @@ interface DashboardLayoutClientProps {
   userInitials: string;
   userName: string;
   userRole: string;
+  userId: string;
 }
 
 export function DashboardLayoutClient({
@@ -16,6 +17,7 @@ export function DashboardLayoutClient({
   userInitials,
   userName,
   userRole,
+  userId,
 }: DashboardLayoutClientProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -27,6 +29,7 @@ export function DashboardLayoutClient({
         userInitials={userInitials}
         userName={userName}
         userRole={userRole}
+        userId={userId}
       />
 
       <div className="flex flex-1 flex-col overflow-hidden">

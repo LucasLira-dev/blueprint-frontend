@@ -33,6 +33,7 @@ export default async function DashboardLayout({
     .map((n) => n[0])
     .join("")
     .toUpperCase();
+  const userId = user.id;
 
   return (
     <Provider>
@@ -40,6 +41,7 @@ export default async function DashboardLayout({
         userInitials={userInitials}
         userName={user.name}
         userRole={user.role ?? 'user'}
+        userId={userId}
       >
         {children}
       </DashboardLayoutClient>
