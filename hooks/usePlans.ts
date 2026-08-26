@@ -115,6 +115,7 @@ export function useDeletePlanMutation(userId: string, isAdmin: boolean) {
             queryClient.invalidateQueries({ queryKey: ['my-plans', userId, planId] });
             queryClient.invalidateQueries({ queryKey: ['public-plans', userId] });
             queryClient.invalidateQueries({ queryKey: ['my-favorite-plans', userId] });
+            queryClient.invalidateQueries({ queryKey: ['my-threads', userId] });
         },
         onError: (error) => {
             console.error('Erro ao deletar o plano:', error);

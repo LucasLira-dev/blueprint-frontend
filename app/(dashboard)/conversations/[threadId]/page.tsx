@@ -29,5 +29,5 @@ export default async function ConversationPage({ params }: ConversationPageProps
         redirect("/login");
     }
 
-    return <ChatView threadId={threadId} />;
+    return <ChatView threadId={threadId} userId={session.data.user.id} />;
 }

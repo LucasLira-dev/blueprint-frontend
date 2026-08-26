@@ -13,9 +13,10 @@ import { ChatError } from "./ChatError";
 
 interface ChatViewProps {
   threadId?: string;
+  userId?: string;
 }
 
-export function ChatView({ threadId }: ChatViewProps) {
+export function ChatView({ threadId, userId }: ChatViewProps) {
   const {
     data: history,
     error,
@@ -36,7 +37,7 @@ export function ChatView({ threadId }: ChatViewProps) {
   );
 
   if (!threadId) {
-    return <ChatSession initialMessages={[]} />;
+    return <ChatSession initialMessages={[]} userId={userId} />;
   }
 
   if (isPending) {
@@ -64,11 +65,11 @@ export function ChatView({ threadId }: ChatViewProps) {
     );
   }
 
-  return <ChatSession key={threadId} initialMessages={historyMessages} />;
+  return <ChatSession key={threadId} initialMessages={historyMessages} userId={userId} />;
 }
 
-function ChatSession({ initialMessages }: { initialMessages: Message[] }) {
-  const { messages, sendMessage, isStreaming } = useChat(initialMessages);
+function ChatSession({ initialMessages, userId }: { initialMessages: Message[]; userId?: string }) {
+  const { messages, sendMessage, isStreaming } = useChat(initialMessages, userId!);
   const containerRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 

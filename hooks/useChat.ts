@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { streamGeneratePlan, type PlanEvent } from "@/services/chatService";
+import { useQueryClient } from "@tanstack/react-query";
 
 export interface Message {
     id: string;
@@ -10,9 +11,11 @@ export interface Message {
     error?: string;
 }
 
-export function useChat(initialMessages: Message[] = []) {
+export function useChat(initialMessages: Message[] = [], userId: string) {
     const [messages, setMessages] = useState<Message[]>(initialMessages);
     const [isStreaming, setIsStreaming] = useState(false);
+
+    const query = useQueryClient();
 
     const sendMessage = useCallback(async (content: string) => {
         const userMessage: Message = { id: crypto.randomUUID(), role: "user", content, steps: []};
@@ -54,8 +57,9 @@ export function useChat(initialMessages: Message[] = []) {
         }
         finally {
             setIsStreaming(false);
+            query.invalidateQueries({ queryKey: ['my-threads', userId] });
         }
-    }, []);
+    }, [query, userId]);
 
     return { messages, sendMessage, isStreaming };
 }

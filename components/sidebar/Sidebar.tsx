@@ -36,7 +36,7 @@ interface SidebarProps {
 export function Sidebar({ open, onClose, userInitials, userName, userRole, userId }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const { data: threads } = useMyThreadsQuery(userId);
+  const { data: threads, isPending } = useMyThreadsQuery(userId);
 
   const handleLogout = async () => {
     try {
@@ -109,7 +109,7 @@ export function Sidebar({ open, onClose, userInitials, userName, userRole, userI
                 key={item.label}
                 href={item.href}
                 onClick={onClose}
-                className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
+                className={`flex items-center mt-2 gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
                   isActive
                     ? "bg-primary/10 text-primary"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -120,6 +120,20 @@ export function Sidebar({ open, onClose, userInitials, userName, userRole, userI
               </Link>
             );
           })}
+
+          {
+            isPending && (
+              <div className="mt-3 flex flex-col gap-1">
+                <p className="px-3 pb-1 text-xs font-medium uppercase tracking-wider text-muted-foreground mt-4">
+                  Conversas
+                </p>
+                <div className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors text-muted-foreground">
+                  <MessageSquare className="h-4 w-4 shrink-0" />
+                  <span>Carregando...</span>
+                </div>
+              </div>
+            )
+          }
 
           {threads && threads.length > 0 && (
             <div className="mt-3 flex flex-col gap-1">
