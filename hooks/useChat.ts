@@ -17,7 +17,7 @@ export function useChat(initialMessages: Message[] = [], userId: string) {
 
     const query = useQueryClient();
 
-    const sendMessage = useCallback(async (content: string) => {
+    const sendMessage = useCallback(async (content: string, model?: string) => {
         const userMessage: Message = { id: crypto.randomUUID(), role: "user", content, steps: []};
         const assistantId = crypto.randomUUID();
         setMessages((prevMessages) => [...prevMessages, userMessage, { id: assistantId, role: "assistant", content: "", steps: [] }]);
@@ -28,7 +28,7 @@ export function useChat(initialMessages: Message[] = [], userId: string) {
         }
 
         try {
-            for await (const event of streamGeneratePlan(content)) {
+            for await (const event of streamGeneratePlan(content, model)) {
                 if (event.step === "error" || event.status === "error") {
                     patch((msg: Message) => ({ ...msg, error: event.label }));
                     continue;

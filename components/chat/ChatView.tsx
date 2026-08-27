@@ -82,10 +82,10 @@ function ChatSession({ initialMessages, userId }: { initialMessages: Message[]; 
     }
   }, [messages]);
 
-  const handleSubmit = (content: string) => {
+  const handleSubmit = (content: string, model?: string) => {
     if (content.trim() === "") return;
 
-    sendMessage(content);
+    sendMessage(content, model);
   }
 
   const handleSuggestionSelect = (suggestion: string) => {

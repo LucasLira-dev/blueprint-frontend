@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { Hero } from "@/components/Hero";
 
-import { RESOURCES, STEPS } from "@/contants/index";
+import { RESOURCES, STEPS } from "@/constants/index";
 import { authClient } from "@/lib/auth-client";
 import { headers } from "next/headers";
 import { NewPlanButton } from "@/components/NewPlanButton";

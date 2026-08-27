@@ -8,8 +8,12 @@ export interface PlanEvent {
     syllabus?: string;
 }
 
-export async function* streamGeneratePlan(topic: string): AsyncGenerator<PlanEvent> {
-    const response = await apiFetch(`/study-plans/generate?topic=${encodeURIComponent(topic)}`);
+export async function* streamGeneratePlan(topic: string, model?: string): AsyncGenerator<PlanEvent> {
+    const query = new URLSearchParams({ topic });
+    if (model) {
+        query.set("model", model);
+    }
+    const response = await apiFetch(`/study-plans/generate?${query.toString()}`);
 
     if (!response.ok) {
         if (response.status === 429) {
