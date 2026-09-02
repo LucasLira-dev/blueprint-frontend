@@ -24,6 +24,10 @@ export default async function DashboardLayout({
   }
 
   if (!session?.data?.user?.id) {
+    console.error(
+      "DashboardLayout: sessão ausente no SSR. session=",
+      JSON.stringify(session?.data ?? null),
+    );
     redirect("/login");
   }
 

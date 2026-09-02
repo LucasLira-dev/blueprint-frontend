@@ -6,9 +6,10 @@ import { redirect } from "next/navigation"
 interface PlanCardProps {
     plan: Plan,
     onChangeVisibility: (planId: string, visibility: 'PUBLIC' | 'PRIVATE') => void
+    canChangeVisibility?: boolean
 }
 
-export const PlanCard = ({ plan, onChangeVisibility }: PlanCardProps) => {
+export const PlanCard = ({ plan, onChangeVisibility, canChangeVisibility }: PlanCardProps) => {
 
     const handlePlanClick = (id: string) => {
         redirect(`/plans/${id}`)
@@ -35,7 +36,8 @@ export const PlanCard = ({ plan, onChangeVisibility }: PlanCardProps) => {
                 </div>
             </div>
             
-            <div className="flex items-center justify-between p-4">
+            <div 
+            className="flex items-center justify-between p-4">
                 <div className="flex flex-col gap-1.5 min-w-0">
                     <h3 className="font-semibold text-base truncate">{plan.topic}</h3>
                     <div className="flex items-center gap-1.5">
@@ -50,20 +52,24 @@ export const PlanCard = ({ plan, onChangeVisibility }: PlanCardProps) => {
                     </div>
                 </div>
                 
-                <button 
-                    onClick={(e) => {
-                        onChangeVisibility(plan.id, plan.visibility === 'PUBLIC' ? 'PRIVATE' : 'PUBLIC');
-                        e.stopPropagation()
-                    }}
-                    className="flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium bg-secondary hover:bg-secondary/80 text-secondary-foreground transition-colors"
-                >
-                    {plan.visibility === 'PUBLIC' ? (
-                        <Globe className="h-3.5 w-3.5" />
-                    ) : (
-                        <Lock className="h-3.5 w-3.5" />
-                    )}
-                    {plan.visibility === 'PUBLIC' ? 'Público' : 'Privado'}
-                </button>
+                {
+                    canChangeVisibility && (
+                        <button
+                            onClick={(e) => {
+                                onChangeVisibility(plan.id, plan.visibility === 'PUBLIC' ? 'PRIVATE' : 'PUBLIC');
+                                e.stopPropagation()
+                            }}
+                            className="flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium bg-secondary hover:bg-secondary/80 text-secondary-foreground transition-colors"
+                        >
+                            {plan.visibility === 'PUBLIC' ? (
+                                <Globe className="h-3.5 w-3.5" />
+                            ) : (
+                                <Lock className="h-3.5 w-3.5" />
+                            )}
+                            {plan.visibility === 'PUBLIC' ? 'Público' : 'Privado'}
+                        </button>
+                    )
+                }
             </div>
         </div>
     )

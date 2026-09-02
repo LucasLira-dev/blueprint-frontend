@@ -13,9 +13,10 @@ import { useMemo, useState } from "react"
 interface PlansProps {
     userId: string | undefined;
     isAdmin?: boolean;
+    canChangeVisibility?: boolean;
 }
 
-export const Plans = ({ userId, isAdmin }: PlansProps) => {
+export const Plans = ({ userId, isAdmin, canChangeVisibility }: PlansProps) => {
 
     const [searchTerm, setSearchTerm] = useState("")
 
@@ -36,6 +37,7 @@ export const Plans = ({ userId, isAdmin }: PlansProps) => {
     }
 
     const handleChangeVisibility = (planId: string, visibility: 'PUBLIC' | 'PRIVATE') => {
+        if (!canChangeVisibility) return;
         changeVisibility({ planId, visibility })
     }
 
@@ -83,6 +85,7 @@ export const Plans = ({ userId, isAdmin }: PlansProps) => {
                         <PlanCard
                             key={plan.id}
                             plan={plan}
+                            canChangeVisibility={canChangeVisibility}
                             onChangeVisibility={handleChangeVisibility}
                         />
                     ))

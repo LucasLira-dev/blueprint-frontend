@@ -23,7 +23,7 @@ export default async function PlansPage() {
 
     return (
         <section className="flex justify-center">
-            <Plans userId={userId}/>
+            <Plans userId={userId} canChangeVisibility={true}/>
         </section>
     )
 }

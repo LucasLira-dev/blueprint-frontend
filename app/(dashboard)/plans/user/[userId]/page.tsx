@@ -31,9 +31,11 @@ export default async function UserPlansPage({ params }: UserPlansPageProps) {
         redirect("/")
     }
 
+    const canChangeVisibility = session?.data?.user.id === userId
+
     return (
         <section className="flex justify-center">
-            <Plans userId={userId} isAdmin={role === "admin"}/>
+            <Plans userId={userId} isAdmin={role === "admin"} canChangeVisibility={canChangeVisibility} />
         </section>
     )
 }
