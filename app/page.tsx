@@ -24,6 +24,8 @@ export default async function Home() {
   }
 
   const hasSession = !!session; 
+
+  console.log("Session data:", session); // Log the session data for debugging
   
   return (
     <div
