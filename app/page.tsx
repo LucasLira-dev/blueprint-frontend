@@ -11,21 +11,27 @@ import Image from "next/image";
 
 export default async function Home() {
 
+  const requestHeaders = await headers();
+
+  console.log("HEADERS DO NEXT:", requestHeaders);
+
   let session = null;
+
   try {
     session = await authClient.getSession({
       fetchOptions: {
-        headers: await headers(),
-      }
-    })
-  } 
-  catch (error) {
-    console.error("Error fetching session:", error);
+        headers: requestHeaders,
+      },
+    });
+
+    console.log("SESSION:", session);
+  } catch (error) {
+    console.error("ERRO SESSION:", error);
   }
 
-  const hasSession = !!session; 
-
-  console.log("Session data:", session); // Log the session data for debugging
+  if (!session?.data?.user.id) {
+    console.log("Usuário não autenticado, redirecionando para /login");
+  }
   
   return (
     <div
