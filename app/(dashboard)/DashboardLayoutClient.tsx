@@ -1,25 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Sidebar } from "@/components/sidebar/Sidebar";
 import { Menu } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
 interface DashboardLayoutClientProps {
   children: React.ReactNode;
-  userInitials: string;
-  userName: string;
-  userRole: string;
-  userId: string;
 }
 
 export function DashboardLayoutClient({
   children,
-  userInitials,
-  userName,
-  userRole,
-  userId,
 }: DashboardLayoutClientProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const router = useRouter();
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
+
+  useEffect(() => {
+    if (!isPending && !user) {
+      router.replace("/login");
+    }
+  }, [isPending, router, user]);
+
+  if (isPending || !user) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background text-foreground">
+        <p className="text-muted-foreground">Carregando...</p>
+      </div>
+    );
+  }
+
+  const userInitials = user.name
+    .split(" ")
+    .map((namePart) => namePart[0])
+    .join("")
+    .toUpperCase();
 
   return (
     <div className="flex h-screen overflow-hidden bg-background text-foreground">
@@ -27,9 +44,9 @@ export function DashboardLayoutClient({
         open={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         userInitials={userInitials}
-        userName={userName}
-        userRole={userRole}
-        userId={userId}
+        userName={user.name}
+        userRole={user.role ?? "user"}
+        userId={user.id}
       />
 
       <div className="flex flex-1 flex-col overflow-hidden">
