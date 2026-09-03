@@ -1,25 +1,31 @@
-export const dynamic = "force-dynamic";
+'use client';
 
 import { Plans } from "@/components/plans/Plans";
 import { authClient } from "@/lib/auth-client";
-import { headers } from "next/headers";
+import { useRouter } from "next/navigation";
+//import { headers } from "next/headers";
 
-export default async function PlansPage() {
+export default function PlansPage() {
 
-    let session = null;
+    const { data: session, isPending } = authClient.useSession();
+    const router = useRouter();
+    
+      if (isPending) {
+        return (
+          <div className="flex min-h-screen items-center justify-center">
+            <p className="text-muted-foreground">Carregando...</p>
+          </div>
+        );
+      }
 
-    try {
-        session = await authClient.getSession({
-            fetchOptions: {
-                headers: await headers()
-            }
-        })
+    console.log("Sessão atual:", session);
+
+    if (!session?.user) {
+        console.log("Usuário não autenticado, redirecionando para /login");
+        router.push("/login");
     }
-    catch (error) {
-        console.error('Erro ao buscar sessão:', error);
-    }
 
-    const userId = session?.data?.user.id
+    const userId = session?.user.id
 
     return (
         <section className="flex justify-center">
