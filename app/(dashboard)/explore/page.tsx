@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-
 import { Explore } from "@/components/explore/Explore";
 import { authClient } from "@/lib/auth-client";
 import { headers } from "next/headers";
