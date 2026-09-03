@@ -1,37 +1,25 @@
-export const dynamic = "force-dynamic";
+'use client';
 
 import Link from "next/link";
 import { Hero } from "@/components/Hero";
 
 import { RESOURCES, STEPS } from "@/constants/index";
 import { authClient } from "@/lib/auth-client";
-import { headers } from "next/headers";
 import { NewPlanButton } from "@/components/NewPlanButton";
 import Image from "next/image";
 
-export default async function Home() {
+export default function Home() {
+  const { data: session, isPending } = authClient.useSession();
 
-  const requestHeaders = await headers();
-
-  console.log("HEADERS DO NEXT:", requestHeaders);
-
-  let session = null;
-
-  try {
-    session = await authClient.getSession({
-      fetchOptions: {
-        headers: requestHeaders,
-      },
-    });
-
-    console.log("SESSION:", session);
-  } catch (error) {
-    console.error("ERRO SESSION:", error);
+  if (isPending) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-muted-foreground">Carregando...</p>
+      </div>
+    );
   }
 
-  if (!session?.data?.user.id) {
-    console.log("Usuário não autenticado, redirecionando para /login");
-  }
+  const hasSession = Boolean(session?.user.id);
   
   return (
     <div
