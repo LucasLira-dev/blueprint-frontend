@@ -125,6 +125,18 @@
   animation: pulse-dot 1.4s ease-in-out infinite;
 }
 
+@keyframes loader-spin {
+  to { transform: rotate(360deg); }
+}
+
+@utility loader-ring {
+  border: 2px solid transparent;
+  border-top-color: var(--primary);
+  border-right-color: var(--primary-glow);
+  animation: loader-spin 0.9s linear infinite;
+  box-shadow: var(--shadow-glow);
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;

@@ -10,15 +10,19 @@ import { redirect } from "next/navigation";
 export default async function LoginPage() {
 
   let session = null;
+  const headersList = await headers();
+
   try {
     session = await authClient.getSession({
       fetchOptions: {
-        headers: await headers()
+        headers: headersList,
       }
     });
   } catch (error) {
     console.error("Error fetching session:", error);
   }
+
+  console.log("Session data from login page:", session);  
 
   if (session?.data) {
     redirect("/")

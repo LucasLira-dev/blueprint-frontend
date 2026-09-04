@@ -1,25 +1,32 @@
-'use client';
-
 import Link from "next/link";
 import { Hero } from "@/components/Hero";
 
 import { RESOURCES, STEPS } from "@/constants/index";
-import { authClient } from "@/lib/auth-client";
 import { NewPlanButton } from "@/components/NewPlanButton";
 import Image from "next/image";
+import { authClient } from "@/lib/auth-client";
+import { headers } from "next/headers";
 
-export default function Home() {
-  const { data: session, isPending } = authClient.useSession();
+export default async function Home() {
 
-  if (isPending) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p className="text-muted-foreground">Carregando...</p>
-      </div>
-    );
+  let session = null;
+
+  const headersList = await headers();
+
+  try {
+    session = await authClient.getSession({
+      fetchOptions: {
+        headers: headersList,
+      },
+    });
+  }
+  catch (error) {
+    console.error("Error fetching session:", error);
   }
 
-  const hasSession = Boolean(session?.user.id);
+  console.log("Session data:", session);
+
+  const hasSession = Boolean(session?.data?.user?.id);
   
   return (
     <div
@@ -63,8 +70,7 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-16">
             Do objetivo ao domínio, em<br />
             três telas.
-          </h2>
-
+          </h2> 
           <div className="space-y-32">
             {STEPS.map((item, index) => (
               <div

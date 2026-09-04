@@ -1,37 +1,41 @@
-export const dynamic = "force-dynamic";
+'use client';
 
+import { use } from "react";
 import { Plans } from "@/components/plans/Plans";
 import { authClient } from "@/lib/auth-client";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface UserPlansPageProps {
     params: Promise<{ userId: string }>;
 }
 
-export default async function UserPlansPage({ params }: UserPlansPageProps) {
-    const { userId } = await params;
+export default function UserPlansPage({ params }: UserPlansPageProps) {
+    const { userId } = use(params);
+    const router = useRouter();
+    const { data: session, isPending } = authClient.useSession();
 
-    let session = null;
+    useEffect(() => {
+        if (!isPending && session?.user.role !== "admin") {
+            router.replace("/");
+        }
+    }, [isPending, session, router]);
 
-    try {
-        session = await authClient.getSession({
-            fetchOptions: {
-                headers: await headers()
-            }
-        })
+    if (isPending) {
+        return (
+            <div className="flex min-h-screen items-center justify-center">
+                <p className="text-muted-foreground">Carregando...</p>
+            </div>
+        );
     }
-    catch (error) {
-        console.error('Erro ao buscar sessão:', error);
-    }
 
-    const role = session?.data?.user.role
+    const role = session?.user.role;
 
     if (role !== "admin") {
-        redirect("/")
+        return null;
     }
 
-    const canChangeVisibility = session?.data?.user.id === userId
+    const canChangeVisibility = session?.user.id === userId;
 
     return (
         <section className="flex justify-center">

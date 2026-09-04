@@ -1,37 +1,31 @@
-export const dynamic = "force-dynamic";
+'use client';
 
+import { use } from "react";
 import { PlanDetails } from "@/components/plans/PlanDetails";
 import { authClient } from "@/lib/auth-client";
-import { headers } from "next/headers";
 
 interface PlanDetailsPageProps {
     params: Promise<{ id: string }>;
 }
 
-export default async function PlanDetailsPage({ params }: PlanDetailsPageProps) {
+export default function PlanDetailsPage({ params }: PlanDetailsPageProps) {
+    const { id: planId } = use(params);
+    const { data: session, isPending } = authClient.useSession();
 
-    const { id: planId } = await params;
-
-    let session = null;
-
-    try {
-        session = await authClient.getSession({
-            fetchOptions: {
-                headers: await headers()
-            }
-        })
-    }
-    catch (error) {
-        console.error('Erro ao buscar sessão:', error);
+    if (isPending) {
+        return (
+            <div className="flex min-h-screen items-center justify-center">
+                <p className="text-muted-foreground">Carregando...</p>
+            </div>
+        );
     }
 
-    const userId = session?.data?.user.id;
-    const userRole = session?.data?.user.role;
+    const userId = session?.user.id;
+    const userRole = session?.user.role;
 
     return (
         <section className="flex justify-center">
             <PlanDetails planId={planId} userId={userId} isAdmin={userRole === 'admin'}/>
         </section>
     )
-
 }

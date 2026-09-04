@@ -1,28 +1,20 @@
+'use client';
+
 import { Explore } from "@/components/explore/Explore";
 import { authClient } from "@/lib/auth-client";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 
-export default async function ExplorePage() {
+export default function ExplorePage() {
+    const { data: session, isPending } = authClient.useSession();
 
-    let session = null;
-
-    try {
-        session = await authClient.getSession({
-            fetchOptions: {
-                headers: await headers(),
-            }
-        })
-    }
-    catch (error) {
-        console.error('Erro ao buscar sessão:', error);
+    if (isPending) {
+        return (
+            <div className="flex min-h-screen items-center justify-center">
+                <p className="text-muted-foreground">Carregando...</p>
+            </div>
+        );
     }
 
-    if (!session?.data?.user) {
-        redirect("/login");
-    }
-
-    const userId = session?.data?.user.id
+    const userId = session?.user.id;
 
     return (
         <section className="flex justify-center">

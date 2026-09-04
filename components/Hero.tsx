@@ -7,9 +7,10 @@ import { NewPlanButton } from "./NewPlanButton";
 
 interface HeroProps {
   hasSession: boolean;
+  isPending?: boolean;
 }
 
-export const Hero = ({ hasSession }: HeroProps) => {
+export const Hero = ({ hasSession, isPending }: HeroProps) => {
 
     useGSAP(() => {
         const media = gsap.matchMedia();
@@ -45,9 +46,23 @@ export const Hero = ({ hasSession }: HeroProps) => {
             livros gerados sob medida em segundos.
           </p>
 
-          <NewPlanButton hasSession={hasSession} className="rounded-lg bg-primary px-6 py-3 text-primary-foreground hover:bg-primary/90">
-            <ArrowRight className="h-5 w-5" aria-hidden="true" />
-          </NewPlanButton>
+          {isPending ? (
+            <div
+              aria-label="Carregando plano"
+              aria-busy="true"
+              className="inline-flex h-12 animate-pulse items-center justify-center gap-2 rounded-lg bg-muted/80 px-6 py-3 shadow-sm"
+            >
+              <div className="h-5 w-5 rounded-full bg-primary" />
+              <div className="h-4 w-20 rounded-full bg-primary" />
+            </div>
+          ) : (
+            <NewPlanButton
+              hasSession={hasSession}
+              className="rounded-lg bg-primary px-6 py-3 text-primary-foreground hover:bg-primary/90"
+            >
+              <ArrowRight className="h-5 w-5" aria-hidden="true" />
+            </NewPlanButton>
+          )}
         </div>
       </section>
     )

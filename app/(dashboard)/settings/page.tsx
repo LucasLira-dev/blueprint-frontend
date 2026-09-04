@@ -1,25 +1,21 @@
-export const dynamic = "force-dynamic";
+'use client';
 
 import { SettingsClient } from "@/components/settings/SettingsClient";
 import { authClient } from "@/lib/auth-client";
-import { headers } from "next/headers";
 
-export default async function SettingsPage() {
-    let session = null;
+export default function SettingsPage() {
+    const { data: session, isPending } = authClient.useSession();
 
-    try {
-        session = await authClient.getSession({
-            fetchOptions: {
-                headers: await headers()
-            }
-        })
-    }
-    catch (error) {
-        console.error('Erro ao buscar sessão:', error);
+    if (isPending) {
+        return (
+            <div className="flex min-h-screen items-center justify-center">
+                <p className="text-muted-foreground">Carregando...</p>
+            </div>
+        );
     }
 
-    const user = session?.data?.user;
-    const sessionCreatedAt = session?.data?.session?.createdAt?.toISOString();
+    const user = session?.user;
+    const sessionCreatedAt = session?.session?.createdAt?.toISOString();
 
     return (
         <section className="flex justify-center px-4 py-8 sm:px-6 lg:px-8">

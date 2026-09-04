@@ -1,27 +1,30 @@
-export const dynamic = "force-dynamic";
+'use client';
 
 import { AdminPage } from "@/components/admin/AdminPage";
 import { authClient } from "@/lib/auth-client";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default async function AdminPageRoute() {
-  let session = null;
+export default function AdminPageRoute() {
+  const router = useRouter();
+  const { data: session, isPending } = authClient.useSession();
 
-  try {
-    session = await authClient.getSession({
-      fetchOptions: {
-        headers: await headers(),
-      },
-    });
-  } catch (error) {
-    console.error("Erro ao buscar sessão:", error);
+  useEffect(() => {
+    if (!isPending && session?.user?.role !== "admin") {
+      router.replace("/");
+    }
+  }, [isPending, session, router]);
+
+  if (isPending) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-muted-foreground">Carregando...</p>
+      </div>
+    );
   }
 
-  const userRole = session?.data?.user?.role;
-  
-  if (userRole !== "admin") {
-    redirect("/");
+  if (session?.user?.role !== "admin") {
+    return null;
   }
 
   return (

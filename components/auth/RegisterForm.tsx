@@ -60,7 +60,6 @@ export function RegisterForm({ disabled = false, onLoadingChange, onError }: Reg
         name: formData.name,
         email: formData.email,
         password: formData.password,
-        callbackURL,
       });
       setIsLoading(false);
       onLoadingChange?.(false);

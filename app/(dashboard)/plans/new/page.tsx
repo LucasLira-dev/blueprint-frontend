@@ -1,26 +1,31 @@
-export const dynamic = "force-dynamic";
+'use client';
 
 import { ChatView } from "@/components/chat/ChatView";
 import { authClient } from "@/lib/auth-client";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default async function ChatPage() {
-  let session = null;
+export default function ChatPage() {
+  const router = useRouter();
+  const { data: session, isPending } = authClient.useSession();
 
-  try {
-    session = await authClient.getSession({
-      fetchOptions: {
-        headers: await headers(),
-      },
-    });
-  } catch (error) {
-    console.error("Erro ao obter a sessão do usuário:", error);
+  useEffect(() => {
+    if (!isPending && !session?.user.id) {
+      router.replace("/login");
+    }
+  }, [isPending, session, router]);
+
+  if (isPending) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-muted-foreground">Carregando...</p>
+      </div>
+    );
   }
 
-  if (!session?.data?.user.id) {
-    redirect("/login");
+  if (!session?.user.id) {
+    return null;
   }
 
-  return <ChatView userId={session.data.user.id} />;
+  return <ChatView userId={session.user.id} />;
 }

@@ -58,7 +58,6 @@ export function LoginForm({ disabled = false, onLoadingChange, onError }: LoginF
         email: formData.email,
         password: formData.password,
         rememberMe,
-        callbackURL,
       });
 
       if (error) {
