@@ -1,28 +1,47 @@
-export const dynamic = "force-dynamic";
+'use client';
 
 import Image from "next/image";
 import Link from "next/link";
 import { RegisterComponent } from "@/components/auth/RegisterComponent";
 import { authClient } from "@/lib/auth-client";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default async function RegisterPage() {
+export default function RegisterPage() {
 
-  let session = null;
-  try {
-    session = await authClient.getSession({
-      fetchOptions: {
-        headers: await headers()
+    const router = useRouter();
+    const { data: session, isPending } = authClient.useSession();
+    const user = session?.user;
+  
+    useEffect(() => {
+      if (!isPending && user) {
+        router.replace("/");
       }
-    });
-  } catch (error) {
-    console.error("Error fetching session:", error);
-  }
-
-  if (session?.data) {
-    redirect("/")
-  }
+    }, [isPending, router, user]);
+  
+    if (isPending) {
+      return (
+        <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background text-foreground">
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{ background: "var(--gradient-hero)" }}
+          />
+          <div className="relative flex flex-col items-center gap-8 fade-up">
+            <div className="relative flex items-center justify-center">
+              <div className="loader-ring absolute inset-0 h-24 w-24 rounded-full" />
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl shadow-(--shadow-elegant)"/>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <h1 className="text-display text-2xl tracking-tight text-foreground">
+                Blueprint
+              </h1>
+              <p className="text-sm text-muted-foreground">Preparando o seu painel...</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  
 
   return (
     <div className="min-h-screen flex">

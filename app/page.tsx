@@ -1,3 +1,5 @@
+'use client';
+
 import Link from "next/link";
 import { Hero } from "@/components/Hero";
 
@@ -5,28 +7,12 @@ import { RESOURCES, STEPS } from "@/constants/index";
 import { NewPlanButton } from "@/components/NewPlanButton";
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
-import { headers } from "next/headers";
 
-export default async function Home() {
+export default function Home() {
 
-  let session = null;
+  const { data: session, isPending } = authClient.useSession();
 
-  const headersList = await headers();
-
-  try {
-    session = await authClient.getSession({
-      fetchOptions: {
-        headers: headersList,
-      },
-    });
-  }
-  catch (error) {
-    console.error("Error fetching session:", error);
-  }
-
-  console.log("Session data:", session);
-
-  const hasSession = Boolean(session?.data?.user?.id);
+  const hasSession = Boolean(session?.user?.id);
   
   return (
     <div
@@ -54,8 +40,8 @@ export default async function Home() {
             </Link>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-4 text-sm">
-            <Link href={hasSession ? "/plans" : "/login"} className="text-muted-foreground hover:text-foreground transition-colors">
+         <div className="flex items-center gap-2 sm:gap-4 text-sm">
+            <Link href={hasSession && !isPending ? "/plans" : "/login"} className="text-muted-foreground hover:text-foreground transition-colors">
               {hasSession ? "Planos" : "Entrar"}
             </Link>
             <NewPlanButton hasSession={hasSession} className="btn-primary rounded-full px-3 py-1.5 text-primary-foreground sm:px-4" />
@@ -63,7 +49,7 @@ export default async function Home() {
         </nav>
       </header>
 
-      <Hero hasSession={hasSession} />
+      <Hero hasSession={hasSession} isPending={isPending} />
 
       <section id="como-funciona" className="py-24 px-6 bg-surface/30">
         <div className="mx-auto max-w-6xl">

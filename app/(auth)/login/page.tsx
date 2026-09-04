@@ -1,31 +1,45 @@
-export const dynamic = "force-dynamic";
+'use client';
 
 import Image from "next/image";
 import Link from "next/link";
 import { LoginComponent } from "@/components/auth/LoginComponent";
 import { authClient } from "@/lib/auth-client";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default async function LoginPage() {
+export default function LoginPage() {
 
-  let session = null;
-  const headersList = await headers();
+  const router = useRouter();
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
 
-  try {
-    session = await authClient.getSession({
-      fetchOptions: {
-        headers: headersList,
-      }
-    });
-  } catch (error) {
-    console.error("Error fetching session:", error);
-  }
+  useEffect(() => {
+    if (!isPending && user) {
+      router.replace("/");
+    }
+  }, [isPending, router, user]);
 
-  console.log("Session data from login page:", session);  
-
-  if (session?.data) {
-    redirect("/")
+  if (isPending) {
+    return (
+      <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background text-foreground">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{ background: "var(--gradient-hero)" }}
+        />
+        <div className="relative flex flex-col items-center gap-8 fade-up">
+          <div className="relative flex items-center justify-center">
+            <div className="loader-ring absolute inset-0 h-24 w-24 rounded-full" />
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl shadow-(--shadow-elegant)"/>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <h1 className="text-display text-2xl tracking-tight text-foreground">
+              Blueprint
+            </h1>
+            <p className="text-sm text-muted-foreground">Preparando o seu painel...</p>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

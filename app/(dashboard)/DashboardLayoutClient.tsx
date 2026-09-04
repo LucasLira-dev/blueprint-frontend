@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Sidebar } from "@/components/sidebar/Sidebar";
-import { Menu, Waves } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import { Menu } from "lucide-react";
 
 interface DashboardLayoutClientProps {
   children: React.ReactNode;
@@ -34,9 +34,7 @@ export function DashboardLayoutClient({
         <div className="relative flex flex-col items-center gap-8 fade-up">
           <div className="relative flex items-center justify-center">
             <div className="loader-ring absolute inset-0 h-24 w-24 rounded-full" />
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-card shadow-(--shadow-elegant)">
-              <Waves className="h-8 w-8 text-primary" strokeWidth={2} />
-            </div>
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl shadow-(--shadow-elegant)"/>
           </div>
           <div className="flex flex-col items-center gap-1">
             <h1 className="text-display text-2xl tracking-tight text-foreground">
