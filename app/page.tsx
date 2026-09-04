@@ -7,6 +7,7 @@ import { RESOURCES, STEPS } from "@/constants/index";
 import { NewPlanButton } from "@/components/NewPlanButton";
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
 
@@ -41,9 +42,15 @@ export default function Home() {
           </div>
 
          <div className="flex items-center gap-2 sm:gap-4 text-sm">
-            <Link href={hasSession && !isPending ? "/plans" : "/login"} className="text-muted-foreground hover:text-foreground transition-colors">
-              {hasSession ? "Planos" : "Entrar"}
-            </Link>
+            <Button
+            disabled={isPending}
+            variant="ghost"
+            >
+              <Link href={hasSession && !isPending ? "/plans" : "/login"} className="text-muted-foreground hover:text-foreground transition-colors">
+                {hasSession ? "Planos" : "Entrar"}
+              </Link>
+            </Button>
+            
             <NewPlanButton hasSession={hasSession} className="btn-primary rounded-full px-3 py-1.5 text-primary-foreground sm:px-4" />
           </div>
         </nav>

@@ -21,14 +21,6 @@ export default function UserPlansPage({ params }: UserPlansPageProps) {
         }
     }, [isPending, session, router]);
 
-    if (isPending) {
-        return (
-            <div className="flex min-h-screen items-center justify-center">
-                <p className="text-muted-foreground">Carregando...</p>
-            </div>
-        );
-    }
-
     const role = session?.user.role;
 
     if (role !== "admin") {

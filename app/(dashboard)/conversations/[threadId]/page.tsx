@@ -21,14 +21,6 @@ export default function ConversationPage({ params }: ConversationPageProps) {
         }
     }, [isPending, session, router]);
 
-    if (isPending) {
-        return (
-            <div className="flex min-h-screen items-center justify-center">
-                <p className="text-muted-foreground">Carregando...</p>
-            </div>
-        );
-    }
-
     if (!session?.user.id) {
         return null;
     }

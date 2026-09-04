@@ -10,15 +10,7 @@ interface PlanDetailsPageProps {
 
 export default function PlanDetailsPage({ params }: PlanDetailsPageProps) {
     const { id: planId } = use(params);
-    const { data: session, isPending } = authClient.useSession();
-
-    if (isPending) {
-        return (
-            <div className="flex min-h-screen items-center justify-center">
-                <p className="text-muted-foreground">Carregando...</p>
-            </div>
-        );
-    }
+    const { data: session } = authClient.useSession();
 
     const userId = session?.user.id;
     const userRole = session?.user.role;

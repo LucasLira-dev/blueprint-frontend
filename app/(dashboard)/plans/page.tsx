@@ -5,15 +5,7 @@ import { authClient } from "@/lib/auth-client";
 
 export default function PlansPage() {
 
-    const { data: session, isPending } = authClient.useSession();
-    
-      if (isPending) {
-        return (
-          <div className="flex min-h-screen items-center justify-center">
-            <p className="text-muted-foreground">Carregando...</p>
-          </div>
-        );
-      }
+    const { data: session } = authClient.useSession();
 
     const userId = session?.user.id
 

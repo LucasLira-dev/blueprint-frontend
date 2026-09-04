@@ -1,6 +1,7 @@
 'use client';
 
 import { AdminPage } from "@/components/admin/AdminPage";
+import { Loading } from "@/components/Loading";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -17,9 +18,7 @@ export default function AdminPageRoute() {
 
   if (isPending) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p className="text-muted-foreground">Carregando...</p>
-      </div>
+      <Loading />
     );
   }
 
