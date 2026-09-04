@@ -1,7 +1,3 @@
-'use client';
-
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
 import { ArrowRight } from "lucide-react";
 import { NewPlanButton } from "./NewPlanButton";
 
@@ -11,18 +7,6 @@ interface HeroProps {
 }
 
 export const Hero = ({ hasSession, isPending }: HeroProps) => {
-
-    useGSAP(() => {
-        const media = gsap.matchMedia();
-
-        media.add("(prefers-reduced-motion: no-preference)", () => {
-            const timeline = gsap.timeline({ defaults: { duration: 1, ease: "power2.out" } });
-
-            timeline.from(".hero h1", { x: -150, opacity: 0, stagger: 0.2 });
-
-            timeline.from(".hero p", { y: 50, opacity: 0 }, "-=0.5");
-        });
-    })
 
     return (
       <section className="relative flex flex-col items-center justify-center min-h-dvh px-4 sm:px-6 text-center hero overflow-hidden">
