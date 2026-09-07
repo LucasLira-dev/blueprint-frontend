@@ -22,7 +22,7 @@ export const Plans = ({ userId, isAdmin, canChangeVisibility }: PlansProps) => {
 
     const { data, isLoading, error } = usePlansQuery(userId!)
 
-    const { mutate: changeVisibility } = useChangePlanVisibilityMutation(userId!)
+    const { mutate: changeVisibility, isPending: isChangeVisibilityPending } = useChangePlanVisibilityMutation(userId!)
 
     const plansData = useMemo<Plan[]>(() => data ?? [], [data])
 
@@ -87,6 +87,7 @@ export const Plans = ({ userId, isAdmin, canChangeVisibility }: PlansProps) => {
                             plan={plan}
                             canChangeVisibility={canChangeVisibility}
                             onChangeVisibility={handleChangeVisibility}
+                            isPending={isChangeVisibilityPending}
                         />
                     ))
                 ) : (

@@ -1,7 +1,7 @@
 'use client';
 
 import { useChangePlanVisibilityMutation, useDeletePlanMutation, useMyPlansQuery } from "@/hooks/usePlans";
-import { Download, FileText } from "lucide-react";
+import { Download, FileText, Loader2 } from "lucide-react";
 import { ChangeVisibilityToogle } from "./ChangeVisibilityToogle";
 import { VideoCard } from "./VideoCard";
 import { BookCard } from "./BookCard";
@@ -26,7 +26,7 @@ export const PlanDetails = ({ planId, userId, isAdmin }: PlanDetailsProps) => {
 
     const { mutate: deletePlan, isPending } = useDeletePlanMutation(userId!, isAdmin)
 
-    const { mutate: changeVisibility } = useChangePlanVisibilityMutation(userId!);
+    const { mutate: changeVisibility, isPending: isChangeVisibilityPending } = useChangePlanVisibilityMutation(userId!);
 
     const router = useRouter();
 
@@ -89,6 +89,7 @@ export const PlanDetails = ({ planId, userId, isAdmin }: PlanDetailsProps) => {
                                 <ChangeVisibilityToogle
                                     visibility={planDetails.visibility}
                                     onChangeVisibility={(visibility) => handleChangeVisibility(planDetails.id, visibility)}
+                                    isPending={isChangeVisibilityPending}
                                 />
                             </div>
                             <DeletePlanDialog

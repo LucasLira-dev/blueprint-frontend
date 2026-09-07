@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Trash2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -41,9 +41,13 @@ export function DeleteAccountDialog({ onDelete, isPending, disabled = false, isM
                         className="w-full justify-start gap-3 h-auto py-3 cursor-pointer whitespace-normal"
                         disabled={disabled || isPending}
                     >
-                        <Trash2 className="h-4 w-4 shrink-0" />
+                        {isPending ? (
+                            <Loader2 className="h-4 w-4 shrink-0 animate-spin" />
+                        ) : (
+                            <Trash2 className="h-4 w-4 shrink-0" />
+                        )}
                         <div className="flex flex-col items-start text-left min-w-0">
-                            <span className="text-md font-bold max-sm:m-auto">Deletar minha conta</span>
+                            <span className="text-md font-bold max-sm:m-auto">{isPending ? "Deletando..." : "Deletar minha conta"}</span>
                             <span className="text-xs opacity-80 wrap-break-words">Remove permanentemente sua conta e todos os dados</span>
                         </div>
                     </Button>
@@ -53,8 +57,12 @@ export function DeleteAccountDialog({ onDelete, isPending, disabled = false, isM
                         className="flex flex-row items-center gap-1 border-red-500/50 cursor-pointer"
                         disabled={disabled || isPending}
                         >
-                            <Trash2 className="mr-2 h-4 w-4" />
-                            Deletar conta
+                            {isPending ? (
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            ) : (
+                                <Trash2 className="mr-2 h-4 w-4" />
+                            )}
+                            {isPending ? "Deletando..." : "Deletar conta"}
                         </Button>
                     )
                 }
@@ -77,7 +85,12 @@ export function DeleteAccountDialog({ onDelete, isPending, disabled = false, isM
                         disabled={isPending}
                         className="bg-destructive hover:bg-destructive/90 cursor-pointer"
                     >
-                        {isPending ? "Deletando..." : "Deletar conta"}
+                        {isPending ? (
+                            <span className="flex items-center gap-2">
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                                Deletando...
+                            </span>
+                        ) : "Deletar conta"}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

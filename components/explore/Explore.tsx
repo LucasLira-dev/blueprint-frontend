@@ -20,7 +20,7 @@ export const Explore = ({ userId }: { userId: string | undefined}) => {
 
     const { data, isLoading, error } = usePublicPlansQuery(userId!)
 
-    const { mutate: changeFavorite } = useChangePlanFavoriteMutation(userId!)
+    const { mutate: changeFavorite, isPending: isChangeFavoritePending, variables } = useChangePlanFavoriteMutation(userId!)
 
     const plansData = useMemo<PublicPlan[]>(() => data?.plans ?? [], [data])
 
@@ -101,6 +101,7 @@ export const Explore = ({ userId }: { userId: string | undefined}) => {
                             key={plan.id}
                             plan={plan}
                             onFavoriteClick={(favorite: boolean) => handleFavoriteClick(plan.id, favorite)}
+                            isPending={isChangeFavoritePending && variables?.planId === plan.id}
                         />
                     ))
                 ) : (

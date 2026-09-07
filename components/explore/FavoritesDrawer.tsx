@@ -36,7 +36,7 @@ export const FavoritesDrawer = ({ open, onOpenChange, userId }: FavoritesDrawerP
 
     return (
         <Drawer open={open} onOpenChange={onOpenChange} swipeDirection="right">
-            <DrawerContent className="w-full sm:w-100 md:w-120">
+            <DrawerContent className="w-80 sm:w-100 md:w-100">
                 <DrawerHeader>
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
@@ -57,38 +57,39 @@ export const FavoritesDrawer = ({ open, onOpenChange, userId }: FavoritesDrawerP
                             <p>Nenhum favorito encontrado.</p>
                         </div>
                     ) : (
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4 w-full m-auto">
                             {favoritesData.map((fav) => (
                                 <div
                                     key={fav.id}
                                     onClick={() => router.push(`/plans/${fav.id}`)}
-                                    className="flex flex-col gap-4 p-4 border border-border rounded-lg hover:border-primary transition-shadow cursor-pointer"
+                                    className="group flex flex-col w-full border border-border/60 rounded-xl overflow-hidden bg-card hover:shadow-lg hover:border-primary/50 transition-all duration-200 cursor-pointer"
                                 >
-                                    <div className="relative w-full h-42 overflow-hidden">
+                                    <div className="relative w-full aspect-video overflow-hidden">
                                         <Image
                                             src={fav.thumbnail ?? "/default-thumbnail.jpg"}
                                             alt={`Thumbnail do plano ${fav.topic}`}
                                             fill
-                                            className="object-cover"
+                                            className="object-cover group-hover:scale-105 transition-transform duration-300"
                                             sizes="(max-width: 640px) 100vw, 400px"
                                             loading="eager"
                                         />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                                     </div>
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex flex-col gap-1 min-w-0">
-                                            <p className="font-bold text-sm sm:text-base line-clamp-1">{fav.topic}</p>
-                                            <div className="flex items-center text-xs sm:text-sm gap-2">
-                                                <Globe className="h-4 w-4 text-muted-foreground" />
-                                                <span className="text-muted-foreground">{fav.userName}</span>
+                                    <div className="flex items-center justify-between p-4">
+                                        <div className="flex flex-col gap-1.5 min-w-0">
+                                            <p className="font-semibold text-base truncate">{fav.topic}</p>
+                                            <div className="flex items-center gap-1.5">
+                                                <Globe className="h-3.5 w-3.5 text-muted-foreground" />
+                                                <span className="text-xs text-muted-foreground">{fav.userName}</span>
                                             </div>
                                         </div>
-                                        <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-1.5">
                                             <DeleteFavoritePlanDialog
-                                            planId={fav.id}
-                                            planTitle={fav.topic}
-                                            isDeleting={isDeletingFavoritePlan}
-                                            onDelete={handleRemove}
-                                             />
+                                                planId={fav.id}
+                                                planTitle={fav.topic}
+                                                isDeleting={isDeletingFavoritePlan}
+                                                onDelete={handleRemove}
+                                            />
                                         </div>
                                     </div>
                                 </div>

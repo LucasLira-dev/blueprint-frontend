@@ -98,7 +98,7 @@ export function LoginForm({ disabled = false, onLoadingChange, onError }: LoginF
           className="w-full px-4 py-3 rounded-sm border border-border bg-surface text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
         />
         {errors.email && (
-          <p className="mt-2 text-sm text-red-400">{errors.email}</p>
+          <p className="mt-2 text-sm text-red-400 text-center">{errors.email}</p>
         )}
       </div>
 
@@ -127,7 +127,7 @@ export function LoginForm({ disabled = false, onLoadingChange, onError }: LoginF
           </button>
         </div>
         {errors.password && (
-          <p className="mt-2 text-sm text-red-400">{errors.password}</p>
+          <p className="mt-2 text-sm text-red-400 text-center">{errors.password}</p>
         )}
       </div>
 

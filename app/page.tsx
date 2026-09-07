@@ -42,16 +42,21 @@ export default function Home() {
           </div>
 
          <div className="flex items-center gap-2 sm:gap-4 text-sm">
-            <Button
-            disabled={isPending}
-            variant="ghost"
-            >
-              <Link href={hasSession && !isPending ? "/plans" : "/login"} className="text-muted-foreground hover:text-foreground transition-colors">
-                {hasSession ? "Planos" : "Entrar"}
-              </Link>
-            </Button>
-            
-            <NewPlanButton hasSession={hasSession} className="btn-primary rounded-full px-3 py-1.5 text-primary-foreground sm:px-4" />
+            {isPending ? (
+              <>
+                <div className="h-9 w-16 animate-pulse rounded-md bg-muted" />
+                <div className="h-9 w-28 animate-pulse rounded-full bg-muted" />
+              </>
+            ) : (
+              <>
+                <Button variant="ghost">
+                  <Link href={hasSession ? "/plans" : "/login"} className="text-muted-foreground hover:text-foreground transition-colors">
+                    {hasSession ? "Planos" : "Entrar"}
+                  </Link>
+                </Button>
+                <NewPlanButton hasSession={hasSession} className="btn-primary rounded-full px-3 py-1.5 text-primary-foreground sm:px-4" />
+              </>
+            )}
           </div>
         </nav>
       </header>

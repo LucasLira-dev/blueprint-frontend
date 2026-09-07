@@ -107,7 +107,7 @@ export function RegisterForm({ disabled = false, onLoadingChange, onError }: Reg
             className="w-full px-4 py-3 rounded-sm border border-border bg-surface text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed md:px-5 md:py-3.5 lg:px-6 lg:py-4"
           />
           {errors.name && (
-            <p className="mt-2 text-sm text-red-400">{errors.name}</p>
+            <p className="mt-2 text-sm text-red-400 text-center">{errors.name}</p>
           )}
         </div>
 
@@ -125,7 +125,7 @@ export function RegisterForm({ disabled = false, onLoadingChange, onError }: Reg
             className="w-full px-4 py-3 rounded-sm border border-border bg-surface text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed md:px-5 md:py-3.5 lg:px-6 lg:py-4"
           />
           {errors.email && (
-            <p className="mt-2 text-sm text-red-400">{errors.email}</p>
+            <p className="mt-2 text-sm text-red-400 text-center">{errors.email}</p>
           )}
         </div>
       </div>
@@ -156,7 +156,7 @@ export function RegisterForm({ disabled = false, onLoadingChange, onError }: Reg
             </button>
           </div>
           {errors.password && (
-            <p className="mt-2 text-sm text-red-400">{errors.password}</p>
+            <p className="mt-2 text-sm text-red-400 text-center">{errors.password}</p>
           )}
         </div>
 
@@ -185,7 +185,7 @@ export function RegisterForm({ disabled = false, onLoadingChange, onError }: Reg
             </button>
           </div>
           {errors.confirmPassword && (
-            <p className="mt-2 text-sm text-red-400">{errors.confirmPassword}</p>
+            <p className="mt-2 text-sm text-red-400 text-center">{errors.confirmPassword}</p>
           )}
         </div>
       </div>

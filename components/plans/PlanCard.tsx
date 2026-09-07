@@ -1,5 +1,5 @@
 import { Plan } from "@/types"
-import { Globe, Lock, ChevronRight } from "lucide-react"
+import { Globe, Lock, ChevronRight, Loader2 } from "lucide-react"
 import Image from "next/image"
 import { redirect } from "next/navigation"
 
@@ -7,9 +7,10 @@ interface PlanCardProps {
     plan: Plan,
     onChangeVisibility: (planId: string, visibility: 'PUBLIC' | 'PRIVATE') => void
     canChangeVisibility?: boolean
+    isPending?: boolean
 }
 
-export const PlanCard = ({ plan, onChangeVisibility, canChangeVisibility }: PlanCardProps) => {
+export const PlanCard = ({ plan, onChangeVisibility, canChangeVisibility, isPending }: PlanCardProps) => {
 
     const handlePlanClick = (id: string) => {
         redirect(`/plans/${id}`)
@@ -59,14 +60,17 @@ export const PlanCard = ({ plan, onChangeVisibility, canChangeVisibility }: Plan
                                 onChangeVisibility(plan.id, plan.visibility === 'PUBLIC' ? 'PRIVATE' : 'PUBLIC');
                                 e.stopPropagation()
                             }}
-                            className="flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium bg-secondary hover:bg-secondary/80 text-secondary-foreground transition-colors"
+                            disabled={isPending}
+                            className="flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium bg-secondary hover:bg-secondary/80 text-secondary-foreground transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {plan.visibility === 'PUBLIC' ? (
+                            {isPending ? (
+                                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                            ) : plan.visibility === 'PUBLIC' ? (
                                 <Globe className="h-3.5 w-3.5" />
                             ) : (
                                 <Lock className="h-3.5 w-3.5" />
                             )}
-                            {plan.visibility === 'PUBLIC' ? 'Público' : 'Privado'}
+                            {isPending ? 'Alterando...' : plan.visibility === 'PUBLIC' ? 'Público' : 'Privado'}
                         </button>
                     )
                 }

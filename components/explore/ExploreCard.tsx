@@ -1,16 +1,17 @@
 "use client";
 
 import { PublicPlan } from "@/types"
-import { Heart, Globe } from "lucide-react"
+import { Heart, Globe, Loader2 } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 
 interface ExploreCardProps {
     plan: PublicPlan;
     onFavoriteClick: (favorite: boolean) => void;
+    isPending?: boolean;
 }
 
-export const ExploreCard = ({ plan, onFavoriteClick }: ExploreCardProps) => {
+export const ExploreCard = ({ plan, onFavoriteClick, isPending }: ExploreCardProps) => {
     const router = useRouter()
 
     const handlePlanClick = (id: string) => {
@@ -49,10 +50,13 @@ export const ExploreCard = ({ plan, onFavoriteClick }: ExploreCardProps) => {
                             event.stopPropagation()
                             onFavoriteClick(!plan.isFavorite)
                         }}
+                        disabled={isPending}
                         aria-label={plan.isFavorite ? "Remover dos favoritos" : "Favoritar plano"}
-                        className="rounded-full p-1.5 transition-colors hover:bg-muted"
+                        className="rounded-full p-1.5 transition-colors hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        {plan.isFavorite ? (
+                        {isPending ? (
+                            <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                        ) : plan.isFavorite ? (
                             <Heart className="h-4 w-4 text-red-600" fill="currentColor" />
                         ) : (
                             <Heart className="h-4 w-4 text-muted-foreground" />

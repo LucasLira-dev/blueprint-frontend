@@ -94,7 +94,7 @@ export function Sidebar({ open, onClose, userInitials, userName, userRole, userI
         </div>
         
 
-        <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-3">
+        <nav className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto px-3">
           {NAV_ITEMS.map((item) => {
             const isActive =
               item.href === "/plans"

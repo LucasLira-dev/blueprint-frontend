@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, Loader2 } from "lucide-react";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -63,7 +63,12 @@ export function DeleteAllPlansDialog({ onDelete, isPending, disabled }: DeleteAl
                         disabled={isPending}
                         className="bg-destructive hover:bg-destructive/90 cursor-pointer"
                     >
-                        {isPending ? "Deletando..." : "Deletar tudo"}
+                        {isPending ? (
+                            <span className="flex items-center gap-2">
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                                Deletando...
+                            </span>
+                        ) : "Deletar tudo"}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
