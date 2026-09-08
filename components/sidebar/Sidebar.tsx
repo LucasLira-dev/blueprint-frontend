@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
@@ -37,6 +38,17 @@ export function Sidebar({ open, onClose, userInitials, userName, userRole, userI
   const pathname = usePathname();
   const router = useRouter();
   const { data: threads, isPending } = useMyThreadsQuery(userId);
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   const handleLogout = async () => {
     try {
