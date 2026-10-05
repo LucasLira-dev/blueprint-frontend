@@ -25,6 +25,7 @@ export type PlanDetails = {
     visibility: 'PUBLIC' | 'PRIVATE';
     videos: Video[];
     books: Book[];
+    hasDeepLearningContent: boolean;
 }
 
 export type Plan = {
@@ -81,6 +82,53 @@ export type HistoryMessage = {
 export type ThreadHistoryResponse = {
     threadId: string;
     messages: HistoryMessage[];
+}
+
+export type DeepLearningStatus = 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED';
+
+export type DeepTopic = {
+    id: string;
+    slug: string;
+    deepLearningContentId: string;
+    title: string;
+    description: string;
+    content: string;
+    order: number;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+export type QuizQuestion = {
+    id: string;
+    deepLearningContentId: string;
+    question: string;
+    options: string[];
+    correctAnswer: string;
+    explanation: string;
+    order: number;
+}
+
+export type QuizAttempt = {
+    id: string;
+    userId: string;
+    deepLearningContentId: string;
+    score: number;
+    total: number;
+    answers: Record<string, string>;
+    createdAt: string;
+}
+
+export type DeepLearningContent = {
+    id: string;
+    studyPlanId: string;
+    title: string;
+    summary: string;
+    status: DeepLearningStatus;
+    topics: DeepTopic[];
+    questions: QuizQuestion[];
+    quizAttempts?: QuizAttempt[];
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 

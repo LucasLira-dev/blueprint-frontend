@@ -137,6 +137,24 @@
   box-shadow: var(--shadow-glow);
 }
 
+@layer components {
+  .deep-learning-prose .hljs-keyword,
+  .deep-learning-prose .hljs-selector-tag,
+  .deep-learning-prose .hljs-built_in { color: var(--primary); }
+
+  .deep-learning-prose .hljs-title,
+  .deep-learning-prose .hljs-title.function_ { color: var(--foreground); }
+
+  .deep-learning-prose .hljs-string,
+  .deep-learning-prose .hljs-number,
+  .deep-learning-prose .hljs-literal { color: var(--muted-foreground); }
+
+  .deep-learning-prose .hljs-comment { color: var(--muted-foreground); opacity: 0.7; font-style: italic; }
+
+  .deep-learning-prose .hljs-attr,
+  .deep-learning-prose .hljs-variable { color: var(--primary-glow); }
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;

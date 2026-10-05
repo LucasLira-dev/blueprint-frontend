@@ -140,11 +140,17 @@ function ChatSession({ initialMessages, userId }: { initialMessages: Message[]; 
                   {message.content && (
                     <div className={`rounded-lg p-4 text-sm ${message.role === "user" ? "bg-muted text-primary-foreground" : "bg-secondary text-secondary-foreground"}`}>
                       {message.role === "user" ? message.content : <Markdown content={message.content} />}
-                      {message.planId && (
+                      {message.planId ? (
                         <a href={`/plans/${message.planId}`} className="mt-3 inline-block text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80">
                           Acesse seu plano de estudos
                         </a>
-                      )}
+                      ) : 
+                      <p>
+                        {message.role === "assistant" && !message.content && !message.error && (
+                          <span className="text-muted-foreground">Gerando conteúdo...</span>
+                        )}
+                      </p>
+                      }
                     </div>
                   )}
                   {message.error && (

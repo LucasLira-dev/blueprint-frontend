@@ -18,6 +18,7 @@ export const VideoCard = (props: VideoCardProps) => {
         >
             <div className="relative w-full aspect-video overflow-hidden">
                 <Image
+                    loading="eager"
                     src={props.thumbnailUrl ?? "/ytb-fallback.webp"}
                     alt={`Thumbnail do vídeo ${props.title}`}
                     fill
