@@ -13,6 +13,7 @@ import {
   Compass,
   Shield,
   MessageSquare,
+  Brain,
 } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
@@ -22,6 +23,7 @@ const NAV_ITEMS = [
   { label: "Planos", href: "/plans", icon: LayoutGrid },
   { label: "Planos públicos", href: "/explore", icon: Compass },
   { label: "Novo plano", href: "/plans/new", icon: Plus },
+  { label: "Aprendizado profundo", href: "/deepLearning", icon: Brain },
   { label: "Admin", href: "/admin", icon: Shield },
 ] as const;
 

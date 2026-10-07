@@ -1,6 +1,6 @@
 'use client';
 
-import { useChangePlanVisibilityMutation, useDeletePlanMutation, useMyPlansQuery } from "@/hooks/usePlans";
+import { useChangePlanVisibilityMutation, useDeletePlanMutation, useMyPlanQuery } from "@/hooks/usePlans";
 import { Download, FileText, Brain } from "lucide-react";
 import { ChangeVisibilityToogle } from "./ChangeVisibilityToogle";
 import { VideoCard } from "./VideoCard";
@@ -14,6 +14,8 @@ import { PlanNotFound } from "./PlanNotFound";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner";
+import { useMemo } from "react";
+import { PlanDetails } from "@/types";
 
 interface PlanDetailsProps {
     planId: string;
@@ -21,15 +23,17 @@ interface PlanDetailsProps {
     isAdmin: boolean;
 }
 
-export const PlanDetails = ({ planId, userId, isAdmin }: PlanDetailsProps) => {
+export const PlanDetailsComponent = ({ planId, userId, isAdmin }: PlanDetailsProps) => {
     
-    const { data: planDetails, isLoading, error } = useMyPlansQuery(userId!, planId, isAdmin);
+    const { data: planDetailsData, isLoading, error } = useMyPlanQuery(userId!, planId, isAdmin);
 
     const { mutate: deletePlan, isPending } = useDeletePlanMutation(userId!, isAdmin)
 
     const { mutate: changeVisibility, isPending: isChangeVisibilityPending } = useChangePlanVisibilityMutation(userId!);
 
     const router = useRouter();
+
+    const planDetails = useMemo<PlanDetails | null>(() => planDetailsData ?? null, [planDetailsData]);
 
     if (isLoading) {
         return <PlanDetailsSkeleton />;

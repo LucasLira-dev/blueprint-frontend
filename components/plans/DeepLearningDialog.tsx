@@ -119,7 +119,7 @@ export const DeepLearningDialog = ({ planId }: DeepLearningDialogProps) => {
                         </div>
                     )}
 
-                    <DialogFooter>
+                    <DialogFooter className="flex flex-row justify-end gap-2">
                         {isStreaming ? (
                             <DialogClose render={<Button variant="outline" />}>
                                 <X className="h-4 w-4" /> Parar
@@ -128,18 +128,18 @@ export const DeepLearningDialog = ({ planId }: DeepLearningDialogProps) => {
                             <>
                                 {isFinished && (
                                     error ? (
-                                        <Button onClick={handleGenerate} variant="outline" className="p-3">
+                                        <Button onClick={handleGenerate} variant="outline" className="cursor-pointer">
                                             Tentar novamente
                                         </Button>
                                     ) : (
-                                        <Link href={`/plans/${planId}/deep-learning`} className="p-3">
-                                            <Button className="w-full">
+                                        <Link href={`/plans/${planId}/deep-learning`}>
+                                            <Button className="w-full cursor-pointer">
                                                 <Check className="h-4 w-4" /> Visualizar aprendizado
                                             </Button>
                                         </Link>
                                     )
                                 )}
-                                <DialogClose render={<Button />}>Fechar</DialogClose>
+                                <DialogClose render={<Button />} className="cursor-pointer">Fechar</DialogClose>
                             </>
                         )}
                     </DialogFooter>

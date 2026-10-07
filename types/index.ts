@@ -131,4 +131,8 @@ export type DeepLearningContent = {
     updatedAt?: string;
 }
 
-
+export type AllDeepLearning = {
+    id: string;
+    title: string;
+    thumbnail: string | null;
+}

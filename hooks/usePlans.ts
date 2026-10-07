@@ -11,6 +11,8 @@ export function usePlansQuery(userId?: string) {
     return useQuery({
         queryKey: ['plans', userId],
         queryFn: () => getPlans(userId),
+        enabled: Boolean(userId),
+        staleTime: 5 * 60 * 1000,
     })
 }
 
@@ -28,9 +30,9 @@ export function useMyFavoritePlansQuery(userId: string) {
     })
 }
 
-export function useMyPlansQuery(userId: string, planId: string, isAdmin: boolean) {
+export function useMyPlanQuery(userId: string, planId: string, isAdmin: boolean) {
     return useQuery({
-        queryKey: ['my-plans', userId, planId, isAdmin],
+        queryKey: ['my-plan', userId, planId, isAdmin],
         queryFn: () => {
             if (isAdmin) {
                 return getPlanDetailsAdmin(planId);
@@ -39,7 +41,7 @@ export function useMyPlansQuery(userId: string, planId: string, isAdmin: boolean
             }
         }
     })
-}
+} 
 
 
 export function useChangePlanVisibilityMutation(userId: string) {
@@ -50,7 +52,7 @@ export function useChangePlanVisibilityMutation(userId: string) {
         mutationFn: ({ planId, visibility}: ChangeVisibilityParams) => changePlanVisibility(planId, visibility),
         onSuccess: (_, { planId }) => {
             queryClient.invalidateQueries({ queryKey: ['plans', userId] });
-            queryClient.invalidateQueries({ queryKey: ['my-plans', userId, planId] });
+            queryClient.invalidateQueries({ queryKey: ['my-plan', userId, planId] });
         },
         onError: (error) => {
             console.error('Erro ao alterar visibilidade do plano:', error);
@@ -65,7 +67,7 @@ export function useChangePlanFavoriteMutation(userId: string) {
         mutationFn: ({ planId, favorite }: { planId: string, favorite: boolean }) => changeFavoriteStatus(planId, favorite),
         onSuccess: (_, { planId }) => {
             queryClient.invalidateQueries({ queryKey: ['plans', userId] });
-            queryClient.invalidateQueries({ queryKey: ['my-plans', userId, planId] });
+            queryClient.invalidateQueries({ queryKey: ['my-plan', userId, planId] });
             queryClient.invalidateQueries({ queryKey: ['public-plans', userId] });
             queryClient.invalidateQueries({ queryKey: ['my-favorite-plans', userId] });
         },
@@ -112,7 +114,7 @@ export function useDeletePlanMutation(userId: string, isAdmin: boolean) {
         mutationFn: (planId: string) => isAdmin ? adminDeletePlan(planId) : deletePlan(planId),
         onSuccess: (_, planId: string) => {
             queryClient.invalidateQueries({ queryKey: ['plans', userId] });
-            queryClient.invalidateQueries({ queryKey: ['my-plans', userId, planId] });
+            queryClient.invalidateQueries({ queryKey: ['my-plan', userId, planId] });
             queryClient.invalidateQueries({ queryKey: ['public-plans', userId] });
             queryClient.invalidateQueries({ queryKey: ['my-favorite-plans', userId] });
             queryClient.invalidateQueries({ queryKey: ['my-threads', userId] });
@@ -130,7 +132,7 @@ export function useDeleteAllPlansMutation(userId: string) {
         mutationFn: () => deleteAllPlans(), 
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['plans', userId] });
-            queryClient.invalidateQueries({ queryKey: ['my-plans', userId] });
+            queryClient.invalidateQueries({ queryKey: ['my-plan', userId] });
             queryClient.invalidateQueries({ queryKey: ['public-plans', userId] });
             queryClient.invalidateQueries({ queryKey: ['my-favorite-plans', userId] });
         },

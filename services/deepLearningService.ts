@@ -1,5 +1,5 @@
 import { apiFetch } from "@/lib/api-client";
-import type { DeepLearningContent } from "@/types";
+import type { AllDeepLearning, DeepLearningContent } from "@/types";
 
 export interface DeepLearningEvent {
     step: string;
@@ -26,6 +26,26 @@ export async function getDeepLearningContent(studyPlanId: string): Promise<DeepL
     catch (error) {
         console.error("Error fetching deep learning content:", error);
         throw new Error("Erro ao buscar conteúdo de aprendizado profundo.");
+    }
+}
+
+export async function getAllDeepLearningByUser(): Promise<AllDeepLearning[]> {
+    try {
+        const response = await apiFetch(`/deep-learning/all`);
+
+        if (!response.ok) {
+            throw new Error(`Erro ao buscar todos os aprendizados profundos: ${response.status}`);
+        }
+
+        const data: AllDeepLearning[] = await response.json();
+
+        console.log("Fetched all deep learning content:", data);
+
+        return data;
+    }
+    catch (error) {
+        console.error("Error fetching all deep learning content:", error);
+        throw new Error("Erro ao buscar todos os aprendizados profundos.");
     }
 }
 

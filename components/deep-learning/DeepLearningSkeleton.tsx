@@ -1,6 +1,6 @@
 export const DeepLearningSkeleton = () => {
   return (
-    <article className="mx-auto flex w-full max-w-170 flex-col gap-8 px-4 py-8 sm:gap-10 sm:px-6 sm:py-10">
+    <article className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-8 sm:gap-10 sm:px-6 sm:py-10">
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between gap-3">
           <div className="h-4 w-32 rounded bg-muted animate-pulse" />

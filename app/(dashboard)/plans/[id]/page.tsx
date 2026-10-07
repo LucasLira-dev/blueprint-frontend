@@ -1,7 +1,7 @@
 'use client';
 
 import { use } from "react";
-import { PlanDetails } from "@/components/plans/PlanDetails";
+import { PlanDetailsComponent } from "@/components/plans/PlanDetails";
 import { authClient } from "@/lib/auth-client";
 
 interface PlanDetailsPageProps {
@@ -17,7 +17,7 @@ export default function PlanDetailsPage({ params }: PlanDetailsPageProps) {
 
     return (
         <section className="flex justify-center">
-            <PlanDetails planId={planId} userId={userId} isAdmin={userRole === 'admin'}/>
+            <PlanDetailsComponent planId={planId} userId={userId} isAdmin={userRole === 'admin'}/>
         </section>
     )
 }

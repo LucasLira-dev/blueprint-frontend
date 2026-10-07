@@ -13,6 +13,7 @@ import { DeepLearningError } from "./DeepLearningError";
 import { DeepLearningNotFound } from "./DeepLearningNotFound";
 import { DeleteDeepLearningContentDialog } from "./DeleteDeepLearningContentDialog";
 import { useRouter } from "next/navigation";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 const DEEP_LEARNING_OBJECTIVES = [
   "Compreender os conceitos fundamentais do plano de estudo.",
@@ -23,6 +24,7 @@ const DEEP_LEARNING_OBJECTIVES = [
 
 interface DeepLearningModuleProps {
   planId: string;
+  userId: string | undefined;
 }
 
 const ModuleHeader = ({
@@ -91,10 +93,22 @@ const ObjectivesPanel = ({ objectives }: { objectives: string[] }) => (
   </section>
 );
 
-export const DeepLearningModule = ({ planId }: DeepLearningModuleProps) => {
+const AiDisclaimerCard = () => (
+  <Alert className="border-primary/20 bg-primary/5 p-4">
+    <Sparkles aria-hidden className="size-4 text-primary" />
+    <AlertTitle>Conteúdo gerado por IA</AlertTitle>
+    <AlertDescription>
+      Este material foi gerado automaticamente por inteligência artificial e
+      pode conter erros ou imprecisões. Recomendamos verificar as informações
+      com fontes confiáveis antes de utilizá-lo.
+    </AlertDescription>
+  </Alert>
+);
+
+export const DeepLearningModule = ({ planId, userId }: DeepLearningModuleProps) => {
   const { data, isLoading, isError, refetch } = useDeepLearningContent(planId);
   const { mutateAsync: deleteContent, isPending: isDeletingContent } =
-    useDeleteDeepLearningContent(planId);
+    useDeleteDeepLearningContent(planId, userId!);
 
   const router = useRouter();
 
@@ -122,6 +136,7 @@ export const DeepLearningModule = ({ planId }: DeepLearningModuleProps) => {
         isDeleting={isDeletingContent}
         onDelete={handleDeleteContent}
       />
+      <AiDisclaimerCard />
       <ObjectivesPanel objectives={DEEP_LEARNING_OBJECTIVES} />
 
       <div className="h-px w-full bg-border" />
