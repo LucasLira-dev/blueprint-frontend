@@ -65,18 +65,18 @@ export function ChatInput({ onSubmit, disabled }: ChatInputProps) {
           className="w-full h-full resize-none bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
         />
 
-        <div className="mt-3 flex flex-col gap-2 flex-row sm:items-center sm:justify-between">
+        <div className="mt-3 flex flex-row justify-between items-center gap-2">
           <Select
-            value={model.charAt(0).toUpperCase() + model.slice(1)}
+            value={model}
             onValueChange={handleModelChange}
             disabled={disabled}
           >
-            <SelectTrigger className="w-full p-4 cursor-pointer rounded-full sm:w-80 border border-border bg-background/20 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none">
-              <SelectValue placeholder="Modelo de IA" />
+            <SelectTrigger className="min-w-0 max-w-md flex-1 cursor-pointer rounded-full border border-border bg-background/20 p-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none">
+              <SelectValue className="min-w-0 truncate" placeholder="Modelo de IA" />
             </SelectTrigger>
-            <SelectContent align="start">
+            <SelectContent align="start" className="max-w-[calc(100vw-2rem)]">
               {AVAILABLE_MODELS.map((available) => (
-                <SelectItem key={available.id} value={available.id} className="p-2 cursor-pointer">
+                <SelectItem key={available.id} value={available.id} className="min-w-0 cursor-pointer p-2">
                   {available.label}
                 </SelectItem>
               ))}
