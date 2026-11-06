@@ -82,7 +82,7 @@ export function LoginForm({ disabled = false, onLoadingChange, onError }: LoginF
   const isDisabled = disabled || isLoading;
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
 
       <div>
         <label htmlFor="email" className="block text-sm font-medium mb-2">
@@ -95,7 +95,7 @@ export function LoginForm({ disabled = false, onLoadingChange, onError }: LoginF
           onChange={(e) => handleChange("email", e.target.value)}
           placeholder="voce@email.com"
           disabled={isDisabled}
-          className="w-full px-4 py-3 rounded-sm border border-border bg-surface text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full px-4 py-3 md:px-5 md:py-3.5 rounded-sm border border-border bg-surface text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
         />
         {errors.email && (
           <p className="mt-2 text-sm text-red-400 text-center">{errors.email}</p>
@@ -114,13 +114,13 @@ export function LoginForm({ disabled = false, onLoadingChange, onError }: LoginF
             onChange={(e) => handleChange("password", e.target.value)}
             placeholder="••••••••"
             disabled={isDisabled}
-            className="w-full px-4 py-3 pr-11 rounded-sm border border-border bg-surface text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-4 py-3 pr-11 md:pl-5 md:pr-14 md:py-3.5 rounded-sm border border-border bg-surface text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
             disabled={isDisabled}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
+            className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
             tabIndex={-1}
           >
             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -152,7 +152,7 @@ export function LoginForm({ disabled = false, onLoadingChange, onError }: LoginF
       <button
         type="submit"
         disabled={isDisabled}
-        className="w-full btn-primary rounded-sm px-4 py-3 font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full btn-primary rounded-sm px-4 py-3 md:py-3.5 font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isLoading ? (
           <Loader2 className="h-4 w-4 animate-spin" />

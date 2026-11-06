@@ -90,110 +90,105 @@ export function RegisterForm({ disabled = false, onLoadingChange, onError }: Reg
   const isDisabled = disabled || isLoading;
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium mb-1.5 sm:mb-2">
-            Nome
-          </label>
-          <input
-            type="text"
-            id="name"
-            value={formData.name}
-            onChange={(e) => handleChange("name", e.target.value)}
-            placeholder="Seu nome"
-            disabled={isDisabled}
-            className="w-full px-4 py-3 rounded-sm border border-border bg-surface text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed md:px-5 md:py-3.5 lg:px-6 lg:py-4"
-          />
-          {errors.name && (
-            <p className="mt-2 text-sm text-red-400 text-center">{errors.name}</p>
-          )}
-        </div>
-
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium mb-1.5 sm:mb-2">
-            E-mail
-          </label>
-          <input
-            type="email"
-            id="email"
-            value={formData.email}
-            onChange={(e) => handleChange("email", e.target.value)}
-            placeholder="voce@email.com"
-            disabled={isDisabled}
-            className="w-full px-4 py-3 rounded-sm border border-border bg-surface text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed md:px-5 md:py-3.5 lg:px-6 lg:py-4"
-          />
-          {errors.email && (
-            <p className="mt-2 text-sm text-red-400 text-center">{errors.email}</p>
-          )}
-        </div>
+    <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
+      <div>
+        <label htmlFor="name" className="block text-sm font-medium mb-2">
+          Nome
+        </label>
+        <input
+          type="text"
+          id="name"
+          value={formData.name}
+          onChange={(e) => handleChange("name", e.target.value)}
+          placeholder="Seu nome"
+          disabled={isDisabled}
+          className="w-full px-4 py-3 md:px-5 md:py-3.5 rounded-sm border border-border bg-surface text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+        />
+        {errors.name && (
+          <p className="mt-2 text-sm text-red-400 text-center">{errors.name}</p>
+        )}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <div>
-          <label htmlFor="password" className="block text-sm font-medium mb-1.5 sm:mb-2">
-            Senha
-          </label>
-          <div className="relative">
-            <input
-              type={showPassword ? "text" : "password"}
-              id="password"
-              value={formData.password}
-              onChange={(e) => handleChange("password", e.target.value)}
-              placeholder="••••••••"
-              disabled={isDisabled}
-              className="w-full px-4 py-3 pr-11 rounded-sm border border-border bg-surface text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed md:px-5 md:py-3.5 lg:px-6 lg:py-4"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              disabled={isDisabled}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
-              tabIndex={-1}
-            >
-              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            </button>
-          </div>
-          {errors.password && (
-            <p className="mt-2 text-sm text-red-400 text-center">{errors.password}</p>
-          )}
-        </div>
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium mb-2">
+          E-mail
+        </label>
+        <input
+          type="email"
+          id="email"
+          value={formData.email}
+          onChange={(e) => handleChange("email", e.target.value)}
+          placeholder="voce@email.com"
+          disabled={isDisabled}
+          className="w-full px-4 py-3 md:px-5 md:py-3.5 rounded-sm border border-border bg-surface text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+        />
+        {errors.email && (
+          <p className="mt-2 text-sm text-red-400 text-center">{errors.email}</p>
+        )}
+      </div>
 
-        <div>
-          <label htmlFor="confirmPassword" className="block text-sm font-medium mb-1.5 sm:mb-2">
-            Confirmar senha
-          </label>
-          <div className="relative">
-            <input
-              type={showConfirmPassword ? "text" : "password"}
-              id="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={(e) => handleChange("confirmPassword", e.target.value)}
-              placeholder="••••••••"
-              disabled={isDisabled}
-              className="w-full px-4 py-3 pr-11 rounded-sm border border-border bg-surface text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed md:px-5 md:py-3.5 lg:px-6 lg:py-4"
-            />
-            <button
-              type="button"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              disabled={isDisabled}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
-              tabIndex={-1}
-            >
-              {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            </button>
-          </div>
-          {errors.confirmPassword && (
-            <p className="mt-2 text-sm text-red-400 text-center">{errors.confirmPassword}</p>
-          )}
+      <div>
+        <label htmlFor="password" className="block text-sm font-medium mb-2">
+          Senha
+        </label>
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            id="password"
+            value={formData.password}
+            onChange={(e) => handleChange("password", e.target.value)}
+            placeholder="••••••••"
+            disabled={isDisabled}
+            className="w-full px-4 py-3 pr-11 md:pl-5 md:pr-14 md:py-3.5 rounded-sm border border-border bg-surface text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            disabled={isDisabled}
+            className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
+            tabIndex={-1}
+          >
+            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+          </button>
         </div>
+        {errors.password && (
+          <p className="mt-2 text-sm text-red-400 text-center">{errors.password}</p>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="confirmPassword" className="block text-sm font-medium mb-2">
+          Confirmar senha
+        </label>
+        <div className="relative">
+          <input
+            type={showConfirmPassword ? "text" : "password"}
+            id="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={(e) => handleChange("confirmPassword", e.target.value)}
+            placeholder="••••••••"
+            disabled={isDisabled}
+            className="w-full px-4 py-3 pr-11 md:pl-5 md:pr-14 md:py-3.5 rounded-sm border border-border bg-surface text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+          />
+          <button
+            type="button"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            disabled={isDisabled}
+            className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
+            tabIndex={-1}
+          >
+            {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+          </button>
+        </div>
+        {errors.confirmPassword && (
+          <p className="mt-2 text-sm text-red-400 text-center">{errors.confirmPassword}</p>
+        )}
       </div>
 
       <button
         type="submit"
         disabled={isDisabled}
-        className="w-full btn-primary rounded-sm px-4 py-3.5 md:py-4 font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full btn-primary rounded-sm px-4 py-3 md:py-3.5 font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isLoading ? (
           <Loader2 className="h-4 w-4 animate-spin" />

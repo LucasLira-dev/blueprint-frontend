@@ -37,19 +37,17 @@ export default function LoginPage() {
           className="object-cover"
         />
       </div>
-      <div className="w-full lg:w-1/2 flex items-center justify-center px-4">
-        <div className="w-full max-w-md">
+      <div className="w-full lg:w-1/2 flex items-center justify-center px-4 py-8 sm:py-10">
+        <div className="w-full max-w-md md:max-w-lg">
           <div className="text-center mb-8">
-            <h1 className="text-4xl md:text-5xl font-medium tracking-tight mb-4 mt-4">
+            <h1 className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
               Bem-vindo de<br />volta.
             </h1>
             <p className="text-muted-foreground">
               Entre para continuar seus blueprints.
             </p>
           </div>
-          <div className="p-3">
-            <LoginComponent />
-          </div>
+          <LoginComponent />
 
           <p className="text-center mt-6 text-muted-foreground mb-4">
             Não tem conta?{' '}

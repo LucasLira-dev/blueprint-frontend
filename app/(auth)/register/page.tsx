@@ -38,19 +38,19 @@ export default function RegisterPage() {
           className="object-cover"
         />
       </div>
-      <div className="w-full lg:w-1/2 flex items-center justify-center px-4 sm:px-6 md:px-8 mt-4">
-        <div className="w-full max-w-md sm:max-w-lg md:max-w-xl">
-          <div className="text-center mb-8 sm:mb-10 md:mb-12">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-4">
+      <div className="w-full lg:w-1/2 flex items-center justify-center px-4 py-8 sm:py-10">
+        <div className="w-full max-w-md md:max-w-lg">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
               Crie sua conta.
             </h1>
-            <p className="text-sm sm:text-base text-muted-foreground max-w-md mx-auto">
+            <p className="text-muted-foreground">
               Comece a criar seus blueprints personalizados.
             </p>
           </div>
           <RegisterComponent />
 
-          <p className="text-center mt-6 md:mt-8 text-sm sm:text-base text-muted-foreground mb-4">
+          <p className="text-center mt-6 text-muted-foreground mb-4">
             Já tem uma conta?{' '}
             <Link href="/login" className="text-foreground font-medium hover:underline">
               Entrar
