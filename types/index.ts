@@ -21,6 +21,7 @@ export type PlanDetails = {
     userId: string;
     topic: string;
     syllabus: string;
+    audioSummary: string | null;
     pdfUrl: string | null;
     visibility: 'PUBLIC' | 'PRIVATE';
     videos: Video[];
@@ -76,6 +77,8 @@ export type ConversationThread = {
 export type HistoryMessage = {
     role: 'user' | 'assistant';
     content: string;
+    planId?: string;
+    audioSummary?: string | null;
 }
 
 

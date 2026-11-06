@@ -6,6 +6,7 @@ export interface Message {
     id: string;
     role: "user" | "assistant";
     content: string | undefined;
+    audioSummary?: string | null;
     steps: PlanEvent[];
     planId?: string;
     error?: string;
@@ -14,6 +15,7 @@ export interface Message {
 export function useChat(initialMessages: Message[] = [], userId: string) {
     const [messages, setMessages] = useState<Message[]>(initialMessages);
     const [isStreaming, setIsStreaming] = useState(false);
+    const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
 
     const query = useQueryClient();
 
@@ -30,8 +32,15 @@ export function useChat(initialMessages: Message[] = [], userId: string) {
         try {
             for await (const event of streamGeneratePlan(content, model)) {
                 if (event.step === "error" || event.status === "error") {
+                    setIsGeneratingPdf(false);
                     patch((msg: Message) => ({ ...msg, error: event.label }));
                     continue;
+                }
+
+                if (event.step === "generatePdf") {
+                    if (event.status === "start") {
+                        setIsGeneratingPdf(true);
+                    }
                 }
 
                 if (event.step === "syllabusChunk") {
@@ -40,6 +49,7 @@ export function useChat(initialMessages: Message[] = [], userId: string) {
                 }
 
                 if (event.step === "done") {
+                    setIsGeneratingPdf(false);
                     patch((msg: Message) => ({ ...msg, content: event.syllabus, planId: event.studyPlanId, steps: []}));
                     continue;
                 }
@@ -52,14 +62,16 @@ export function useChat(initialMessages: Message[] = [], userId: string) {
             }
         }
         catch (error) {
+            setIsGeneratingPdf(false);
             patch((msg: Message) => ({ ...msg, error: (error as Error).message }));
             console.error("Error during streaming:", error);
         }
         finally {
+            setIsGeneratingPdf(false);
             setIsStreaming(false);
             query.invalidateQueries({ queryKey: ['my-threads', userId] });
         }
     }, [query, userId]);
 
-    return { messages, sendMessage, isStreaming };
+    return { messages, sendMessage, isStreaming, isGeneratingPdf };
 }

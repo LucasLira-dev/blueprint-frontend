@@ -10,6 +10,8 @@ import { ConversationApiError } from "@/services/conversationsService";
 import { Markdown } from "./Markdown";
 import { ChatSkeleton } from "./ChatSkeleton";
 import { ChatError } from "./ChatError";
+import { AudioSummary } from "./AudioSummary";
+import { toast } from "sonner";
 
 interface ChatViewProps {
   threadId?: string;
@@ -31,6 +33,8 @@ export function ChatView({ threadId, userId }: ChatViewProps) {
         id: `${threadId}-${index}`,
         role: message.role,
         content: message.content,
+        planId: message.planId,
+        audioSummary: message.audioSummary,
         steps: [],
       })) ?? [],
     [history, threadId]
@@ -69,7 +73,7 @@ export function ChatView({ threadId, userId }: ChatViewProps) {
 }
 
 function ChatSession({ initialMessages, userId }: { initialMessages: Message[]; userId?: string }) {
-  const { messages, sendMessage, isStreaming } = useChat(initialMessages, userId!);
+  const { messages, sendMessage, isStreaming, isGeneratingPdf } = useChat(initialMessages, userId!);
   const containerRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -81,6 +85,74 @@ function ChatSession({ initialMessages, userId }: { initialMessages: Message[]; 
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+
+  useEffect(() => {
+    const toastId = "pdf-generation";
+
+    if (!isGeneratingPdf) {
+      toast.dismiss(toastId);
+      return;
+    }
+
+    toast.loading(
+      "Seu plano foi gerado. Finalizando o PDF, aguarde antes de sair desta página.",
+      { id: toastId, duration: Infinity },
+    );
+
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+
+    const handleNavigationAttempt = (event: MouseEvent) => {
+      if (!(event.target instanceof Element)) return;
+
+      const link = event.target.closest("a[href]");
+      if (
+        !link ||
+        link.hasAttribute("download") ||
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
+
+      const href = link.getAttribute("href");
+      if (!href) return;
+
+      const destination = new URL(href, window.location.href);
+      const isSamePage =
+        destination.origin === window.location.origin &&
+        destination.pathname === window.location.pathname &&
+        destination.search === window.location.search &&
+        destination.hash === window.location.hash;
+
+      if (
+        destination.origin !== window.location.origin ||
+        isSamePage
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      toast.warning(
+        "Aguarde a conclusão da geração do PDF antes de sair desta página.",
+      );
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    document.addEventListener("click", handleNavigationAttempt, true);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      document.removeEventListener("click", handleNavigationAttempt, true);
+    };
+  }, [isGeneratingPdf]);
 
   const handleSubmit = (content: string, model?: string) => {
     if (content.trim() === "") return;
@@ -141,9 +213,13 @@ function ChatSession({ initialMessages, userId }: { initialMessages: Message[]; 
                     <div className={`rounded-lg p-4 text-sm ${message.role === "user" ? "bg-muted text-primary-foreground" : "bg-secondary text-secondary-foreground"}`}>
                       {message.role === "user" ? message.content : <Markdown content={message.content} />}
                       {message.planId ? (
-                        <a href={`/plans/${message.planId}`} className="mt-3 inline-block text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80">
+                        <div
+                        className="mt-3 flex flex-col md:flex-row gap-2">
+                          <a href={`/plans/${message.planId}`} className="inline-block text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80">
                           Acesse seu plano de estudos
-                        </a>
+                          </a>
+                          <AudioSummary syllabus={message.audioSummary || ""} />
+                        </div>
                       ) : 
                       <p>
                         {message.role === "assistant" && !message.content && !message.error && (
@@ -177,4 +253,3 @@ function ChatSession({ initialMessages, userId }: { initialMessages: Message[]; 
     </div>
   );
 }
-

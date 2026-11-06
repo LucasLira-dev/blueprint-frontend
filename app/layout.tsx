@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, DM_Sans } from "next/font/google";
 import "./globals.css";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/sonner";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -44,7 +46,12 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${spaceGrotesk.variable} ${dmSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <TooltipProvider>
+          {children}
+           <Toaster richColors position="top-right" />
+        </TooltipProvider>
+        </body>
     </html>
   );
 }
