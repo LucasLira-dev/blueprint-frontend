@@ -7,6 +7,7 @@ export interface Message {
     role: "user" | "assistant";
     content: string | undefined;
     audioSummary?: string | null;
+    suggestedTopic?: string;
     steps: PlanEvent[];
     planId?: string;
     error?: string;
@@ -34,6 +35,15 @@ export function useChat(initialMessages: Message[] = [], userId: string) {
                 if (event.step === "error" || event.status === "error") {
                     setIsGeneratingPdf(false);
                     patch((msg: Message) => ({ ...msg, error: event.label }));
+                    continue;
+                }
+
+                if (event.step === "questionAnswer") {
+                    patch((msg: Message) => ({
+                        ...msg,
+                        content: event.label,
+                        suggestedTopic: event.suggestedTopic,
+                    }));
                     continue;
                 }
 

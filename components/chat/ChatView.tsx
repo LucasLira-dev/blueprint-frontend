@@ -229,6 +229,16 @@ function ChatSession({ initialMessages, userId }: { initialMessages: Message[]; 
                       }
                     </div>
                   )}
+                  {message.role === "assistant" && message.suggestedTopic && (
+                    <button
+                      type="button"
+                      onClick={() => handleSubmit(message.suggestedTopic!)}
+                      disabled={isStreaming}
+                      className="mt-3 block text-left text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80 disabled:opacity-50"
+                    >
+                      Gerar plano sobre “{message.suggestedTopic}”
+                    </button>
+                  )}
                   {message.error && (
                     <div className="mt-2 text-sm text-red-500 w-full">
                       <p className="truncate">Erro: {message.error}</p>

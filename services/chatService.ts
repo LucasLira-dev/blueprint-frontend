@@ -6,6 +6,7 @@ export interface PlanEvent {
     label: string;
     studyPlanId?: string;
     syllabus?: string;
+    suggestedTopic?: string;
 }
 
 export async function* streamGeneratePlan(topic: string, model?: string): AsyncGenerator<PlanEvent> {
